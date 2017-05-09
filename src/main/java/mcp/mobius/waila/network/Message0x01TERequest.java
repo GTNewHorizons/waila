@@ -54,7 +54,7 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
     public Message0x01TERequest() {
     }
 
-    public Message0x01TERequest(TileEntity ent, HashSet<String> keys) {
+    public Message0x01TERequest(final TileEntity ent, final HashSet<String> keys) {
         this.dim = ent.getWorld().provider.getDimension();
         this.posX = ent.getPos().getX();
         this.posY = ent.getPos().getY();
@@ -63,49 +63,49 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, IWailaMessage msg, ByteBuf target) throws Exception {
+    public void encodeInto(final ChannelHandlerContext ctx, final IWailaMessage msg, final ByteBuf target) throws Exception {
         target.writeInt(dim);
         target.writeInt(posX);
         target.writeInt(posY);
         target.writeInt(posZ);
         target.writeInt(this.keys.size());
 
-        for (String key : keys)
+        for (final String key : keys)
             WailaPacketHandler.INSTANCE.writeString(target, key);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, IWailaMessage rawmsg) {
+    public void decodeInto(final ChannelHandlerContext ctx, final ByteBuf dat, final IWailaMessage rawmsg) {
         try {
-            Message0x01TERequest msg = (Message0x01TERequest) rawmsg;
+            final Message0x01TERequest msg = (Message0x01TERequest) rawmsg;
             msg.dim = dat.readInt();
             msg.posX = dat.readInt();
             msg.posY = dat.readInt();
             msg.posZ = dat.readInt();
 
-            int nkeys = dat.readInt();
+            final int nkeys = dat.readInt();
 
             for (int i = 0; i < nkeys; i++)
                 this.keys.add(WailaPacketHandler.INSTANCE.readString(dat));
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             WailaExceptionHandler.handleErr(e, this.getClass().toString(), null);
         }
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Message0x01TERequest msg) throws Exception {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        World world = DimensionManager.getWorld(msg.dim);
-        BlockPos pos = new BlockPos(msg.posX, msg.posY, msg.posZ);
-        TileEntity entity = world.getTileEntity(pos);
-        Block block = world.getBlockState(pos).getBlock();
+    protected void channelRead0(final ChannelHandlerContext ctx, final Message0x01TERequest msg) throws Exception {
+        final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        final World world = DimensionManager.getWorld(msg.dim);
+        final BlockPos pos = new BlockPos(msg.posX, msg.posY, msg.posZ);
+        final TileEntity entity = world.getTileEntity(pos);
+        final Block block = world.getBlockState(pos).getBlock();
 
         if (entity != null) {
             try {
                 NBTTagCompound tag = new NBTTagCompound();
-                boolean hasNBTBlock = ModuleRegistrar.instance().hasNBTProviders(block);
-                boolean hasNBTEnt = ModuleRegistrar.instance().hasNBTProviders(entity);
+                final boolean hasNBTBlock = ModuleRegistrar.instance().hasNBTProviders(block);
+                final boolean hasNBTEnt = ModuleRegistrar.instance().hasNBTProviders(entity);
 
                 if (hasNBTBlock || hasNBTEnt) {
                     tag.setInteger("x", msg.posX);
@@ -114,28 +114,28 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
 //                    tag.setString("id", (String) ((HashMap) classToNameMap.get(null)).get(entity.getClass()));
                     tag.setString("id", entity.getClass().getName());
 
-                    EntityPlayerMP player = ((NetHandlerPlayServer) ctx.channel().attr(NetworkRegistry.NET_HANDLER).get()).playerEntity;
+                    final EntityPlayerMP player = ((NetHandlerPlayServer) ctx.channel().attr(NetworkRegistry.NET_HANDLER).get()).playerEntity;
 
-                    for (List<IWailaDataProvider> providersList : ModuleRegistrar.instance().getNBTProviders(block).values()) {
-                        for (IWailaDataProvider provider : providersList) {
+                    for (final List<IWailaDataProvider> providersList : ModuleRegistrar.instance().getNBTProviders(block).values()) {
+                        for (final IWailaDataProvider provider : providersList) {
                             try {
                                 tag = provider.getNBTData(player, entity, tag, world, new BlockPos(msg.posX, msg.posY, msg.posZ));
-                            } catch (AbstractMethodError ame) {
+                            } catch (final AbstractMethodError ame) {
                                 tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
-                            } catch (NoSuchMethodError nsm) {
+                            } catch (final NoSuchMethodError nsm) {
                                 tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
                             }
                         }
                     }
 
 
-                    for (List<IWailaDataProvider> providersList : ModuleRegistrar.instance().getNBTProviders(entity).values()) {
-                        for (IWailaDataProvider provider : providersList) {
+                    for (final List<IWailaDataProvider> providersList : ModuleRegistrar.instance().getNBTProviders(entity).values()) {
+                        for (final IWailaDataProvider provider : providersList) {
                             try {
                                 tag = provider.getNBTData(player, entity, tag, world, new BlockPos(msg.posX, msg.posY, msg.posZ));
-                            } catch (AbstractMethodError ame) {
+                            } catch (final AbstractMethodError ame) {
                                 tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
-                            } catch (NoSuchMethodError nsm) {
+                            } catch (final NoSuchMethodError nsm) {
                                 tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
                             }
                         }
@@ -154,7 +154,7 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
 
                 WailaPacketHandler.INSTANCE.sendTo(new Message0x02TENBTData(tag), WailaPacketHandler.getPlayer(ctx));
                 //ctx.writeAndFlush(new Message0x02TENBTData(tag)).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
-            } catch (Throwable e) {
+            } catch (final Throwable e) {
                 WailaExceptionHandler.handleErr(e, entity.getClass().toString(), null);
             }
         }

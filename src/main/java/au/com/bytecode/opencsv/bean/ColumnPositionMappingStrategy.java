@@ -22,16 +22,16 @@ import au.com.bytecode.opencsv.CSVReader;
 
 public class ColumnPositionMappingStrategy<T> extends HeaderColumnNameMappingStrategy<T> {
     private String[] columnMapping = new String[] {};
-    public void captureHeader(CSVReader reader) throws IOException {
+    public void captureHeader(final CSVReader reader) throws IOException {
         //do nothing, first line is not header
     }
-    protected String getColumnName(int col) {
+    protected String getColumnName(final int col) {
         return (null != columnMapping && col < columnMapping.length) ? columnMapping[col] : null ;
     }
     public String[] getColumnMapping() {
         return columnMapping != null ? columnMapping.clone() : null;
     }
-    public void setColumnMapping(String[] columnMapping) {
+    public void setColumnMapping(final String[] columnMapping) {
         this.columnMapping = columnMapping != null ? columnMapping.clone() : null;
     }
 }

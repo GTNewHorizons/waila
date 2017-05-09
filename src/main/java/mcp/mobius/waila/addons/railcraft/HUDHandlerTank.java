@@ -1,7 +1,5 @@
 package mcp.mobius.waila.addons.railcraft;
 
-import java.util.List;
-
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -16,70 +14,72 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 
+import java.util.List;
+
 public class HUDHandlerTank implements IWailaDataProvider {
 
-	@Override
-	public ItemStack getWailaStack(IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return null;
-	}
+    @Override
+    public ItemStack getWailaStack(final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+        return null;
+    }
 
-	@Override
-	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		if (!config.getConfig("railcraft.fluidamount")) return currenttip;	
-		try {
-			IFluidTank tank = (IFluidTank)RailcraftModule.ITankTile_getTank.invoke(RailcraftModule.ITankTile.cast(accessor.getTileEntity()));
-			if (tank == null) return currenttip;
-			
-			FluidStack fluid = tank.getFluid();
+    @Override
+    public List<String> getWailaHead(final ItemStack itemStack, List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+        if (!config.getConfig("railcraft.fluidamount")) return currenttip;
+        try {
+            final IFluidTank tank = (IFluidTank) RailcraftModule.ITankTile_getTank.invoke(RailcraftModule.ITankTile.cast(accessor.getTileEntity()));
+            if (tank == null) return currenttip;
 
-			String name = currenttip.get(0);
-			
-			try{
-				name += String.format(" < %s >", fluid.getFluid().getLocalizedName(fluid));
-			} catch (NullPointerException f){
-				name += " " + LangUtil.translateG("hud.msg.empty");
-			}			
-			
-			currenttip.set(0, name);			
-			
-		} catch (Exception e){    
-			currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
-		} 		
-		
-		return currenttip;
-	}
+            final FluidStack fluid = tank.getFluid();
 
-	@Override
-	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		if (!config.getConfig("railcraft.fluidamount")) return currenttip;	
-		
-		try {
-			IFluidTank tank = (IFluidTank)RailcraftModule.ITankTile_getTank.invoke(RailcraftModule.ITankTile.cast(accessor.getTileEntity()));
-			if (tank == null) return currenttip;			
-			
-			FluidStack fluid = tank.getFluid();
-			if (fluid != null)
-				currenttip.add(String.format("%d / %d mB", fluid.amount, tank.getInfo().capacity));
-			else
-				currenttip.add(String.format("0 / %d mB", tank.getInfo().capacity));
-			
-		} catch (Exception e){    
-			currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
-		} 		
-		
-		return currenttip;
-	}
+            String name = currenttip.get(0);
 
-	@Override
-	public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return currenttip;
-	}
+            try {
+                name += String.format(" < %s >", fluid.getFluid().getLocalizedName(fluid));
+            } catch (final NullPointerException f) {
+                name += " " + LangUtil.translateG("hud.msg.empty");
+            }
 
-	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-		if (te != null)
-			te.writeToNBT(tag);
-		return tag;
-	}	
-	
+            currenttip.set(0, name);
+
+        } catch (final Exception e) {
+            currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
+        }
+
+        return currenttip;
+    }
+
+    @Override
+    public List<String> getWailaBody(final ItemStack itemStack, List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+        if (!config.getConfig("railcraft.fluidamount")) return currenttip;
+
+        try {
+            final IFluidTank tank = (IFluidTank) RailcraftModule.ITankTile_getTank.invoke(RailcraftModule.ITankTile.cast(accessor.getTileEntity()));
+            if (tank == null) return currenttip;
+
+            final FluidStack fluid = tank.getFluid();
+            if (fluid != null)
+                currenttip.add(String.format("%d / %d mB", fluid.amount, tank.getInfo().capacity));
+            else
+                currenttip.add(String.format("0 / %d mB", tank.getInfo().capacity));
+
+        } catch (final Exception e) {
+            currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
+        }
+
+        return currenttip;
+    }
+
+    @Override
+    public List<String> getWailaTail(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+        return currenttip;
+    }
+
+    @Override
+    public NBTTagCompound getNBTData(final EntityPlayerMP player, final TileEntity te, final NBTTagCompound tag, final World world, final BlockPos pos) {
+        if (te != null)
+            te.writeToNBT(tag);
+        return tag;
+    }
+
 }

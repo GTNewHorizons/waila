@@ -31,42 +31,42 @@ public class HeaderColumnNameMappingStrategy<T> implements MappingStrategy<T> {
     protected Map<String, PropertyDescriptor> descriptorMap = null;
     protected Class<T> type;
 
-    public void captureHeader(CSVReader reader) throws IOException {
+    public void captureHeader(final CSVReader reader) throws IOException {
         header = reader.readNext();
     }
 
-    public PropertyDescriptor findDescriptor(int col) throws IntrospectionException {
-        String columnName = getColumnName(col);
+    public PropertyDescriptor findDescriptor(final int col) throws IntrospectionException {
+        final String columnName = getColumnName(col);
         return (null != columnName && columnName.trim().length() > 0) ? findDescriptor(columnName) : null;
     }
 
-    protected String getColumnName(int col) {
+    protected String getColumnName(final int col) {
         return (null != header && col < header.length) ? header[col] : null;
     }
 
-    protected PropertyDescriptor findDescriptor(String name) throws IntrospectionException {
+    protected PropertyDescriptor findDescriptor(final String name) throws IntrospectionException {
         if (null == descriptorMap) descriptorMap = loadDescriptorMap(getType()); //lazy load descriptors
         return descriptorMap.get(name.toUpperCase().trim());
     }
 
-    protected boolean matches(String name, PropertyDescriptor desc) {
+    protected boolean matches(final String name, final PropertyDescriptor desc) {
         return desc.getName().equals(name.trim());
     }
 
-    protected Map<String, PropertyDescriptor> loadDescriptorMap(Class<T> cls) throws IntrospectionException {
-        Map<String, PropertyDescriptor> map = new HashMap<String, PropertyDescriptor>();
+    protected Map<String, PropertyDescriptor> loadDescriptorMap(final Class<T> cls) throws IntrospectionException {
+        final Map<String, PropertyDescriptor> map = new HashMap<String, PropertyDescriptor>();
 
-        PropertyDescriptor[] descriptors;
+        final PropertyDescriptor[] descriptors;
         descriptors = loadDescriptors(getType());
-        for (PropertyDescriptor descriptor : descriptors) {
+        for (final PropertyDescriptor descriptor : descriptors) {
             map.put(descriptor.getName().toUpperCase().trim(), descriptor);
         }
 
         return map;
     }
 
-    private PropertyDescriptor[] loadDescriptors(Class<T> cls) throws IntrospectionException {
-        BeanInfo beanInfo = Introspector.getBeanInfo(cls);
+    private PropertyDescriptor[] loadDescriptors(final Class<T> cls) throws IntrospectionException {
+        final BeanInfo beanInfo = Introspector.getBeanInfo(cls);
         return beanInfo.getPropertyDescriptors();
     }
 
@@ -78,7 +78,7 @@ public class HeaderColumnNameMappingStrategy<T> implements MappingStrategy<T> {
         return type;
     }
 
-    public void setType(Class<T> type) {
+    public void setType(final Class<T> type) {
         this.type = type;
     }
 }

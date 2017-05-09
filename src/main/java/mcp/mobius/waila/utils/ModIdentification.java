@@ -1,15 +1,15 @@
 package mcp.mobius.waila.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Locale;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.GameData;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class ModIdentification {
 
@@ -21,7 +21,7 @@ public class ModIdentification {
     public static void init() {
 
         //TODO : Redo this for the new frameworkn (1.7.2)
-		/*
+        /*
         NBTTagList itemDataList = new NBTTagList();
         GameData.writeItemData(itemDataList);
 
@@ -32,7 +32,7 @@ public class ModIdentification {
         }
 		 */
 
-        for (ModContainer mod : Loader.instance().getModList()) {
+        for (final ModContainer mod : Loader.instance().getModList()) {
             modSource_Name.put(mod.getSource().getName(), mod.getName());
             modSource_ID.put(mod.getSource().getName(), mod.getModId());
         }
@@ -73,17 +73,17 @@ public class ModIdentification {
 		*/
     }
 
-    public static String nameFromObject(Object obj) {
+    public static String nameFromObject(final Object obj) {
         String objPath = obj.getClass().getProtectionDomain().getCodeSource().getLocation().toString();
 
         try {
             objPath = URLDecoder.decode(objPath, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         String modName = "<Unknown>";
-        for (String s : modSource_Name.keySet())
+        for (final String s : modSource_Name.keySet())
             if (objPath.contains(s)) {
                 modName = modSource_Name.get(s);
                 break;
@@ -120,19 +120,19 @@ public class ModIdentification {
 	}
 	*/
 
-    public static String nameFromStack(ItemStack stack) {
+    public static String nameFromStack(final ItemStack stack) {
         try {
-            ResourceLocation resource = (ResourceLocation) GameData.getItemRegistry().getNameForObject(stack.getItem());
-            ModContainer mod = ModIdentification.findModContainer(resource.getResourceDomain());
-            String modName = mod == null ? "Minecraft" : mod.getName();
+            final ResourceLocation resource = (ResourceLocation) GameData.getItemRegistry().getNameForObject(stack.getItem());
+            final ModContainer mod = ModIdentification.findModContainer(resource.getResourceDomain());
+            final String modName = mod == null ? "Minecraft" : mod.getName();
             return modName;
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             return "";
         }
     }
 
-    public static ModContainer findModContainer(String modID) {
-        for (ModContainer mc : Loader.instance().getModList())
+    public static ModContainer findModContainer(final String modID) {
+        for (final ModContainer mc : Loader.instance().getModList())
             if (modID.toLowerCase(Locale.US).equals(mc.getModId().toLowerCase(Locale.US)))
                 return mc;
         return null;

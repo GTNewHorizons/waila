@@ -52,7 +52,7 @@ public class CSVReader implements Closeable {
      * @param reader
      *            the reader to an underlying CSV source.
      */
-    public CSVReader(Reader reader) {
+    public CSVReader(final Reader reader) {
         this(reader, CSVParser.DEFAULT_SEPARATOR, CSVParser.DEFAULT_QUOTE_CHARACTER, CSVParser.DEFAULT_ESCAPE_CHARACTER);
     }
 
@@ -64,7 +64,7 @@ public class CSVReader implements Closeable {
      * @param separator
      *            the delimiter to use for separating entries.
      */
-    public CSVReader(Reader reader, char separator) {
+    public CSVReader(final Reader reader, final char separator) {
         this(reader, separator, CSVParser.DEFAULT_QUOTE_CHARACTER, CSVParser.DEFAULT_ESCAPE_CHARACTER);
     }
 
@@ -78,7 +78,7 @@ public class CSVReader implements Closeable {
      * @param quotechar
      *            the character to use for quoted elements
      */
-    public CSVReader(Reader reader, char separator, char quotechar) {
+    public CSVReader(final Reader reader, final char separator, final char quotechar) {
         this(reader, separator, quotechar, CSVParser.DEFAULT_ESCAPE_CHARACTER, DEFAULT_SKIP_LINES, CSVParser.DEFAULT_STRICT_QUOTES);
     }
 
@@ -95,7 +95,7 @@ public class CSVReader implements Closeable {
      * @param strictQuotes
      *            sets if characters outside the quotes are ignored
      */
-    public CSVReader(Reader reader, char separator, char quotechar, boolean strictQuotes) {
+    public CSVReader(final Reader reader, final char separator, final char quotechar, final boolean strictQuotes) {
         this(reader, separator, quotechar, CSVParser.DEFAULT_ESCAPE_CHARACTER, DEFAULT_SKIP_LINES, strictQuotes);
     }
 
@@ -112,8 +112,8 @@ public class CSVReader implements Closeable {
      *            the character to use for escaping a separator or quote
      */
 
-    public CSVReader(Reader reader, char separator,
-			char quotechar, char escape) {
+    public CSVReader(final Reader reader, final char separator,
+                     final char quotechar, final char escape) {
         this(reader, separator, quotechar, escape, DEFAULT_SKIP_LINES, CSVParser.DEFAULT_STRICT_QUOTES);
 	}
     
@@ -129,7 +129,7 @@ public class CSVReader implements Closeable {
      * @param line
      *            the line number to skip for start reading 
      */
-    public CSVReader(Reader reader, char separator, char quotechar, int line) {
+    public CSVReader(final Reader reader, final char separator, final char quotechar, final int line) {
         this(reader, separator, quotechar, CSVParser.DEFAULT_ESCAPE_CHARACTER, line, CSVParser.DEFAULT_STRICT_QUOTES);
     }
 
@@ -147,7 +147,7 @@ public class CSVReader implements Closeable {
      * @param line
      *            the line number to skip for start reading
      */
-    public CSVReader(Reader reader, char separator, char quotechar, char escape, int line) {
+    public CSVReader(final Reader reader, final char separator, final char quotechar, final char escape, final int line) {
         this(reader, separator, quotechar, escape, line, CSVParser.DEFAULT_STRICT_QUOTES);
     }
     
@@ -167,7 +167,7 @@ public class CSVReader implements Closeable {
      * @param strictQuotes
      *            sets if characters outside the quotes are ignored
      */
-    public CSVReader(Reader reader, char separator, char quotechar, char escape, int line, boolean strictQuotes) {
+    public CSVReader(final Reader reader, final char separator, final char quotechar, final char escape, final int line, final boolean strictQuotes) {
         this(reader, separator, quotechar, escape, line, strictQuotes, CSVParser.DEFAULT_IGNORE_LEADING_WHITESPACE);
     }
 
@@ -189,7 +189,7 @@ public class CSVReader implements Closeable {
      * @param ignoreLeadingWhiteSpace
      *            it true, parser should ignore white space before a quote in a field
      */
-    public CSVReader(Reader reader, char separator, char quotechar, char escape, int line, boolean strictQuotes, boolean ignoreLeadingWhiteSpace) {
+    public CSVReader(final Reader reader, final char separator, final char quotechar, final char escape, final int line, final boolean strictQuotes, final boolean ignoreLeadingWhiteSpace) {
         this.br = new BufferedReader(reader);
         this.parser = new CSVParser(separator, quotechar, escape, strictQuotes, ignoreLeadingWhiteSpace);
         this.skipLines = line;
@@ -207,9 +207,9 @@ public class CSVReader implements Closeable {
      */
     public List<String[]> readAll() throws IOException {
 
-        List<String[]> allElements = new ArrayList<String[]>();
+        final List<String[]> allElements = new ArrayList<String[]>();
         while (hasNext) {
-            String[] nextLineAsTokens = readNext();
+            final String[] nextLineAsTokens = readNext();
             if (nextLineAsTokens != null)
                 allElements.add(nextLineAsTokens);
         }
@@ -230,16 +230,16 @@ public class CSVReader implements Closeable {
     	
     	String[] result = null;
     	do {
-    		String nextLine = getNextLine();
+    		final String nextLine = getNextLine();
     		if (!hasNext) {
     			return result; // should throw if still pending?
     		}
-    		String[] r = parser.parseLineMulti(nextLine);
+    		final String[] r = parser.parseLineMulti(nextLine);
     		if (r.length > 0) {
     			if (result == null) {
     				result = r;
     			} else {
-    				String[] t = new String[result.length+r.length];
+    				final String[] t = new String[result.length+r.length];
     				System.arraycopy(result, 0, t, 0, result.length);
     				System.arraycopy(r, 0, t, result.length, r.length);
     				result = t;
@@ -263,7 +263,7 @@ public class CSVReader implements Closeable {
             }
             this.linesSkiped = true;
         }
-        String nextLine = br.readLine();
+        final String nextLine = br.readLine();
         if (nextLine == null) {
             hasNext = false;
         }

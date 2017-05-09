@@ -1,7 +1,5 @@
 package mcp.mobius.waila.gui.helpers;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,19 +8,20 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
+import org.lwjgl.opengl.GL11;
 
 public class UIHelper {
 
-    public static void drawTexture(int posX, int posY, int sizeX, int sizeY) {
+    public static void drawTexture(final int posX, final int posY, final int sizeX, final int sizeY) {
         UIHelper.drawTexture(posX, posY, sizeX, sizeY, 0, 0, 256, 256);
     }
 
-    public static void drawTexture(int posX, int posY, int sizeX, int sizeY, int texU, int texV, int texSizeU, int texSizeV) {
-        float zLevel = 0.0F;
-        float f = 0.00390625F;
+    public static void drawTexture(final int posX, final int posY, final int sizeX, final int sizeY, final int texU, final int texV, final int texSizeU, final int texSizeV) {
+        final float zLevel = 0.0F;
+        final float f = 0.00390625F;
 
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer t = tessellator.getBuffer();
+        final Tessellator tessellator = Tessellator.getInstance();
+        final VertexBuffer t = tessellator.getBuffer();
         t.begin(7, DefaultVertexFormats.POSITION_TEX);
         t.pos((double) (posX + 0), (double) (posY + sizeY), (double) zLevel).tex((double) ((float) texU * f), (double) ((float) (texV + texSizeV) * f)).endVertex();
         t.pos((double) (posX + sizeX), (double) (posY + sizeY), (double) zLevel).tex((double) ((float) (texU + texSizeU) * f), (double) ((float) (texV + texSizeV) * f)).endVertex();
@@ -31,22 +30,22 @@ public class UIHelper {
         tessellator.draw();
     }
 
-    public static void drawGradientRect(int left, int top, int right, int bottom, int zLevel, int startColor, int endColor) {
-        float alpha1 = (float) (startColor >> 24 & 255) / 255.0F;
-        float red1 = (float) (startColor >> 16 & 255) / 255.0F;
-        float green1 = (float) (startColor >> 8 & 255) / 255.0F;
-        float blue1 = (float) (startColor & 255) / 255.0F;
-        float alpha2 = (float) (endColor >> 24 & 255) / 255.0F;
-        float red2 = (float) (endColor >> 16 & 255) / 255.0F;
-        float green2 = (float) (endColor >> 8 & 255) / 255.0F;
-        float blue2 = (float) (endColor & 255) / 255.0F;
+    public static void drawGradientRect(final int left, final int top, final int right, final int bottom, final int zLevel, final int startColor, final int endColor) {
+        final float alpha1 = (float) (startColor >> 24 & 255) / 255.0F;
+        final float red1 = (float) (startColor >> 16 & 255) / 255.0F;
+        final float green1 = (float) (startColor >> 8 & 255) / 255.0F;
+        final float blue1 = (float) (startColor & 255) / 255.0F;
+        final float alpha2 = (float) (endColor >> 24 & 255) / 255.0F;
+        final float red2 = (float) (endColor >> 16 & 255) / 255.0F;
+        final float green2 = (float) (endColor >> 8 & 255) / 255.0F;
+        final float blue2 = (float) (endColor & 255) / 255.0F;
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.shadeModel(7425);
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer t = tessellator.getBuffer();
+        final Tessellator tessellator = Tessellator.getInstance();
+        final VertexBuffer t = tessellator.getBuffer();
         t.begin(7, DefaultVertexFormats.POSITION_COLOR);
         t.pos((double) right, (double) top, (double) zLevel).color(red1, green1, blue1, alpha1).endVertex();
         t.pos((double) left, (double) top, (double) zLevel).color(red1, green1, blue1, alpha1).endVertex();
@@ -59,21 +58,21 @@ public class UIHelper {
         GlStateManager.enableTexture2D();
     }
 
-    public static void drawBillboard(Vec3d pos, float offX, float offY, float offZ, double x1, double y1, double x2, double y2, int r, int g, int b, int a, double partialFrame) {
+    public static void drawBillboard(final Vec3d pos, final float offX, final float offY, final float offZ, final double x1, final double y1, final double x2, final double y2, final int r, final int g, final int b, final int a, final double partialFrame) {
         UIHelper.drawBillboard((float) pos.xCoord, (float) pos.yCoord, (float) pos.zCoord, offX, offY, offZ, x1, y1, x2, y2, r, g, b, a, partialFrame);
     }
 
-    public static void drawBillboard(float posX, float posY, float posZ, float offX, float offY, float offZ, double x1, double y1, double x2, double y2, int r, int g, int b, int a, double partialFrame) {
-        Entity player = Minecraft.getMinecraft().getRenderViewEntity();
-        float playerViewY = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * (float) partialFrame;
-        float playerViewX = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * (float) partialFrame;
+    public static void drawBillboard(final float posX, final float posY, final float posZ, final float offX, final float offY, final float offZ, final double x1, final double y1, final double x2, final double y2, final int r, final int g, final int b, final int a, final double partialFrame) {
+        final Entity player = Minecraft.getMinecraft().getRenderViewEntity();
+        final float playerViewY = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * (float) partialFrame;
+        final float playerViewX = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * (float) partialFrame;
 
         UIHelper.drawBillboard(posX, posY, posZ, offX, offY, offZ, playerViewX, playerViewY * -1.0F, 0.0F, x1, y1, x2, y2, r, g, b, a);
     }
 
-    public static void drawBillboard(float posX, float posY, float posZ, float offX, float offY, float offZ, float rotX, float rotY, float rotZ, double x1, double y1, double x2, double y2, int r, int g, int b, int a) {
-        float f = 1.6F;
-        float f1 = 0.016666668F * f;
+    public static void drawBillboard(final float posX, final float posY, final float posZ, final float offX, final float offY, final float offZ, final float rotX, final float rotY, final float rotZ, final double x1, final double y1, final double x2, final double y2, final int r, final int g, final int b, final int a) {
+        final float f = 1.6F;
+        final float f1 = 0.016666668F * f;
         GL11.glPushMatrix();
 
         GL11.glTranslatef(posX + offX, posY + offY, posZ + offZ);
@@ -96,30 +95,30 @@ public class UIHelper {
         GL11.glPopMatrix();
     }
 
-    public static void drawBillboardText(String text, Vec3d pos, float offX, float offY, float offZ, double partialFrame) {
+    public static void drawBillboardText(final String text, final Vec3d pos, final float offX, final float offY, final float offZ, final double partialFrame) {
         UIHelper.drawBillboardText(text, (float) pos.xCoord, (float) pos.yCoord, (float) pos.zCoord, offX, offY, offZ, partialFrame);
     }
 
-    public static void drawBillboardText(String text, float posX, float posY, float posZ, float offX, float offY, float offZ, double partialFrame) {
-        Entity player = Minecraft.getMinecraft().getRenderViewEntity();
-        float playerViewY = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * (float) partialFrame;
-        float playerViewX = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * (float) partialFrame;
+    public static void drawBillboardText(final String text, final float posX, final float posY, final float posZ, final float offX, final float offY, final float offZ, final double partialFrame) {
+        final Entity player = Minecraft.getMinecraft().getRenderViewEntity();
+        final float playerViewY = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * (float) partialFrame;
+        final float playerViewX = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * (float) partialFrame;
 
         UIHelper.drawFloatingText(text, posX, posY, posZ, offX, offY, offZ, playerViewX, playerViewY * -1.0F, 0.0F);
     }
 
-    public static void drawFloatingText(String text, Vec3d pos, float offX, float offY, float offZ, float rotX, float rotY, float rotZ) {
+    public static void drawFloatingText(final String text, final Vec3d pos, final float offX, final float offY, final float offZ, final float rotX, final float rotY, final float rotZ) {
         UIHelper.drawFloatingText(text, (float) pos.xCoord, (float) pos.yCoord, (float) pos.zCoord, offX, offY, offZ, rotX, rotY, rotZ);
     }
 
-    public static void drawFloatingText(String text, float posX, float posY, float posZ, float offX, float offY, float offZ, float rotX, float rotY, float rotZ) {
+    public static void drawFloatingText(final String text, final float posX, final float posY, final float posZ, final float offX, final float offY, final float offZ, final float rotX, final float rotY, final float rotZ) {
 
         if (text.isEmpty()) return;
 
-        FontRenderer fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
+        final FontRenderer fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
 
-        float f = 1.6F;
-        float f1 = 0.016666668F * f;
+        final float f = 1.6F;
+        final float f1 = 0.016666668F * f;
         GL11.glPushMatrix();
 
         //GL11.glTranslatef((float)accessor.getPosition().blockX + 0.0F, (float)accessor.getPosition().blockY + 0.5F, (float)accessor.getPosition().blockZ);
@@ -138,10 +137,10 @@ public class UIHelper {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        byte b0 = 0;
+        final byte b0 = 0;
 
         GL11.glDisable(GL11.GL_TEXTURE_2D);
-        int j = fontRendererObj.getStringWidth(text) / 2;
+        final int j = fontRendererObj.getStringWidth(text) / 2;
         drawRectangle((double) (-j - 1), (double) (8 + b0), 0.0, (double) (j + 1), (double) (-1 + b0), 0.0, 0, 0, 0, 64);
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -156,9 +155,9 @@ public class UIHelper {
         GL11.glPopMatrix();
     }
 
-    public static void drawRectangle(double x1, double y1, double z1, double x2, double y2, double z2, int r, int g, int b, int a) {
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer t = tessellator.getBuffer();
+    public static void drawRectangle(final double x1, final double y1, final double z1, final double x2, final double y2, final double z2, final int r, final int g, final int b, final int a) {
+        final Tessellator tessellator = Tessellator.getInstance();
+        final VertexBuffer t = tessellator.getBuffer();
 
         t.begin(7, DefaultVertexFormats.POSITION_COLOR);
         t.pos(x1, y2, z1).color(r, g, b, a).endVertex();
@@ -168,9 +167,9 @@ public class UIHelper {
         tessellator.draw();
     }
 
-    public static void drawRectangleEW(double x1, double y1, double z1, double x2, double y2, double z2, int r, int g, int b, int a) {
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer t = tessellator.getBuffer();
+    public static void drawRectangleEW(final double x1, final double y1, final double z1, final double x2, final double y2, final double z2, final int r, final int g, final int b, final int a) {
+        final Tessellator tessellator = Tessellator.getInstance();
+        final VertexBuffer t = tessellator.getBuffer();
 
         t.begin(7, DefaultVertexFormats.POSITION_COLOR);
         t.pos(x1, y1, z1).color(r, g, b, a).endVertex();

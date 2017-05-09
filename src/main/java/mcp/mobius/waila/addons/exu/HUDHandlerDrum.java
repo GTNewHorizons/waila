@@ -14,21 +14,21 @@ import java.util.List;
 
 public class HUDHandlerDrum implements IWailaDataProvider {
 
-	@Override
-	public ItemStack getWailaStack(IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return null;
-	}
+    @Override
+    public ItemStack getWailaStack(final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+        return null;
+    }
 
-	@Override
-	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return currenttip;
-	}
+    @Override
+    public List<String> getWailaHead(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+        return currenttip;
+    }
 
-	@Override
-	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		
-		if (!config.getConfig("extrautilities.fluidamount")) return currenttip;
-		
+    @Override
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+
+        if (!config.getConfig("extrautilities.fluidamount")) return currenttip;
+
 //		int amount = 0;
 //
 //		NBTTagCompound subtag = accessor.getNBTData().getCompoundTag("tank");
@@ -42,20 +42,20 @@ public class HUDHandlerDrum implements IWailaDataProvider {
 //		if (tanks.length != 1) return currenttip;
 //
 //		currenttip.add(String.format("%d / %d mB", amount, tanks[0].capacity));
-		
-		return currenttip;
-	}
 
-	@Override
-	public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return currenttip;
-	}
+        return currenttip;
+    }
 
-	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-		if (te != null)
-			te.writeToNBT(tag);
-		return tag;
-	}	
-	
+    @Override
+    public List<String> getWailaTail(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+        return currenttip;
+    }
+
+    @Override
+    public NBTTagCompound getNBTData(final EntityPlayerMP player, final TileEntity te, final NBTTagCompound tag, final World world, final BlockPos pos) {
+        if (te != null)
+            te.writeToNBT(tag);
+        return tag;
+    }
+
 }

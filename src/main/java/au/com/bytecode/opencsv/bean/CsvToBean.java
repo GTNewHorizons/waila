@@ -35,48 +35,48 @@ public class CsvToBean<T> {
     public CsvToBean() {
     }
 
-    public List<T> parse(MappingStrategy<T> mapper, Reader reader) {
+    public List<T> parse(final MappingStrategy<T> mapper, final Reader reader) {
         return parse(mapper, new CSVReader(reader));
     }
 
-    public List<T> parse(MappingStrategy<T> mapper, CSVReader csv) {
+    public List<T> parse(final MappingStrategy<T> mapper, final CSVReader csv) {
         try {
             mapper.captureHeader(csv);
             String[] line;
-            List<T> list = new ArrayList<T>();
+            final List<T> list = new ArrayList<T>();
             while (null != (line = csv.readNext())) {
-                T obj = processLine(mapper, line);
+                final T obj = processLine(mapper, line);
                 list.add(obj); // TODO: (Kyle) null check object
             }
             return list;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RuntimeException("Error parsing CSV!", e);
         }
     }
 
-    protected T processLine(MappingStrategy<T> mapper, String[] line) throws IllegalAccessException, InvocationTargetException, InstantiationException, IntrospectionException {
-        T bean = mapper.createBean();
+    protected T processLine(final MappingStrategy<T> mapper, final String[] line) throws IllegalAccessException, InvocationTargetException, InstantiationException, IntrospectionException {
+        final T bean = mapper.createBean();
         for (int col = 0; col < line.length; col++) {
-            PropertyDescriptor prop = mapper.findDescriptor(col);
+            final PropertyDescriptor prop = mapper.findDescriptor(col);
             if (null != prop) {
-                String value = checkForTrim(line[col], prop);
-                Object obj = convertValue(value, prop);
+                final String value = checkForTrim(line[col], prop);
+                final Object obj = convertValue(value, prop);
                 prop.getWriteMethod().invoke(bean, obj);
             }
         }
         return bean;
     }
 
-    private String checkForTrim(String s, PropertyDescriptor prop) {
+    private String checkForTrim(final String s, final PropertyDescriptor prop) {
         return trimmableProperty(prop) ? s.trim() : s;
     }
 
-    private boolean trimmableProperty(PropertyDescriptor prop) {
+    private boolean trimmableProperty(final PropertyDescriptor prop) {
         return !prop.getPropertyType().getName().contains("String");
     }
 
-    protected Object convertValue(String value, PropertyDescriptor prop) throws InstantiationException, IllegalAccessException {
-        PropertyEditor editor = getPropertyEditor(prop);
+    protected Object convertValue(final String value, final PropertyDescriptor prop) throws InstantiationException, IllegalAccessException {
+        final PropertyEditor editor = getPropertyEditor(prop);
         Object obj = value;
         if (null != editor) {
             editor.setAsText(value);
@@ -85,7 +85,7 @@ public class CsvToBean<T> {
         return obj;
     }
 
-    private PropertyEditor getPropertyEditorValue(Class<?> cls) {
+    private PropertyEditor getPropertyEditorValue(final Class<?> cls) {
         if (editorMap == null) {
             editorMap = new HashMap<Class<?>, PropertyEditor>();
         }
@@ -100,7 +100,7 @@ public class CsvToBean<T> {
         return editor;
     }
 
-    private void addEditorToMap(Class<?> cls, PropertyEditor editor) {
+    private void addEditorToMap(final Class<?> cls, final PropertyEditor editor) {
         if (editor != null) {
             editorMap.put(cls, editor);
         }
@@ -110,8 +110,8 @@ public class CsvToBean<T> {
     /*
      * Attempt to find custom property editor on descriptor first, else try the propery editor manager.
      */
-    protected PropertyEditor getPropertyEditor(PropertyDescriptor desc) throws InstantiationException, IllegalAccessException {
-        Class<?> cls = desc.getPropertyEditorClass();
+    protected PropertyEditor getPropertyEditor(final PropertyDescriptor desc) throws InstantiationException, IllegalAccessException {
+        final Class<?> cls = desc.getPropertyEditorClass();
         if (null != cls) return (PropertyEditor) cls.newInstance();
         return getPropertyEditorValue(desc.getPropertyType());
     }

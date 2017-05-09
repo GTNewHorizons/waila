@@ -45,69 +45,69 @@ public class ResultSetHelperService implements ResultSetHelper {
 	private static final int LONGNVARCHAR = -16;
 	private static final int NCLOB = 2011;
 
-    public String[] getColumnNames(ResultSet rs) throws SQLException {
-        List<String> names = new ArrayList<String>();
-        ResultSetMetaData metadata = rs.getMetaData();
+    public String[] getColumnNames(final ResultSet rs) throws SQLException {
+        final List<String> names = new ArrayList<String>();
+        final ResultSetMetaData metadata = rs.getMetaData();
 
         for (int i = 0; i < metadata.getColumnCount(); i++) {
             names.add(metadata.getColumnName(i+1));
         }
 
-        String[] nameArray = new String[names.size()];
+        final String[] nameArray = new String[names.size()];
         return names.toArray(nameArray);
     }
 
-    public String[] getColumnValues(ResultSet rs) throws SQLException, IOException {
+    public String[] getColumnValues(final ResultSet rs) throws SQLException, IOException {
 
-        List<String> values = new ArrayList<String>();
-        ResultSetMetaData metadata = rs.getMetaData();
+        final List<String> values = new ArrayList<String>();
+        final ResultSetMetaData metadata = rs.getMetaData();
 
         for (int i = 0; i < metadata.getColumnCount(); i++) {
             values.add(getColumnValue(rs, metadata.getColumnType(i + 1), i + 1));
         }
 
-        String[] valueArray = new String[values.size()];
+        final String[] valueArray = new String[values.size()];
         return values.toArray(valueArray);
     }
 
-    private String handleObject(Object obj){
+    private String handleObject(final Object obj){
         return obj == null ? "" : String.valueOf(obj);
     }
 
-    private String handleBigDecimal(BigDecimal decimal) {
+    private String handleBigDecimal(final BigDecimal decimal) {
         return decimal == null ? "" : decimal.toString();
     }
 
-    private String handleLong(ResultSet rs, int columnIndex) throws SQLException {
-        long lv = rs.getLong(columnIndex);
+    private String handleLong(final ResultSet rs, final int columnIndex) throws SQLException {
+        final long lv = rs.getLong(columnIndex);
         return rs.wasNull() ? "" : Long.toString(lv);
     }
 
-    private String handleInteger(ResultSet rs, int columnIndex) throws SQLException {
-        int i = rs.getInt(columnIndex);
+    private String handleInteger(final ResultSet rs, final int columnIndex) throws SQLException {
+        final int i = rs.getInt(columnIndex);
         return rs.wasNull() ? "" : Integer.toString(i);
     }
 
-    private String handleDate(ResultSet rs, int columnIndex) throws SQLException {
-        java.sql.Date date = rs.getDate(columnIndex);
+    private String handleDate(final ResultSet rs, final int columnIndex) throws SQLException {
+        final java.sql.Date date = rs.getDate(columnIndex);
         String value = null;
         if (date != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+            final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
             value =  dateFormat.format(date);
         }
         return value;
     }
 
-    private String handleTime(Time time) {
+    private String handleTime(final Time time) {
         return time == null ? null : time.toString();
     }
 
-    private String handleTimestamp(Timestamp timestamp) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+    private String handleTimestamp(final Timestamp timestamp) {
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
         return timestamp == null ? null : timeFormat.format(timestamp);
     }
 
-    private String getColumnValue(ResultSet rs, int colType, int colIndex)
+    private String getColumnValue(final ResultSet rs, final int colType, final int colIndex)
     		throws SQLException, IOException {
 
     	String value = "";
@@ -119,12 +119,12 @@ public class ResultSetHelperService implements ResultSetHelper {
 				value = handleObject(rs.getObject(colIndex));
 			    break;
 			case Types.BOOLEAN:
-				boolean b = rs.getBoolean(colIndex);
+				final boolean b = rs.getBoolean(colIndex);
 				value = Boolean.valueOf(b).toString();
 			    break;
 			case NCLOB: // todo : use rs.getNClob
 			case Types.CLOB:
-				Clob c = rs.getClob(colIndex);
+				final Clob c = rs.getClob(colIndex);
 				if (c != null) {
 					value = read(c);
 				}
@@ -175,11 +175,11 @@ public class ResultSetHelperService implements ResultSetHelper {
 
     }
 
-    private static String read(Clob c) throws SQLException, IOException
+    private static String read(final Clob c) throws SQLException, IOException
 	{
-		StringBuilder sb = new StringBuilder( (int) c.length());
-		Reader r = c.getCharacterStream();
-		char[] cbuf = new char[CLOBBUFFERSIZE];
+		final StringBuilder sb = new StringBuilder( (int) c.length());
+		final Reader r = c.getCharacterStream();
+		final char[] cbuf = new char[CLOBBUFFERSIZE];
 		int n;
 		while ((n = r.read(cbuf, 0, cbuf.length)) != -1) {
 				sb.append(cbuf, 0, n);
