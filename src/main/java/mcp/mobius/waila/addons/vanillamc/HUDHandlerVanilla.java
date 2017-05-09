@@ -146,7 +146,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
           int x = accessor.getPosition().getX();
           int y = accessor.getPosition().getY();
           int z = accessor.getPosition().getZ();
-          if (!accessor.getWorld().getBlockState(new BlockPos(x, y, z)).getPropertyNames().contains(BlockFlowerPot.CONTENTS))
+          if (!accessor.getWorld().getBlockState(new BlockPos(x, y, z)).getPropertyKeys().contains(BlockFlowerPot.CONTENTS))
               return new ItemStack(Blocks.FLOWER_POT, 1, accessor.getMetadata());
           EnumFlowerType variant = accessor.getWorld().getBlockState(new BlockPos(x, y, z)).getValue(BlockFlowerPot.CONTENTS);
           switch (variant) {
@@ -395,7 +395,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
 			if (block == jukebox){
 				NBTTagCompound tag = accessor.getNBTData();
 				if (tag.hasKey("RecordItem", 10)) {
-					Item record = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("RecordItem")).getItem();
+					Item record = new ItemStack(tag.getCompoundTag("RecordItem")).getItem();
 					currenttip.add(LangUtil.translateG("record.nowPlaying").replace("%s", ((ItemRecord) record).getRecordNameLocal()));
 				} else {
 					currenttip.add(LangUtil.translateG("hud.msg.empty"));

@@ -34,22 +34,22 @@ public class HUDHandlerFurnace implements IWailaDataProvider {
 		
 		String renderStr = "";
 		{
-			ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTagAt(0));
+			ItemStack stack = new ItemStack(tag.getCompoundTagAt(0));
 			String name     = String.valueOf(GameData.getItemRegistry().getNameForObject(stack.getItem()));
-			renderStr += SpecialChars.getRenderString("waila.stack", "1", name, String.valueOf(stack.stackSize), String.valueOf(stack.getItemDamage()));
+			renderStr += SpecialChars.getRenderString("waila.stack", "1", name, String.valueOf(stack.getCount()), String.valueOf(stack.getItemDamage()));
 		}
 		{
-			ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTagAt(1));
+			ItemStack stack = new ItemStack(tag.getCompoundTagAt(1));
 			String name     = String.valueOf(GameData.getItemRegistry().getNameForObject(stack.getItem()));
-			renderStr += SpecialChars.getRenderString("waila.stack", "1", name, String.valueOf(stack.stackSize), String.valueOf(stack.getItemDamage()));
+			renderStr += SpecialChars.getRenderString("waila.stack", "1", name, String.valueOf(stack.getCount()), String.valueOf(stack.getItemDamage()));
 		}
 		
 		renderStr += SpecialChars.getRenderString("waila.progress", String.valueOf(cookTime), String.valueOf(200));
 		
 		{
-			ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTagAt(2));
+			ItemStack stack = new ItemStack(tag.getCompoundTagAt(2));
 			String name     = String.valueOf(GameData.getItemRegistry().getNameForObject(stack.getItem()));
-			renderStr += SpecialChars.getRenderString("waila.stack", "1", name, String.valueOf(stack.stackSize), String.valueOf(stack.getItemDamage()));
+			renderStr += SpecialChars.getRenderString("waila.stack", "1", name, String.valueOf(stack.getCount()), String.valueOf(stack.getItemDamage()));
 		}		
 		
 		currenttip.add(renderStr);

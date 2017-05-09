@@ -11,12 +11,12 @@ import net.minecraft.server.MinecraftServer;
 public class CommandDumpHandlers extends CommandBase {
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "dumphandlers";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender p_71518_1_) {
+	public String getUsage(ICommandSender p_71518_1_) {
 		return "/dumphandlers";
 	}
 

@@ -26,7 +26,7 @@ public class OverlayRenderer {
     {
         Minecraft mc = Minecraft.getMinecraft();
         if(!(mc.currentScreen == null &&
-                mc.theWorld != null &&
+                mc.world != null &&
                 Minecraft.isGuiEnabled() &&
                 !mc.gameSettings.keyBindPlayerList.isKeyDown() &&
                 ConfigHandler.instance().showTooltip() &&

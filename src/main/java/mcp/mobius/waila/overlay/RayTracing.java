@@ -86,13 +86,13 @@ public class RayTracing {
         
         //if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true))
         if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true))
-        	return entity.worldObj.rayTraceBlocks(vec3, vec32, true);
+        	return entity.world.rayTraceBlocks(vec3, vec32, true);
         else
-        	return entity.worldObj.rayTraceBlocks(vec3, vec32, false);
+        	return entity.world.rayTraceBlocks(vec3, vec32, false);
     }	
 	
 	public ItemStack getIdentifierStack(){
-        World world = mc.theWorld;
+        World world = mc.world;
         ArrayList<ItemStack> items = this.getIdentifierItems();
         
         if (items.isEmpty())
@@ -137,8 +137,8 @@ public class RayTracing {
     	if (this.target == null)
     		return items;
     	
-    	EntityPlayer player = mc.thePlayer;
-    	World world = mc.theWorld;
+    	EntityPlayer player = mc.player;
+    	World world = mc.world;
 		BlockPos pos = target.getBlockPos();
 
         //int   blockID         = world.getBlockId(x, y, z);

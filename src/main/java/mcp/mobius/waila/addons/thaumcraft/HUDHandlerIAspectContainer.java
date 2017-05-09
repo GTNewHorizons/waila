@@ -73,7 +73,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider{
 			tag.setTag("Aspects", new NBTTagList());
 			NBTTagList aspects = tag.getTagList("Aspects", 10);			
 			
-			ItemStack headSlot = player.inventory.armorInventory[3];
+			ItemStack headSlot = player.inventory.armorInventory.get(3);
 			if (headSlot == null) return tag;
 			boolean hasReveal =  ThaumcraftModule.IGoggles.isInstance(headSlot.getItem());
 			if (!hasReveal) return tag;

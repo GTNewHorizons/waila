@@ -30,7 +30,7 @@ public class Message0x03EntRequest extends SimpleChannelInboundHandler<Message0x
 	public Message0x03EntRequest(){}	
 	
 	public Message0x03EntRequest(Entity ent, HashSet<String> keys){
-		this.dim  = ent.worldObj.provider.getDimension();
+		this.dim  = ent.world.provider.getDimension();
 		this.id   = ent.getEntityId();
 		this.keys = keys;
 	}	

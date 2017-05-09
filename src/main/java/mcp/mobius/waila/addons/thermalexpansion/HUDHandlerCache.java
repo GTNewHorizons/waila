@@ -100,7 +100,7 @@ public class HUDHandlerCache implements IWailaDataProvider {
 
     public ItemStack readItemStack(NBTTagCompound tag) {
         ItemStack is = new ItemStack(Item.getItemById(tag.getShort("id")));
-        is.stackSize = tag.getInteger("Count");
+        is.setCount(tag.getInteger("Count"));
         is.setItemDamage(Math.max(0, tag.getShort("Damage")));
         if (tag.hasKey("tag", 10)) {
             //is.stackTagCompound = tag.getCompoundTag("tag"); //TODO

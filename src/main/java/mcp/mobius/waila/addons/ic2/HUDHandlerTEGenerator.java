@@ -85,19 +85,19 @@ public class HUDHandlerTEGenerator implements IWailaDataProvider {
 			
 			else if (IC2Module.TileKineticGenerator.isInstance(te)){
 				storage    = IC2Module.TileKineticGenerator_storage.getDouble(te);
-				production = MathHelper.floor_double_long(IC2Module.TileKineticGenerator_production.getDouble(te));
+				production = MathHelper.floor(IC2Module.TileKineticGenerator_production.getDouble(te));
 				maxStorage = (long)IC2Module.TileKineticGenerator_maxStorage.getInt(te);				
 			}			
 			
 			else if (IC2Module.TileSemifluidGenerator.isInstance(te)){
 				storage    = IC2Module.TileSemifluidGenerator_storage.getDouble(te);
-				production = MathHelper.floor_double_long(IC2Module.TileSemifluidGenerator_production.getDouble(te));
+				production = MathHelper.floor(IC2Module.TileSemifluidGenerator_production.getDouble(te));
 				maxStorage = (long)IC2Module.TileSemifluidGenerator_maxStorage.getShort(te);				
 			}			
 			
 			else if (IC2Module.TileStirlingGenerator.isInstance(te)){
 				storage    = IC2Module.TileStirlingGenerator_storage.getDouble(te);
-				production = MathHelper.floor_double_long(IC2Module.TileStirlingGenerator_production.getDouble(te));
+				production = MathHelper.floor(IC2Module.TileStirlingGenerator_production.getDouble(te));
 				maxStorage = (long)IC2Module.TileStirlingGenerator_maxStorage.getShort(te);				
 			}			
 			
