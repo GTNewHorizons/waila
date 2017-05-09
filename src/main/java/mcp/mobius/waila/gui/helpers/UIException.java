@@ -1,7 +1,7 @@
 package mcp.mobius.waila.gui.helpers;
 
 public class UIException extends RuntimeException {
-    public UIException(String message) {
+    public UIException(final String message) {
         super(message);
     }
 }
