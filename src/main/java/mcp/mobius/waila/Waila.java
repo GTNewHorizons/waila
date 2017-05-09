@@ -35,10 +35,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid="Waila", name="Waila", version="1.7.0", dependencies = "required-after:Forge@[12.16.0.1809,);", acceptableRemoteVersions="*")
+@Mod(modid="waila", name="waila", version="1.7.0", acceptableRemoteVersions="*")
 public class Waila {
     // The instance of your mod that Forge uses.
-	@Instance("Waila")
+	@Instance("waila")
 	public static Waila instance;
 
 	@SidedProxy(clientSide="mcp.mobius.waila.client.ProxyClient", serverSide="mcp.mobius.waila.server.ProxyServer")
