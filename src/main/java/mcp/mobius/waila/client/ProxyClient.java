@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Loader;
 
 public class ProxyClient extends ProxyServer {
 
-//    TrueTypeFont minecraftiaFont;
+    TrueTypeFont minecraftiaFont;
 
     //public static LangUtil lang = LangUtil.loadLangDir("waila");
 
@@ -33,7 +33,7 @@ public class ProxyClient extends ProxyServer {
 
         LangUtil.loadLangDir("waila");
 
-//        minecraftiaFont = FontLoader.createFont(new ResourceLocation("waila", "fonts/Minecraftia.ttf"), 14, true);
+        minecraftiaFont = FontLoader.createFont(new ResourceLocation("waila", "fonts/minecraftia.ttf"), 14, true);
 
         //TickRegistry.registerTickHandler(WailaTickHandler.instance(), Side.CLIENT);
 
