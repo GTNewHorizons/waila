@@ -78,13 +78,14 @@ artifacts {
     archives devJar
 }
 
+def repoDir = new File(projectDir, "repo")
+repoDir.mkdirs()
+
 uploadArchives {
 	dependsOn 'build'
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
-        repository(url: "scp://mobiusstrip.eu/home/mobius/web/maven"){
-            authentication(userName: "mobius")
-        }
+        repository(url: "file://" + repoDir.absolutePath)
 
         pom {
             groupId = project.group

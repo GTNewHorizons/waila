@@ -2,7 +2,8 @@ package mcp.mobius.waila.api;
 
 /**
  * Main registration interface. An instance will be provided to a method specified in an IMC msg formatted as follow<br>
- * FMLInterModComms.sendMessage("Waila", "register", "fully.qualified.path.to.registration.method");<br>
+ * FMLInterModComms.sendMessage("waila", "register", "fully.qualified.path.to.registration.method");<br>
+ * Remark : Pre 1.11, Waila modID was "Waila". As of 1.11, modID is now "waila". The call to FMLInterModComms.sendMessage() need to reflect that.<br>
  * The registration method need to follow this signature<br>
  * public static void callbackRegister({@link IWailaRegistrar} registrar)<p>
  * If not specified otherwise, all the registration methods taking a class can take classes as well as interfaces.
