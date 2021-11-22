@@ -1,10 +1,10 @@
 [
 {
-  "modid": "waila",
-  "name": "Waila",
+  "modid": "${modId}",
+  "name": "${modName}",
   "description": "All your data are belong to us.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "version": "${modVersion}",
+  "mcversion": "${minecraftVersion}",
   "url": "",
   "updateUrl": "",
   "authors": ["ProfMobius"],

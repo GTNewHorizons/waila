@@ -1,0 +1,5 @@
+// Add your dependencies here
+
+dependencies {
+    compile("com.github.GTNewHorizons:NotEnoughItems:unified-build-script-SNAPSHOT:dev")
+}
