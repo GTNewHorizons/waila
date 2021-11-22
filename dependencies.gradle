@@ -2,4 +2,6 @@
 
 dependencies {
     compile("com.github.GTNewHorizons:NotEnoughItems:unified-build-script-SNAPSHOT:dev")
+
+    shadowImplementation("au.com.bytecode:opencsv:2.4")
 }
