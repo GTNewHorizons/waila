@@ -1,0 +1,7 @@
+// Add your dependencies here
+
+dependencies {
+    compile("com.github.GTNewHorizons:NotEnoughItems:master-SNAPSHOT:dev")
+
+    shadowImplementation("au.com.bytecode:opencsv:2.4")
+}
