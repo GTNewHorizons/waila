@@ -37,7 +37,6 @@ public class Message0x00ServerPing extends SimpleChannelInboundHandler<Message0x
 	@Override
 	public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, IWailaMessage rawmsg) {
 		try{
-			Message0x00ServerPing msg = (Message0x00ServerPing)rawmsg;
 			int nkeys = dat.readShort();
 			for (int i = 0; i < nkeys; i++){
 				this.forcedKeys.put(WailaPacketHandler.INSTANCE.readString(dat), dat.readBoolean());
