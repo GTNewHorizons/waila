@@ -1,6 +1,8 @@
 package mcp.mobius.waila.network;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import java.util.HashSet;
+import java.util.List;
+
 import cpw.mods.fml.common.network.NetworkRegistry;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,12 +16,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-
-import java.util.HashSet;
-import java.util.List;
 
 public class Message0x03EntRequest extends SimpleChannelInboundHandler<Message0x03EntRequest> implements IWailaMessage {
 
@@ -65,39 +63,37 @@ public class Message0x03EntRequest extends SimpleChannelInboundHandler<Message0x
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message0x03EntRequest msg) throws Exception {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        World           world  = DimensionManager.getWorld(msg.dim);
-        Entity          entity = world.getEntityByID(msg.id);
-        
-        if (entity != null){
-        	try{
-        		NBTTagCompound tag = new NBTTagCompound();
-        		
-        		EntityPlayerMP player = ((NetHandlerPlayServer) ctx.channel().attr(NetworkRegistry.NET_HANDLER).get()).playerEntity;
-        		
-        		if (ModuleRegistrar.instance().hasNBTEntityProviders(entity)){
-        			for (List<IWailaEntityProvider> providersList : ModuleRegistrar.instance().getNBTEntityProviders(entity).values()){
-	        			for (IWailaEntityProvider provider : providersList){
-	        				try{
-	        					tag = provider.getNBTData(player, entity, tag, world);
-	        				} catch (AbstractMethodError ame){
-	        					tag = AccessHelper.getNBTData(provider, entity, tag);
-	        				}        				
-	        			}
-        			}
+        World world  = DimensionManager.getWorld(msg.dim);
+        if(world == null) return;
+        Entity entity = world.getEntityByID(msg.id);
+        if(entity == null) return;
+        try{
+            NBTTagCompound tag = new NBTTagCompound();
+            
+            EntityPlayerMP player = ((NetHandlerPlayServer) ctx.channel().attr(NetworkRegistry.NET_HANDLER).get()).playerEntity;
+            
+            if (ModuleRegistrar.instance().hasNBTEntityProviders(entity)){
+                for (List<IWailaEntityProvider> providersList : ModuleRegistrar.instance().getNBTEntityProviders(entity).values()){
+                    for (IWailaEntityProvider provider : providersList){
+                        try{
+                            tag = provider.getNBTData(player, entity, tag, world);
+                        } catch (AbstractMethodError ame){
+                            tag = AccessHelper.getNBTData(provider, entity, tag);
+                        }                       
+                    }
+                }
 
-        		} else {
-            		entity.writeToNBT(tag);
-            		tag = NBTUtil.createTag(tag, msg.keys);
-        		}
-        		
-        		tag.setInteger("WailaEntityID", entity.getEntityId());
+            } else {
+                entity.writeToNBT(tag);
+                tag = NBTUtil.createTag(tag, msg.keys);
+            }
+            
+            tag.setInteger("WailaEntityID", entity.getEntityId());
 
-        		WailaPacketHandler.INSTANCE.sendTo(new Message0x04EntNBTData(tag), WailaPacketHandler.getPlayer(ctx));
-        		//ctx.writeAndFlush(new Message0x04EntNBTData(tag)).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
-        	}catch(Throwable e){
-        		WailaExceptionHandler.handleErr(e, entity.getClass().toString(), null);
-        	}
+            WailaPacketHandler.INSTANCE.sendTo(new Message0x04EntNBTData(tag), WailaPacketHandler.getPlayer(ctx));
+            //ctx.writeAndFlush(new Message0x04EntNBTData(tag)).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        }catch(Throwable e){
+            WailaExceptionHandler.handleErr(e, entity.getClass().toString(), null);
         }		
 	}
 
