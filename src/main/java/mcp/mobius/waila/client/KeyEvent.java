@@ -21,11 +21,11 @@ public class KeyEvent {
 	public static KeyBinding key_usage;
 
 	public KeyEvent() {
-		ClientRegistry.registerKeyBinding(KeyEvent.key_cfg = new KeyBinding(Constants.BIND_WAILA_CFG, Keyboard.KEY_NUMPAD0, "Waila"));
-		ClientRegistry.registerKeyBinding(KeyEvent.key_show = new KeyBinding(Constants.BIND_WAILA_SHOW, Keyboard.KEY_NUMPAD1, "Waila"));
-		ClientRegistry.registerKeyBinding(KeyEvent.key_liquid = new KeyBinding(Constants.BIND_WAILA_LIQUID, Keyboard.KEY_NUMPAD2, "Waila"));
-		ClientRegistry.registerKeyBinding(KeyEvent.key_recipe = new KeyBinding(Constants.BIND_WAILA_RECIPE, Keyboard.KEY_NUMPAD3, "Waila"));
-		ClientRegistry.registerKeyBinding(KeyEvent.key_usage = new KeyBinding(Constants.BIND_WAILA_USAGE, Keyboard.KEY_NUMPAD4, "Waila"));
+		ClientRegistry.registerKeyBinding(key_cfg = new KeyBinding(Constants.BIND_WAILA_CFG, Keyboard.KEY_NUMPAD0, "Waila"));
+		ClientRegistry.registerKeyBinding(key_show = new KeyBinding(Constants.BIND_WAILA_SHOW, Keyboard.KEY_NUMPAD1, "Waila"));
+		ClientRegistry.registerKeyBinding(key_liquid = new KeyBinding(Constants.BIND_WAILA_LIQUID, Keyboard.KEY_NUMPAD2, "Waila"));
+		ClientRegistry.registerKeyBinding(key_recipe = new KeyBinding(Constants.BIND_WAILA_RECIPE, Keyboard.KEY_NUMPAD3, "Waila"));
+		ClientRegistry.registerKeyBinding(key_usage = new KeyBinding(Constants.BIND_WAILA_USAGE, Keyboard.KEY_NUMPAD4, "Waila"));
 	}
 
 	@SubscribeEvent
