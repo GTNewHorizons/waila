@@ -3,9 +3,9 @@ package mcp.mobius.waila.addons.thaumcraft;
 import static mcp.mobius.waila.api.SpecialChars.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -46,8 +46,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
             for (int i = 0; i < taglist.tagCount(); i++) {
                 NBTTagCompound subtag = taglist.getCompoundTagAt(i);
 
-                String aspect = Character.toUpperCase(subtag.getString("key").charAt(0))
-                        + subtag.getString("key").substring(1);
+                String aspect = subtag.getString("key");
                 String amount = String.valueOf(subtag.getInteger("value"));
 
                 if (!aspect.equals("???"))
@@ -67,6 +66,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
         return currenttip;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
@@ -80,17 +80,17 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
             boolean hasReveal = ThaumcraftModule.IGoggles.isInstance(headSlot.getItem());
             if (!hasReveal) return tag;
 
-            HashMap knownAspects = (HashMap) ThaumcraftModule.CommonProxy_getKnownAspects
+            Map<String, ?> knownAspects = (Map<String, ?>) ThaumcraftModule.CommonProxy_getKnownAspects
                     .invoke(ThaumcraftModule.Thaumcraft_proxy.get(null));
-            LinkedHashMap playerAspects = (LinkedHashMap) ThaumcraftModule.AspectList_aspects
+            Map<?, Integer> playerAspects = (Map<?, Integer>) ThaumcraftModule.AspectList_aspects
                     .get(knownAspects.get(player.getCommandSenderName()));
-            LinkedHashMap tileAspects = new LinkedHashMap();
+            Map<?, Integer> tileAspects = new LinkedHashMap<>();
 
             if (ThaumcraftModule.IAspectContainer.isInstance(te)) {
-                tileAspects = (LinkedHashMap) ThaumcraftModule.AspectList_aspects
+                tileAspects = (Map<?, Integer>) ThaumcraftModule.AspectList_aspects
                         .get(ThaumcraftModule.IAspectContainer_getAspects.invoke(te));
             } else if (ThaumcraftModule.TileAlchemyFurnace.isInstance(te)) {
-                tileAspects = (LinkedHashMap) ThaumcraftModule.AspectList_aspects
+                tileAspects = (Map<?, Integer>) ThaumcraftModule.AspectList_aspects
                         .get(ThaumcraftModule.TileAlchemyFurnace_aspects.get(te));
             }
 
@@ -98,7 +98,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
                 if ((Integer) tileAspects.get(o) > 0) {
                     if (playerAspects.containsKey(o)) {
                         NBTTagCompound cmptag = new NBTTagCompound();
-                        cmptag.setString("key", (String) ThaumcraftModule.Aspect_tag.get(o));
+                        cmptag.setString("key", (String) ThaumcraftModule.Aspect_getName.invoke(o));
                         cmptag.setInteger("value", (Integer) tileAspects.get(o));
                         aspects.appendTag(cmptag);
                     } else {
