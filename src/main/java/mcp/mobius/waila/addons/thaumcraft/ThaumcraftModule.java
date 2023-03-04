@@ -12,28 +12,29 @@ import org.apache.logging.log4j.Level;
 
 public class ThaumcraftModule {
 
-    public static Class Thaumcraft = null;
+    public static Class<?> Thaumcraft = null;
     public static Field Thaumcraft_proxy = null;
 
-    public static Class IAspectContainer = null;
+    public static Class<?> IAspectContainer = null;
     public static Method IAspectContainer_getAspects = null;
 
-    public static Class AspectList = null;
+    public static Class<?> AspectList = null;
     public static Method AspectList_writeToNBT = null;
     public static Field AspectList_aspects = null;
 
-    public static Class TileAlchemyFurnace = null;
+    public static Class<?> TileAlchemyFurnace = null;
     public static Field TileAlchemyFurnace_aspects = null;
 
-    public static Class Aspect = null;
+    public static Class<?> Aspect = null;
     public static Field Aspect_tag = null;
+    public static Method Aspect_getName = null;
 
-    public static Class CommonProxy = null;
+    public static Class<?> CommonProxy = null;
     public static Method CommonProxy_getKnownAspects = null;
 
-    public static Class IGoggles = null;
+    public static Class<?> IGoggles = null;
 
-    // public static Class TileAlchemyFurnace = null;
+    // public static Class<?> TileAlchemyFurnace = null;
 
     public static void register() {
         try {
@@ -53,6 +54,7 @@ public class ThaumcraftModule {
             Aspect = Class.forName("thaumcraft.api.aspects.Aspect");
             Aspect_tag = Aspect.getDeclaredField("tag");
             Aspect_tag.setAccessible(true);
+            Aspect_getName = Aspect.getDeclaredMethod("getName");
 
             CommonProxy = Class.forName("thaumcraft.common.CommonProxy");
             CommonProxy_getKnownAspects = CommonProxy.getDeclaredMethod("getKnownAspects");
