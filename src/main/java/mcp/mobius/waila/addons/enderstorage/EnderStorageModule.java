@@ -3,10 +3,10 @@ package mcp.mobius.waila.addons.enderstorage;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import org.apache.logging.log4j.Level;
+
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
-
-import org.apache.logging.log4j.Level;
 
 public class EnderStorageModule {
 

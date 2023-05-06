@@ -9,6 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
+
+import org.lwjgl.opengl.GL11;
+
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
 import mcp.mobius.waila.api.impl.ConfigHandler;
@@ -18,11 +23,6 @@ import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderIcon;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderString;
 import mcp.mobius.waila.utils.Constants;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
-
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
-
-import org.lwjgl.opengl.GL11;
 
 public class Tooltip {
 

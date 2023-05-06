@@ -2,11 +2,6 @@ package mcp.mobius.waila.handlers.nei;
 
 import java.util.List;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.cbcore.LangUtil;
-import mcp.mobius.waila.overlay.RayTracing;
-import mcp.mobius.waila.utils.Constants;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -22,6 +17,10 @@ import codechicken.nei.api.API;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.overlay.RayTracing;
+import mcp.mobius.waila.utils.Constants;
 
 public class NEIHandler {
 

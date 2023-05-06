@@ -3,9 +3,9 @@ package mcp.mobius.waila.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import mcp.mobius.waila.Waila;
-
 import org.apache.logging.log4j.Level;
+
+import mcp.mobius.waila.Waila;
 
 public class WailaExceptionHandler {
 

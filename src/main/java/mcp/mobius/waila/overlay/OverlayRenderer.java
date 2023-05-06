@@ -1,13 +1,13 @@
 package mcp.mobius.waila.overlay;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.MovingObjectPosition;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class OverlayRenderer {
 

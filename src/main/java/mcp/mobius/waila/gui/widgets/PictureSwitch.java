@@ -1,13 +1,13 @@
 package mcp.mobius.waila.gui.widgets;
 
-import mcp.mobius.waila.gui.events.MouseEvent;
-import mcp.mobius.waila.gui.helpers.UIHelper;
-import mcp.mobius.waila.gui.interfaces.IWidget;
-
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Point;
+
+import mcp.mobius.waila.gui.events.MouseEvent;
+import mcp.mobius.waila.gui.helpers.UIHelper;
+import mcp.mobius.waila.gui.interfaces.IWidget;
 
 public class PictureSwitch extends WidgetBase {
 

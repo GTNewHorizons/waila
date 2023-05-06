@@ -5,13 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.IWailaEntityProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.api.impl.DataAccessorCommon;
-import mcp.mobius.waila.api.impl.ModuleRegistrar;
-import mcp.mobius.waila.utils.Constants;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -25,6 +18,13 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.config.Configuration;
+
+import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IWailaEntityProvider;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.api.impl.DataAccessorCommon;
+import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.utils.Constants;
 
 public class RayTracing {
 

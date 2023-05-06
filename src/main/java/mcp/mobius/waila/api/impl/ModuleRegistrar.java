@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import au.com.bytecode.opencsv.CSVReader;
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.IWailaBlockDecorator;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -23,7 +24,6 @@ import mcp.mobius.waila.api.IWailaSummaryProvider;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.utils.Constants;
-import au.com.bytecode.opencsv.CSVReader;
 
 public class ModuleRegistrar implements IWailaRegistrar {
 

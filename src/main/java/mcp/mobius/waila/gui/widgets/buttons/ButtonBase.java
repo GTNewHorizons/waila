@@ -1,17 +1,17 @@
 package mcp.mobius.waila.gui.widgets.buttons;
 
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Point;
+
 import mcp.mobius.waila.gui.events.MouseEvent;
 import mcp.mobius.waila.gui.helpers.UIHelper;
 import mcp.mobius.waila.gui.interfaces.IWidget;
 import mcp.mobius.waila.gui.interfaces.Signal;
 import mcp.mobius.waila.gui.widgets.LabelFixedFont;
 import mcp.mobius.waila.gui.widgets.WidgetBase;
-
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Point;
 
 public abstract class ButtonBase extends WidgetBase {
 

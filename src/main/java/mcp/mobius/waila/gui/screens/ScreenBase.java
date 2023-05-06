@@ -2,13 +2,13 @@ package mcp.mobius.waila.gui.screens;
 
 import java.util.HashMap;
 
-import mcp.mobius.waila.gui.interfaces.IWidget;
-import mcp.mobius.waila.gui.widgets.LayoutCanvas;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 
 import org.lwjgl.input.Mouse;
+
+import mcp.mobius.waila.gui.interfaces.IWidget;
+import mcp.mobius.waila.gui.widgets.LayoutCanvas;
 
 public abstract class ScreenBase extends GuiScreen {
 

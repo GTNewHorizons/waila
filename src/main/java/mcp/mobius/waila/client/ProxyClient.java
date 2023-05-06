@@ -1,5 +1,11 @@
 package mcp.mobius.waila.client;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
+
+import cpw.mods.fml.common.Loader;
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.cbcore.LangUtil;
@@ -12,13 +18,6 @@ import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderHealth;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderProgressBar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderStack;
 import mcp.mobius.waila.server.ProxyServer;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-
-import cpw.mods.fml.common.Loader;
 
 public class ProxyClient extends ProxyServer {
 

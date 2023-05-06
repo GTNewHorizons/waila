@@ -2,13 +2,12 @@ package mcp.mobius.waila.handlers.nei;
 
 import java.util.regex.Pattern;
 
-import mcp.mobius.waila.utils.ModIdentification;
-
 import net.minecraft.item.ItemStack;
 
 import codechicken.nei.SearchField;
 import codechicken.nei.SearchField.ISearchProvider;
 import codechicken.nei.api.ItemFilter;
+import mcp.mobius.waila.utils.ModIdentification;
 
 public class ModNameFilter implements ISearchProvider {
 

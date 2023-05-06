@@ -1,9 +1,5 @@
 package mcp.mobius.waila.client;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.gui.screens.config.ScreenConfig;
-import mcp.mobius.waila.utils.Constants;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.config.Configuration;
@@ -14,6 +10,9 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.gui.screens.config.ScreenConfig;
+import mcp.mobius.waila.utils.Constants;
 
 public class KeyEvent {
 

@@ -4,10 +4,6 @@ import static mcp.mobius.waila.api.SpecialChars.*;
 
 import java.util.List;
 
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaEntityAccessor;
-import mcp.mobius.waila.api.IWailaEntityProvider;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,6 +13,9 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaEntityAccessor;
+import mcp.mobius.waila.api.IWailaEntityProvider;
 
 public class HUDHandlerEntities implements IWailaEntityProvider {
 

@@ -4,14 +4,6 @@ import static mcp.mobius.waila.api.SpecialChars.*;
 
 import java.util.List;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.api.impl.DataAccessorCommon;
-import mcp.mobius.waila.api.impl.MetaDataProvider;
-import mcp.mobius.waila.api.impl.TipList;
-import mcp.mobius.waila.cbcore.Layout;
-import mcp.mobius.waila.client.KeyEvent;
-import mcp.mobius.waila.utils.Constants;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,6 +19,13 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.api.impl.DataAccessorCommon;
+import mcp.mobius.waila.api.impl.MetaDataProvider;
+import mcp.mobius.waila.api.impl.TipList;
+import mcp.mobius.waila.cbcore.Layout;
+import mcp.mobius.waila.client.KeyEvent;
+import mcp.mobius.waila.utils.Constants;
 
 public class WailaTickHandler {
 

@@ -4,12 +4,12 @@ import static mcp.mobius.waila.api.SpecialChars.*;
 
 import java.util.List;
 
+import net.minecraft.item.ItemStack;
+
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaFMPAccessor;
 import mcp.mobius.waila.api.IWailaFMPProvider;
 import mcp.mobius.waila.utils.NBTUtil;
-
-import net.minecraft.item.ItemStack;
 
 public class HUDFMPGateLogic implements IWailaFMPProvider {
 

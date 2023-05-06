@@ -7,11 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import mcp.mobius.waila.api.IWailaTooltipRenderer;
-import mcp.mobius.waila.api.impl.DataAccessorCommon;
-import mcp.mobius.waila.api.impl.ModuleRegistrar;
-import mcp.mobius.waila.utils.WailaExceptionHandler;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -23,6 +18,11 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
+
+import mcp.mobius.waila.api.IWailaTooltipRenderer;
+import mcp.mobius.waila.api.impl.DataAccessorCommon;
+import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class DisplayUtil {
 

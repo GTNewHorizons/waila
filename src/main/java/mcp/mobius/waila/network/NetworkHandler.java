@@ -1,11 +1,10 @@
 package mcp.mobius.waila.network;
 
-import mcp.mobius.waila.Waila;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import mcp.mobius.waila.Waila;
 
 public class NetworkHandler {
 

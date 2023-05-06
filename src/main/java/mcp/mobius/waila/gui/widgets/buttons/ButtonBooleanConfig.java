@@ -1,11 +1,11 @@
 package mcp.mobius.waila.gui.widgets.buttons;
 
+import org.lwjgl.util.Point;
+
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.events.MouseEvent;
 import mcp.mobius.waila.gui.helpers.UIHelper;
 import mcp.mobius.waila.gui.interfaces.IWidget;
-
-import org.lwjgl.util.Point;
 
 public class ButtonBooleanConfig extends ButtonBoolean {
 

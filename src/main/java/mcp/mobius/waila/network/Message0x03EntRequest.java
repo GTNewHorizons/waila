@@ -3,12 +3,6 @@ package mcp.mobius.waila.network;
 import java.util.HashSet;
 import java.util.List;
 
-import mcp.mobius.waila.api.IWailaEntityProvider;
-import mcp.mobius.waila.api.impl.ModuleRegistrar;
-import mcp.mobius.waila.utils.AccessHelper;
-import mcp.mobius.waila.utils.NBTUtil;
-import mcp.mobius.waila.utils.WailaExceptionHandler;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +14,11 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import mcp.mobius.waila.api.IWailaEntityProvider;
+import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.utils.AccessHelper;
+import mcp.mobius.waila.utils.NBTUtil;
+import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class Message0x03EntRequest extends SimpleChannelInboundHandler<Message0x03EntRequest> implements IWailaMessage {
 

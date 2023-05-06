@@ -1,5 +1,7 @@
 package mcp.mobius.waila.gui.screens.config;
 
+import net.minecraft.client.gui.GuiScreen;
+
 import mcp.mobius.waila.gui.interfaces.CType;
 import mcp.mobius.waila.gui.interfaces.WAlign;
 import mcp.mobius.waila.gui.screens.ScreenBase;
@@ -7,8 +9,6 @@ import mcp.mobius.waila.gui.widgets.LayoutBase;
 import mcp.mobius.waila.gui.widgets.WidgetGeometry;
 import mcp.mobius.waila.gui.widgets.buttons.ButtonContainer;
 import mcp.mobius.waila.gui.widgets.buttons.ButtonScreenChange;
-
-import net.minecraft.client.gui.GuiScreen;
 
 public class ScreenConfig extends ScreenBase {
 

@@ -1,10 +1,10 @@
 package mcp.mobius.waila.gui.events;
 
-import mcp.mobius.waila.gui.interfaces.IWidget;
-
 import net.minecraft.client.Minecraft;
 
 import org.lwjgl.input.Mouse;
+
+import mcp.mobius.waila.gui.interfaces.IWidget;
 
 public class MouseEvent {
 

@@ -1,15 +1,15 @@
 package mcp.mobius.waila.gui.widgets;
 
+import net.minecraft.client.gui.ScaledResolution;
+
+import org.lwjgl.input.Mouse;
+import org.lwjgl.util.Point;
+
 import mcp.mobius.waila.gui.events.MouseEvent;
 import mcp.mobius.waila.gui.events.MouseEvent.EventType;
 import mcp.mobius.waila.gui.interfaces.CType;
 import mcp.mobius.waila.gui.interfaces.IWidget;
 import mcp.mobius.waila.gui.interfaces.Signal;
-
-import net.minecraft.client.gui.ScaledResolution;
-
-import org.lwjgl.input.Mouse;
-import org.lwjgl.util.Point;
 
 public class LayoutCanvas extends LayoutBase {
 

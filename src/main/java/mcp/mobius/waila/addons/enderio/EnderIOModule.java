@@ -2,10 +2,10 @@ package mcp.mobius.waila.addons.enderio;
 
 import java.lang.reflect.Method;
 
+import org.apache.logging.log4j.Level;
+
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
-
-import org.apache.logging.log4j.Level;
 
 public class EnderIOModule {
 

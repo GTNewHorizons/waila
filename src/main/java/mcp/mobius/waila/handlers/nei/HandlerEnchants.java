@@ -2,10 +2,6 @@ package mcp.mobius.waila.handlers.nei;
 
 import java.util.Map;
 
-import mcp.mobius.waila.gui.screens.info.ScreenEnchants;
-import mcp.mobius.waila.utils.Constants;
-import mcp.mobius.waila.utils.ModIdentification;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.enchantment.Enchantment;
@@ -16,6 +12,9 @@ import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerInputHandler;
+import mcp.mobius.waila.gui.screens.info.ScreenEnchants;
+import mcp.mobius.waila.utils.Constants;
+import mcp.mobius.waila.utils.ModIdentification;
 
 public class HandlerEnchants implements IContainerInputHandler {
 

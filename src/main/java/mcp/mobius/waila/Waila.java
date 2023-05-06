@@ -2,18 +2,6 @@ package mcp.mobius.waila;
 
 import java.lang.reflect.Field;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.api.impl.ModuleRegistrar;
-import mcp.mobius.waila.client.KeyEvent;
-import mcp.mobius.waila.commands.CommandDumpHandlers;
-import mcp.mobius.waila.network.NetworkHandler;
-import mcp.mobius.waila.network.WailaPacketHandler;
-import mcp.mobius.waila.overlay.DecoratorRenderer;
-import mcp.mobius.waila.overlay.OverlayConfig;
-import mcp.mobius.waila.overlay.WailaTickHandler;
-import mcp.mobius.waila.server.ProxyServer;
-import mcp.mobius.waila.utils.ModIdentification;
-
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,6 +24,17 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.relauncher.Side;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.client.KeyEvent;
+import mcp.mobius.waila.commands.CommandDumpHandlers;
+import mcp.mobius.waila.network.NetworkHandler;
+import mcp.mobius.waila.network.WailaPacketHandler;
+import mcp.mobius.waila.overlay.DecoratorRenderer;
+import mcp.mobius.waila.overlay.OverlayConfig;
+import mcp.mobius.waila.overlay.WailaTickHandler;
+import mcp.mobius.waila.server.ProxyServer;
+import mcp.mobius.waila.utils.ModIdentification;
 
 @Mod(
         modid = "Waila",
