@@ -1,6 +1,11 @@
 package mcp.mobius.waila.overlay;
 
-import static mcp.mobius.waila.api.SpecialChars.*;
+import static mcp.mobius.waila.api.SpecialChars.ALIGNCENTER;
+import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
+import static mcp.mobius.waila.api.SpecialChars.patternIcon;
+import static mcp.mobius.waila.api.SpecialChars.patternLineSplit;
+import static mcp.mobius.waila.api.SpecialChars.patternRender;
+import static mcp.mobius.waila.api.SpecialChars.patternTab;
 
 import java.awt.Dimension;
 import java.awt.Point;

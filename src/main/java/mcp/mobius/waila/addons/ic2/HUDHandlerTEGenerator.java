@@ -1,6 +1,7 @@
 package mcp.mobius.waila.addons.ic2;
 
-import static mcp.mobius.waila.api.SpecialChars.*;
+import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
+import static mcp.mobius.waila.api.SpecialChars.TAB;
 
 import java.util.List;
 
