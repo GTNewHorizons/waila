@@ -32,8 +32,6 @@ public class ProxyClient extends ProxyServer {
 
         LangUtil.loadLangDir("waila");
 
-        minecraftiaFont = FontLoader.createFont(new ResourceLocation("waila", "fonts/Minecraftia.ttf"), 14, true);
-
         // TickRegistry.registerTickHandler(WailaTickHandler.instance(), Side.CLIENT);
 
         if (Loader.isModLoaded("NotEnoughItems")) {
@@ -67,6 +65,8 @@ public class ProxyClient extends ProxyServer {
 
     @Override
     public Object getFont() {
+        if (minecraftiaFont == null)
+            minecraftiaFont = FontLoader.createFont(new ResourceLocation("waila", "fonts/Minecraftia.ttf"), 14, true);
         return this.minecraftiaFont;
     }
 
