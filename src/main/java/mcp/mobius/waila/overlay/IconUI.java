@@ -1,6 +1,7 @@
 package mcp.mobius.waila.overlay;
 
-import static mcp.mobius.waila.api.SpecialChars.*;
+import static mcp.mobius.waila.api.SpecialChars.WailaIcon;
+import static mcp.mobius.waila.api.SpecialChars.WailaStyle;
 
 import java.util.HashMap;
 

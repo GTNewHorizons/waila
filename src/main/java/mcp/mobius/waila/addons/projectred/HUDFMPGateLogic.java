@@ -1,6 +1,9 @@
 package mcp.mobius.waila.addons.projectred;
 
-import static mcp.mobius.waila.api.SpecialChars.*;
+import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
+import static mcp.mobius.waila.api.SpecialChars.GRAY;
+import static mcp.mobius.waila.api.SpecialChars.TAB;
+import static mcp.mobius.waila.api.SpecialChars.WHITE;
 
 import java.util.List;
 
