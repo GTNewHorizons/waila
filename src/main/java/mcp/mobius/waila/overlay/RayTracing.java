@@ -1,15 +1,12 @@
 package mcp.mobius.waila.overlay;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -38,15 +35,12 @@ public class RayTracing {
     }
 
     private MovingObjectPosition target = null;
-    private ItemStack targetStack = null;
-    private Entity targetEntity = null;
-    private Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getMinecraft();
 
     public void fire() {
         if (mc.objectMouseOver != null
                 && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
             this.target = mc.objectMouseOver;
-            this.targetStack = null;
             return;
         }
 
@@ -54,8 +48,6 @@ public class RayTracing {
         if (viewpoint == null) return;
 
         this.target = this.rayTrace(viewpoint, mc.playerController.getBlockReachDistance(), 0);
-
-        if (this.target == null) return;
     }
 
     public MovingObjectPosition getTarget() {
@@ -63,19 +55,12 @@ public class RayTracing {
     }
 
     public ItemStack getTargetStack() {
-        if (this.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-            this.targetStack = this.getIdentifierStack();
-        else this.targetStack = null;
-
-        return this.targetStack;
+        return this.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK ? this.getIdentifierStack() : null;
     }
 
     public Entity getTargetEntity() {
-        if (this.target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY)
-            this.targetEntity = this.getIdentifierEntity();
-        else this.targetEntity = null;
-
-        return this.targetEntity;
+        return this.target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY ? this.getIdentifierEntity()
+                : null;
     }
 
     public MovingObjectPosition rayTrace(EntityLivingBase entity, double par1, float par3) {
@@ -90,24 +75,17 @@ public class RayTracing {
     }
 
     public ItemStack getIdentifierStack() {
-        World world = mc.theWorld;
         ArrayList<ItemStack> items = this.getIdentifierItems();
 
         if (items.isEmpty()) return null;
 
-        Collections.sort(items, new Comparator<ItemStack>() {
-
-            @Override
-            public int compare(ItemStack stack0, ItemStack stack1) {
-                return stack1.getItemDamage() - stack0.getItemDamage();
-            }
-        });
+        items.sort((stack0, stack1) -> stack1.getItemDamage() - stack0.getItemDamage());
 
         return items.get(0);
     }
 
     public Entity getIdentifierEntity() {
-        ArrayList<Entity> ents = new ArrayList<Entity>();
+        ArrayList<Entity> ents = new ArrayList<>();
 
         if (this.target == null) return null;
 
@@ -120,16 +98,15 @@ public class RayTracing {
             }
         }
 
-        if (ents.size() > 0) return ents.get(0);
+        if (!ents.isEmpty()) return ents.get(0);
         else return this.target.entityHit;
     }
 
     public ArrayList<ItemStack> getIdentifierItems() {
-        ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> items = new ArrayList<>();
 
         if (this.target == null) return items;
 
-        EntityPlayer player = mc.thePlayer;
         World world = mc.theWorld;
 
         int x = this.target.blockX;
@@ -174,7 +151,7 @@ public class RayTracing {
             }
         }
 
-        if (items.size() > 0) return items;
+        if (!items.isEmpty()) return items;
 
         if (world.getTileEntity(x, y, z) == null) {
             try {
@@ -191,14 +168,14 @@ public class RayTracing {
             } catch (Exception e) {}
         }
 
-        if (items.size() > 0) return items;
+        if (!items.isEmpty()) return items;
 
         try {
             ItemStack pick = mouseoverBlock.getPickBlock(this.target, world, x, y, z);
             if (pick != null) items.add(pick);
         } catch (Exception e) {}
 
-        if (items.size() > 0) return items;
+        if (!items.isEmpty()) return items;
 
         /*
          * try { items.addAll(mouseoverBlock.getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), 0)); }
@@ -212,7 +189,7 @@ public class RayTracing {
             }
         }
 
-        if (items.size() == 0) items.add(0, new ItemStack(mouseoverBlock, 1, world.getBlockMetadata(x, y, z)));
+        if (items.isEmpty()) items.add(0, new ItemStack(mouseoverBlock, 1, world.getBlockMetadata(x, y, z)));
 
         return items;
     }
