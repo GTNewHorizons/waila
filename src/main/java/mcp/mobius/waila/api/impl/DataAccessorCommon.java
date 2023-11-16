@@ -212,5 +212,4 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     public String getBlockQualifiedName() {
         return this.blockResource;
     }
-
 }
