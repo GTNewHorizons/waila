@@ -65,13 +65,7 @@ public class ProxyClient extends ProxyServer {
         ModuleRegistrar.instance().registerTooltipRenderer("waila.stack", new TTRenderStack());
         ModuleRegistrar.instance().registerTooltipRenderer("waila.progress", new TTRenderProgressBar());
 
-        MinecraftForge.EVENT_BUS.register(new Object() {
-
-            @SubscribeEvent
-            public void onWorldUnload(WorldEvent.Unload event) {
-                DataAccessorCommon.instance = new DataAccessorCommon();
-            }
-        });
+        MinecraftForge.EVENT_BUS.register(new WorldUnloadEventHandler());
     }
 
     @Override
@@ -81,4 +75,11 @@ public class ProxyClient extends ProxyServer {
         return this.minecraftiaFont;
     }
 
+    public static class WorldUnloadEventHandler {
+
+        @SubscribeEvent
+        public void onWorldUnload(WorldEvent.Unload event) {
+            DataAccessorCommon.instance = new DataAccessorCommon();
+        }
+    }
 }
