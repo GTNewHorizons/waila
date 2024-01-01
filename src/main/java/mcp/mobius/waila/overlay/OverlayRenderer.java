@@ -7,6 +7,7 @@ import net.minecraft.util.MovingObjectPosition;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class OverlayRenderer {
@@ -61,6 +62,19 @@ public class OverlayRenderer {
                 OverlayConfig.bgcolor,
                 OverlayConfig.gradient1,
                 OverlayConfig.gradient2);
+
+        if (OverlayConfig.breakprogress && tooltip.accessor instanceof IWailaDataAccessor) {
+            IWailaDataAccessor data = ((IWailaDataAccessor) tooltip.accessor);
+            if (data.getBlockBreakDamage() > 0) {
+                DisplayUtil.drawGradientRect(
+                        tooltip.x + 1,
+                        tooltip.y + tooltip.h,
+                        (double) (tooltip.w - 1) * (data.getBlockBreakDamage()),
+                        1,
+                        0xffffffff,
+                        0xffffffff);
+            }
+        }
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

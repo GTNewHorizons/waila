@@ -1,6 +1,7 @@
 package mcp.mobius.waila.api.impl;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +22,7 @@ import mcp.mobius.waila.utils.NBTUtil;
 
 public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAccessor, IWailaEntityAccessor {
 
+    private static final Minecraft MC = Minecraft.getMinecraft();
     public World world;
     public EntityPlayer player;
     public MovingObjectPosition mop;
@@ -37,6 +39,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     public ItemStack stack;
 
     public static DataAccessorCommon instance = new DataAccessorCommon();
+    public float blockBreakDamage;
 
     public void set(World _world, EntityPlayer _player, MovingObjectPosition _mop) {
         this.set(_world, _player, _mop, null, 0.0);
@@ -55,6 +58,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
             this.entity = null;
             this.blockID = Block.getIdFromBlock(this.block);
             this.blockResource = GameData.getBlockRegistry().getNameForObject(this.block);
+            this.blockBreakDamage = MC.playerController.curBlockDamageMP;
             try {
                 this.stack = new ItemStack(this.block, 1, this.metadata);
             } catch (Exception e) {}
@@ -198,6 +202,11 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     @Override
     public ItemStack getStack() {
         return this.stack;
+    }
+
+    @Override
+    public float getBlockBreakDamage() {
+        return this.blockBreakDamage;
     }
 
     public boolean isTimeElapsed(long time) {

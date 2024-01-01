@@ -49,4 +49,6 @@ public interface IWailaDataAccessor {
     ForgeDirection getSide();
 
     ItemStack getStack();
+
+    float getBlockBreakDamage();
 }

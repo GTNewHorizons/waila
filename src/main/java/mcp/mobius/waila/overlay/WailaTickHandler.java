@@ -78,7 +78,6 @@ public class WailaTickHandler {
                 accessor.set(world, player, target);
                 ItemStack targetStack = RayTracing.instance().getTargetStack(); // Here we get either the proper stack
                                                                                 // or the override
-
                 if (targetStack != null) {
                     this.currenttip = new TipList<String, String>();
                     this.currenttipHead = new TipList<String, String>();
