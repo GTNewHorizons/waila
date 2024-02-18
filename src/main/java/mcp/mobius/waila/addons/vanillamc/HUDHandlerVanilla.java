@@ -3,6 +3,7 @@ package mcp.mobius.waila.addons.vanillamc;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -94,6 +95,10 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
 
         if ((block == quartz) && (accessor.getMetadata() > 2)) {
             return new ItemStack(block, 1, 2);
+        }
+
+        if (block instanceof BlockAnvil) {
+            return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
         }
 
         return null;
@@ -245,6 +250,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerStackProvider(provider, log.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, log2.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, quartz.getClass());
+        ModuleRegistrar.instance().registerStackProvider(provider, BlockAnvil.class);
 
         // ModuleRegistrar.instance().registerStackProvider(provider, Block.class);
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
