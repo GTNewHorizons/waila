@@ -45,6 +45,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     static Block log = Blocks.log;
     static Block log2 = Blocks.log2;
     static Block quartz = Blocks.quartz_block;
+    static Block sapling = Blocks.sapling;
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -98,6 +99,10 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         }
 
         if (block instanceof BlockAnvil) {
+            return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
+        }
+
+        if (block == sapling) {
             return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
         }
 
@@ -251,6 +256,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerStackProvider(provider, log2.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, quartz.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, BlockAnvil.class);
+        ModuleRegistrar.instance().registerStackProvider(provider, sapling.getClass());
 
         // ModuleRegistrar.instance().registerStackProvider(provider, Block.class);
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
