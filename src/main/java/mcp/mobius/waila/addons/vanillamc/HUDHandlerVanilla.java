@@ -100,6 +100,8 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             return new ItemStack(block, 1, 2);
         }
 
+        // note: this also fixes waila display for modded blocks that extend BlockAnvil.
+        // for example, EnderIO's Dark Steel Anvils and Et Futurum Requiem's Anvil (block replacement).
         if (block instanceof BlockAnvil) {
             return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
         }
