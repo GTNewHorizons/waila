@@ -3,7 +3,6 @@ package mcp.mobius.waila.addons.vanillamc;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.BlockWoodSlab;
@@ -47,6 +46,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     static Block log = Blocks.log;
     static Block log2 = Blocks.log2;
     static Block quartz = Blocks.quartz_block;
+    static Block anvil = Blocks.anvil;
     static Block sapling = Blocks.sapling;
 
     @Override
@@ -100,9 +100,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             return new ItemStack(block, 1, 2);
         }
 
-        // note: this also fixes waila display for modded blocks that extend BlockAnvil.
-        // for example, EnderIO's Dark Steel Anvils and Et Futurum Requiem's Anvil (block replacement).
-        if (block instanceof BlockAnvil) {
+        if (block == anvil) {
             return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
         }
 
@@ -268,7 +266,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerStackProvider(provider, log.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, log2.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, quartz.getClass());
-        ModuleRegistrar.instance().registerStackProvider(provider, BlockAnvil.class);
+        ModuleRegistrar.instance().registerStackProvider(provider, anvil.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, sapling.getClass());
 
         // ModuleRegistrar.instance().registerStackProvider(provider, Block.class);
