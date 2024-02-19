@@ -143,7 +143,10 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         // the special "smooth" (meta >= 8) versions of double slabs actually look different in a couple cases.
         // so since we can't change the stack, we change the name instead.
         if (block instanceof BlockStoneSlab || block instanceof BlockWoodSlab) {
-            currenttip.set(0, SpecialChars.WHITE + new ItemStack(block, 1, block.damageDropped(accessor.getMetadata())).getDisplayName());
+            currenttip.set(
+                    0,
+                    SpecialChars.WHITE
+                            + new ItemStack(block, 1, block.damageDropped(accessor.getMetadata())).getDisplayName());
         }
 
         return currenttip;
