@@ -5,6 +5,8 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockRedstoneOre;
+import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.BlockWoodSlab;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -136,6 +138,12 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             currenttip.set(0, SpecialChars.WHITE + "Pumpkin stem");
         }
 
+        // the special "smooth" (meta >= 8) versions of double slabs actually look different in a couple cases.
+        // so since we can't change the stack, we change the name instead.
+        if (block instanceof BlockStoneSlab || block instanceof BlockWoodSlab) {
+            currenttip.set(0, SpecialChars.WHITE + new ItemStack(block, 1, block.damageDropped(accessor.getMetadata())).getDisplayName());
+        }
+
         return currenttip;
     }
 
@@ -262,6 +270,8 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, melonStem.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, pumpkinStem.getClass());
+        ModuleRegistrar.instance().registerHeadProvider(provider, BlockStoneSlab.class);
+        ModuleRegistrar.instance().registerHeadProvider(provider, BlockWoodSlab.class);
 
         ModuleRegistrar.instance().registerBodyProvider(provider, crops.getClass());
         ModuleRegistrar.instance().registerBodyProvider(provider, melonStem.getClass());
