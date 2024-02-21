@@ -108,6 +108,10 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
         }
 
+        if (block instanceof BlockStoneSlab || block instanceof BlockWoodSlab) {
+            return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
+        }
+
         return null;
 
     }
@@ -136,15 +140,6 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
 
         if (block == pumpkinStem) {
             currenttip.set(0, SpecialChars.WHITE + "Pumpkin stem");
-        }
-
-        // the special "smooth" (meta >= 8) versions of double slabs actually look different in a couple cases.
-        // so since we can't change the stack, we change the name instead.
-        if (block instanceof BlockStoneSlab || block instanceof BlockWoodSlab) {
-            currenttip.set(
-                    0,
-                    SpecialChars.WHITE
-                            + new ItemStack(block, 1, block.damageDropped(accessor.getMetadata())).getDisplayName());
         }
 
         return currenttip;
@@ -268,13 +263,13 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerStackProvider(provider, quartz.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, anvil.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, sapling.getClass());
+        ModuleRegistrar.instance().registerStackProvider(provider, BlockStoneSlab.class);
+        ModuleRegistrar.instance().registerStackProvider(provider, BlockWoodSlab.class);
 
         // ModuleRegistrar.instance().registerStackProvider(provider, Block.class);
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, melonStem.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, pumpkinStem.getClass());
-        ModuleRegistrar.instance().registerHeadProvider(provider, BlockStoneSlab.class);
-        ModuleRegistrar.instance().registerHeadProvider(provider, BlockWoodSlab.class);
 
         ModuleRegistrar.instance().registerBodyProvider(provider, crops.getClass());
         ModuleRegistrar.instance().registerBodyProvider(provider, melonStem.getClass());
