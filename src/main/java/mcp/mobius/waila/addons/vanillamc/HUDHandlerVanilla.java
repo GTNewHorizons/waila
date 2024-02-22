@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneOre;
+import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.BlockWoodSlab;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -44,6 +46,8 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     static Block log = Blocks.log;
     static Block log2 = Blocks.log2;
     static Block quartz = Blocks.quartz_block;
+    static Block anvil = Blocks.anvil;
+    static Block sapling = Blocks.sapling;
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -94,6 +98,18 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
 
         if ((block == quartz) && (accessor.getMetadata() > 2)) {
             return new ItemStack(block, 1, 2);
+        }
+
+        if (block == anvil) {
+            return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
+        }
+
+        if (block == sapling) {
+            return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
+        }
+
+        if (block instanceof BlockStoneSlab || block instanceof BlockWoodSlab) {
+            return new ItemStack(block, 1, block.damageDropped(accessor.getMetadata()));
         }
 
         return null;
@@ -245,6 +261,10 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerStackProvider(provider, log.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, log2.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, quartz.getClass());
+        ModuleRegistrar.instance().registerStackProvider(provider, anvil.getClass());
+        ModuleRegistrar.instance().registerStackProvider(provider, sapling.getClass());
+        ModuleRegistrar.instance().registerStackProvider(provider, BlockStoneSlab.class);
+        ModuleRegistrar.instance().registerStackProvider(provider, BlockWoodSlab.class);
 
         // ModuleRegistrar.instance().registerStackProvider(provider, Block.class);
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
