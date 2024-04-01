@@ -212,8 +212,6 @@ public class TrueTypeFont {
 
             fontTextureID = loadImage(imgTemp);
 
-            // .getTexture(font.toString(), imgTemp);
-
         } catch (Exception e) {
             System.err.println("Failed to create font.");
             e.printStackTrace();
@@ -232,15 +230,9 @@ public class TrueTypeFont {
         float RenderHeight = (SrcHeight / textureHeight);
         Tessellator t = Tessellator.instance;
 
-        // t.setColorRGBA_F(0f, 0f, 0f, 1f);
-
         t.addVertexWithUV(drawX, drawY, 0, TextureSrcX, TextureSrcY);
-        // GL11.glTexCoord2f(TextureSrcX, TextureSrcY);
-        // GL11.glVertex2f(drawX, drawY);
 
         t.addVertexWithUV(drawX, drawY + DrawHeight, 0, TextureSrcX, TextureSrcY + RenderHeight);
-        // GL11.glTexCoord2f(TextureSrcX, TextureSrcY + RenderHeight);
-        // GL11.glVertex2f(drawX, drawY + DrawHeight);
 
         t.addVertexWithUV(
                 drawX + DrawWidth,
@@ -248,12 +240,8 @@ public class TrueTypeFont {
                 0,
                 TextureSrcX + RenderWidth,
                 TextureSrcY + RenderHeight);
-        // GL11.glTexCoord2f(TextureSrcX + RenderWidth, TextureSrcY + RenderHeight);
-        // GL11.glVertex2f(drawX + DrawWidth, drawY + DrawHeight);
 
         t.addVertexWithUV(drawX + DrawWidth, drawY, 0, TextureSrcX + RenderWidth, TextureSrcY);
-        // GL11.glTexCoord2f(TextureSrcX + RenderWidth, TextureSrcY);
-        // GL11.glVertex2f(drawX + DrawWidth, drawY);
     }
 
     public float getWidth(String whatchars) {
@@ -274,9 +262,7 @@ public class TrueTypeFont {
                 lastWidth = floatObject.width;
             }
         }
-        // System.out.println("Size: "+totalwidth);
         return this.fontMetrics.stringWidth(whatchars);
-        // return (totalwidth);
     }
 
     public float getHeight() {
@@ -350,7 +336,6 @@ public class TrueTypeFont {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, fontTextureID);
         Tessellator t = Tessellator.instance;
         t.startDrawingQuads();
-        // GL11.glBegin(GL11.GL_QUADS);
         if (rgba.length == 4) t.setColorRGBA_F(rgba[0], rgba[1], rgba[2], rgba[3]);
         while (i >= startIndex && i <= endIndex) {
 
@@ -397,8 +382,6 @@ public class TrueTypeFont {
             }
         }
         t.draw();
-        // GL11.glEnd();
-
         GL11.glPopMatrix();
     }
 
@@ -406,7 +389,6 @@ public class TrueTypeFont {
         try {
             short width = (short) bufferedImage.getWidth();
             short height = (short) bufferedImage.getHeight();
-            // textureLoader.bpp = bufferedImage.getColorModel().hasAlpha() ? (byte)32 : (byte)24;
             int bpp = (byte) bufferedImage.getColorModel().getPixelSize();
             ByteBuffer byteBuffer;
             DataBuffer db = bufferedImage.getData().getDataBuffer();
@@ -441,12 +423,6 @@ public class TrueTypeFont {
 
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
-            // GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-            // GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_NEAREST);
-
-            // GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
-            // GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST_MIPMAP_LINEAR);
-            // GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST_MIPMAP_NEAREST);
 
             GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 
@@ -462,7 +438,6 @@ public class TrueTypeFont {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-            // System.exit(-1);
         }
     }
 

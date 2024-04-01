@@ -33,28 +33,6 @@ public class ScreenHUDConfig extends ScreenBase {
             super(parent);
             this.setGeometry(new WidgetGeometry(0.0, 0.0, 100.0, 100.0, CType.RELXY, CType.RELXY));
 
-            /*
-             * IWidget layoutX = this.addWidget("LayoutX", new LayoutBase(this)); layoutX.setGeometry(new
-             * WidgetGeometry(40.0,50.0,20,60, CType.RELXY, CType.ABSXY, WAlign.CENTER, WAlign.CENTER));
-             * layoutX.addWidget("ButtonXAdd", new ButtonLabel(null, "+")).setGeometry(new WidgetGeometry(0.0,
-             * 0.0,20,20, CType.RELXY, CType.ABSXY, WAlign.LEFT, WAlign.TOP)); layoutX.addWidget("ButtonXSub", new
-             * ButtonLabel(null, "-")).setGeometry(new WidgetGeometry(0.0,100.0,20,20, CType.RELXY, CType.ABSXY,
-             * WAlign.LEFT, WAlign.BOTTOM)); layoutX.addWidget("ValueDisplayX", new LabelFixedFont(null,
-             * "0")).setGeometry(new WidgetGeometry(50.0,50.0,20,20, CType.RELXY, CType.ABSXY, WAlign.CENTER,
-             * WAlign.CENTER));
-             */
-
-            /*
-             * IWidget layoutY = this.addWidget("LayoutY", new LayoutBase(this)); layoutY.setGeometry(new
-             * WidgetGeometry(50.0,50.0,20,60,CType.RELXY, CType.ABSXY, WAlign.CENTER, WAlign.CENTER));
-             * layoutY.addWidget("ButtonYAdd", new ButtonLabel(null, "+")).setGeometry(new WidgetGeometry(0.0,
-             * 0.0,20,20, CType.RELXY, CType.ABSXY, WAlign.LEFT, WAlign.TOP)); layoutY.addWidget("ButtonYSub", new
-             * ButtonLabel(null, "-")).setGeometry(new WidgetGeometry(0.0,100.0,20,20, CType.RELXY, CType.ABSXY,
-             * WAlign.LEFT, WAlign.BOTTOM)); layoutY.addWidget("ValueDisplayY", new LabelFixedFont(null,
-             * "0")).setGeometry(new WidgetGeometry(50.0,50.0,20,20, CType.RELXY, CType.ABSXY, WAlign.CENTER,
-             * WAlign.CENTER));
-             */
-
             double picX = ConfigHandler.instance()
                     .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSX, 0) / 100.0;
             double picY = ConfigHandler.instance()
@@ -169,8 +147,6 @@ public class ScreenHUDConfig extends ScreenBase {
 
         @Override
         public void onMouseClick(MouseEvent event) {
-            // System.out.println(this.getWidgetAtCoordinates(event.x, event.y));
-
             if ((event.button == 0)
                     && (this.getWidget("Layout").getWidget("Picture").isWidgetAtCoordinates(event.x, event.y))) {
                 this.getWidget("Layout").getWidget("Picture").onMouseClick(event);
@@ -180,8 +156,6 @@ public class ScreenHUDConfig extends ScreenBase {
 
         @Override
         public void onMouseDrag(MouseEvent event) {
-
-            // if ((this.getWidgetAtCoordinates(event.x, event.y) == this) && (this.draggedWidget != null)){
             if (this.draggedWidget != null) {
                 this.draggedWidget.onMouseDrag(event);
             } else {
@@ -276,7 +250,6 @@ public class ScreenHUDConfig extends ScreenBase {
                     ((LayoutMargin) this.getWidget("Layout")).setMargins(picSX / 2, picSX / 2, picSY / 2, picSY / 2);
                 }
 
-                // picture.emit(Signal.DRAGGED, picture.getPos());
                 this.updateData();
 
             }

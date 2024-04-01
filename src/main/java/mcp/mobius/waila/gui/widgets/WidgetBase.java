@@ -141,10 +141,6 @@ public abstract class WidgetBase implements IWidget {
 
         this.draw(this.getPos());
 
-        /*
-         * for (IWidget widget: this.widgets.values()) if (widget.shouldRender()) widget.draw();
-         */
-
         for (IWidget widget : this.renderQueue_LOW.values()) if (widget.shouldRender()) widget.draw();
 
         for (IWidget widget : this.renderQueue_MEDIUM.values()) if (widget.shouldRender()) widget.draw();
@@ -270,7 +266,6 @@ public abstract class WidgetBase implements IWidget {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
         GL11.glPopMatrix();
         GL11.glPopAttrib();
-        // GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     @Override
@@ -307,59 +302,36 @@ public abstract class WidgetBase implements IWidget {
 
     @Override
     public void onMouseClick(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseClick(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseClick(event);
     }
 
     @Override
     public void onMouseDrag(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseDrag(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseDrag(event);
     }
 
     @Override
     public void onMouseMove(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseMove(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseMove(event);
     }
 
     @Override
     public void onMouseRelease(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseRelease(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseRelease(event);
     }
 
     @Override
     public void onMouseWheel(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseWheel(event);
     }
 
     @Override
     public void onMouseEnter(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseEnter(event);
     }
 
     @Override
     public void onMouseLeave(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseLeave(event);
     }
 

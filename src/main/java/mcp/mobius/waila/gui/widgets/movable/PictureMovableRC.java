@@ -27,7 +27,6 @@ public class PictureMovableRC extends WidgetBase {
     public void onMouseClick(MouseEvent event) {
         this.offsetX = event.x - this.geom.getUnalignedPos(this.parent).getX();
         this.offsetY = event.y - this.geom.getUnalignedPos(this.parent).getY();
-        // System.out.printf("%s %s\n", this.offsetX, this.offsetY);
     }
 
     @Override
@@ -44,9 +43,6 @@ public class PictureMovableRC extends WidgetBase {
         this.setPos(
                 ((newX - this.parent.getLeft()) / this.parent.getSize().getX()) * 100.0,
                 ((newY - this.parent.getTop()) / this.parent.getSize().getY()) * 100.0);
-
-        // System.out.printf("%s\n", this.parent.getGeometry());
-        // System.out.printf("%s %s\n", this.parent.getPos(), this.parent.getSize());
 
         this.emit(Signal.DRAGGED, this.getPos());
     }

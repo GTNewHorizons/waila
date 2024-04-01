@@ -34,8 +34,6 @@ public class ThaumcraftModule {
 
     public static Class<?> IGoggles = null;
 
-    // public static Class<?> TileAlchemyFurnace = null;
-
     public static void register() {
         try {
             Thaumcraft = Class.forName("thaumcraft.common.Thaumcraft");

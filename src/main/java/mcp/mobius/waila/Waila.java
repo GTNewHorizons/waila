@@ -42,12 +42,6 @@ import mcp.mobius.waila.utils.ModIdentification;
         version = "GRADLETOKEN_VERSION",
         dependencies = "after:NotEnoughItems@[1.0.4.0,)",
         acceptableRemoteVersions = "*")
-/*
- * @NetworkMod(channels = {"Waila"},clientSideRequired=false, serverSideRequired=false, connectionHandler =
- * WailaConnectionHandler.class, packetHandler = WailaPacketHandler.class, versionBounds="[1.5.0,)") //packetHandler =
- * WailaPacketHandler.class)
- */
-
 public class Waila {
 
     // The instance of your mod that Forge uses.
@@ -90,29 +84,12 @@ public class Waila {
     public void postInit(FMLPostInitializationEvent event) {
         proxy.registerHandlers();
         ModIdentification.init();
-
-        /*
-         * if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_KEYBIND, true)){
-         * for (String key: ModIdentification.keyhandlerStrings.keySet()){ String orig = I18n.getString(key); if
-         * (orig.equals(key)) orig = LanguageRegistry.instance().getStringLocalization(key); if (orig.equals(key)) orig
-         * = LangUtil.translateG(key); if (orig.isEmpty()) orig = key; String modif; if (orig.startsWith("[") ||
-         * orig.contains(":")) modif = orig; else{ String id = ModIdentification.keyhandlerStrings.get(key); if
-         * (id.contains(".")) id = id.split("\\.")[0]; if (id.length() > 10) id = id.substring(0, 11); if (id.isEmpty())
-         * id = "????"; modif = String.format("[%s] %s", id, orig); }
-         * LanguageRegistry.instance().addStringLocalization(key, modif); } }
-         */
-
     }
 
     @Subscribe
     public void loadComplete(FMLLoadCompleteEvent event) {
         proxy.registerMods();
         proxy.registerIMCs();
-
-        /*
-         * String[] ores = OreDictionary.getOreNames(); for (String s : ores) for (ItemStack stack :
-         * OreDictionary.getOres(s)) System.out.printf("%s : %s\n", s, stack);
-         */
     }
 
     @EventHandler

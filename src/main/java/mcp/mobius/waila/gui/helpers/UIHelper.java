@@ -133,14 +133,12 @@ public class UIHelper {
         GL11.glRotatef(rotX, 1.0F, 0.0F, 0.0F);
         GL11.glRotatef(rotZ, 0.0F, 0.0F, 1.0F);
 
-        // GL11.glScalef(-f1, -f1, f1);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        // GL11.glDisable(GL11.GL_TEXTURE_2D);
         drawRectangle(x1, y1, 0, x2, y2, 0, r, g, b, a);
 
         GL11.glPopMatrix();
@@ -196,16 +194,12 @@ public class UIHelper {
         float f1 = 0.016666668F * f;
         GL11.glPushMatrix();
 
-        // GL11.glTranslatef((float)accessor.getPosition().blockX + 0.0F, (float)accessor.getPosition().blockY + 0.5F,
-        // (float)accessor.getPosition().blockZ);
         GL11.glTranslatef(posX + offX, posY + offY, posZ + offZ);
 
-        // GL11.glTranslatef(posX, posY, posZ);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
         GL11.glRotatef(rotY, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(rotX, 1.0F, 0.0F, 0.0F);
         GL11.glRotatef(rotZ, 0.0F, 0.0F, 1.0F);
-        // GL11.glTranslatef(offX, offY, offZ);
 
         GL11.glScalef(-f1, -f1, f1);
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -234,9 +228,7 @@ public class UIHelper {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
         fontrenderer.drawString(text, -fontrenderer.getStringWidth(text) / 2, b0, -1);
-        // GL11.glEnable(GL11.GL_LIGHTING);
-        // GL11.glDisable(GL11.GL_BLEND);
-        // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glPopMatrix();
 

@@ -46,11 +46,6 @@ public class ScreenModuleConfig extends ScreenBase {
                             "screen.button.no",
                             "screen.button.yes"),
                     ConfigHandler.instance().getConfigKeys(this.modName).get(key));
-            // buttonContainer.addButton(new ButtonConfigRemote(-1, "No", "Yes",
-            // ConfigHandler.instance().getConfigKeys(this.modName).get(key), key ));
-            // else
-            // buttonContainer.addButton(new ButtonConfigOption(-1, "No", "Yes",
-            // ConfigHandler.instance().getConfigKeys(this.modName).get(key), key ));
         }
 
         this.getRoot().addWidget("LayoutBack", new LayoutBase(this.getRoot()));

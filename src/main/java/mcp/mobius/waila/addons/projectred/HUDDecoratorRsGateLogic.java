@@ -41,11 +41,8 @@ public class HUDDecoratorRsGateLogic implements IWailaFMPDecorator {
         subID = NBTUtil.getNBTInteger(accessor.getNBTData(), "subID");
         shape = NBTUtil.getNBTInteger(accessor.getNBTData(), "shape");
 
-        // orient = orient - ((orient & 0x10) + (orient & 0x8) + (orient & 0x4));
         int hOrient = orient & 0x3;
         ForgeDirection vOrient = ForgeDirection.getOrientation((orient - (orient & 0x3)) >> 2);
-
-        // System.out.printf("%s\n", ForgeDirection.getOrientation(vOrient));
 
         if (vOrient == ForgeDirection.EAST) hOrient -= 1;
 

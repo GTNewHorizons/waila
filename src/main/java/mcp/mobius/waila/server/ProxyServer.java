@@ -68,9 +68,6 @@ public class ProxyServer {
         /* ETB */
         ETBModule.register();
 
-        /* EnderIO */
-        // EnderIOModule.register();
-
         /* ProjectRed API */
         ProjectRedModule.register();
 
@@ -85,9 +82,6 @@ public class ProxyServer {
 
         /* Steve's Carts */
         StevesCartsModule.register();
-
-        /* Secret Rooms */
-        // SecretRoomsModule.register();
 
         /* Carpenter's Blocks */
         CarpentersModule.register();
@@ -108,9 +102,6 @@ public class ProxyServer {
             HUDHandlerFMP.register();
             DecoratorFMP.register();
         }
-
-        // ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerBlocks(), Block.class);
-        // ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerBlocks(), TileEntity.class);
     }
 
     public void registerIMCs() {

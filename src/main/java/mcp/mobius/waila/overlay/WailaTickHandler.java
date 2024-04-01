@@ -29,8 +29,6 @@ import mcp.mobius.waila.utils.Constants;
 
 public class WailaTickHandler {
 
-    // public static LangUtil lang = LangUtil.loadLangDir("waila");
-
     private int ticks = 0;
     public ItemStack identifiedHighlight = new ItemStack(Blocks.dirt);
     private List<String> currenttip = new TipList<String, String>();
@@ -85,7 +83,6 @@ public class WailaTickHandler {
                     this.currenttipBody = new TipList<String, String>();
                     this.currenttipTail = new TipList<String, String>();
 
-                    // this.identifiedHighlight = handler.identifyHighlight(world, player, target);
                     this.currenttipHead = handler.handleBlockTextData(
                             targetStack,
                             world,

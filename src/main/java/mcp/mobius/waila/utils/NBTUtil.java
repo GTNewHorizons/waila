@@ -26,7 +26,6 @@ public class NBTUtil {
                     return deepTag.getTag(i);
                 }
             } else {
-                // Waila.log.log(Level.WARN, "Leaf " + key + " not found.");
                 return null;
             }
         }
@@ -38,9 +37,7 @@ public class NBTUtil {
 
         NBTTagCompound deepTag = targetTag;
         for (int i = 0; i < path.length - 1; i++) {
-            if (!deepTag.hasKey(path[i]))
-                // deepTag.setCompoundTag(path[i], new NBTTagCompound());
-                deepTag.setTag(path[i], new NBTTagCompound());
+            if (!deepTag.hasKey(path[i])) deepTag.setTag(path[i], new NBTTagCompound());
 
             deepTag = deepTag.getCompoundTag(path[i]);
         }
@@ -57,7 +54,6 @@ public class NBTUtil {
 
         for (String key : keys) {
             NBTBase tagToAdd = getTag(key, inTag);
-            // System.out.printf("%s\n", tagToAdd);
             if (tagToAdd != null) outTag = setTag(key, outTag, tagToAdd);
         }
 

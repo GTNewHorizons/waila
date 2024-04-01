@@ -27,7 +27,6 @@ public class AccessHelper {
             Class class_ = Class.forName(classname);
             Field field_ = class_.getDeclaredField(fieldname);
             field_.setAccessible(true);
-            // mod_Waila.log.fine(String.format("++ Found field %s %s\n", classname, fieldname));
             return field_;
         } catch (NoSuchFieldException e) {
             Waila.log.warn(String.format("== Field %s %s not found !\n", classname, fieldname));
@@ -47,8 +46,6 @@ public class AccessHelper {
             Class class_ = Class.forName(classname);
             Field field_ = class_.getDeclaredField(fieldname);
             field_.setAccessible(true);
-
-            // mod_Waila.log.fine(String.format("++ Found field %s %s\n", classname, fieldname));
             return field_.get(instance);
         } catch (NoSuchFieldException e) {
             Waila.log.warn(String.format("== Field %s %s not found !\n", classname, fieldname));
@@ -72,8 +69,6 @@ public class AccessHelper {
         Class class_ = Class.forName(classname);
         Field field_ = class_.getDeclaredField(fieldname);
         field_.setAccessible(true);
-
-        // mod_Waila.log.fine(String.format("++ Found field %s %s\n", classname, fieldname));
         return field_.get(instance);
     }
 
@@ -137,17 +132,4 @@ public class AccessHelper {
         Method getNBTData = provider.getClass().getMethod("getNBTData", Entity.class, NBTTagCompound.class);
         return (NBTTagCompound) getNBTData.invoke(provider, entity, tag);
     }
-
-    /*
-     * public static void cleanSmeltingRecipes(ItemStack stack){ Map smeltingList =
-     * FurnaceRecipes.smelting().getSmeltingList(); Map<List<Integer>, ItemStack> smeltingListMeta =
-     * FurnaceRecipes.smelting().getMetaSmeltingList(); HashMap<Integer, ItemStack> matchingRecipes = new
-     * HashMap<Integer, ItemStack>(); HashMap<List<Integer>, ItemStack> matchingRecipesMeta = new HashMap<List<Integer>,
-     * ItemStack>(); // We walk the none meta list to find all the recipes for (Object id_ : smeltingList.keySet()){
-     * Integer id = (Integer)id_; ItemStack result = (ItemStack)smeltingList.get(id_); if (stack.isItemEqual(result))
-     * matchingRecipes.put(id, result); } for (List<Integer> key : smeltingListMeta.keySet()){ ItemStack result =
-     * smeltingListMeta.get(key); if (stack.isItemEqual(result)) matchingRecipesMeta.put(key, result); } for (Integer
-     * key : matchingRecipes.keySet()) FurnaceRecipes.smelting().getSmeltingList().remove(key); for (List<Integer> key :
-     * matchingRecipesMeta.keySet()) FurnaceRecipes.smelting().getMetaSmeltingList().remove(key); }
-     */
 }

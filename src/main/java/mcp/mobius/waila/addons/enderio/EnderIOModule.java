@@ -44,9 +44,6 @@ public class EnderIOModule {
         } catch (NoSuchMethodException e) {
             Waila.log.log(Level.WARN, "[EnderStorage] Method not found." + e);
             return;
-            // } catch (NoSuchFieldException e){
-            // mod_Waila.log.log(Level.WARNING, "[EnderStorage] Field not found." + e);
-            // return;
         } catch (Exception e) {
             Waila.log.log(Level.WARN, "[EnderStorage] Unhandled exception." + e);
             return;

@@ -86,8 +86,6 @@ public class HUDLiquidManager implements IWailaDataProvider {
             String shouldReturn = (doReturn & (1 << i)) != 0 ? "Ret." : "Cont.";
             String sAmount = amount == 0 ? "All" : String.valueOf(this.getMaxAmountBuckets(amount)) + " mB";
 
-            // String selection = (String)
-            // StevesCartsModule.GetSelectionName.invoke(StevesCartsModule.CargoItemSelection.cast(itemSelection.get(target)));
             currenttip.add(
                     String.format(
                             "Side %s %s[ %s ]%s[ %s , %s]%s[ %s ]",

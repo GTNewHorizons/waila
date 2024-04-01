@@ -103,8 +103,6 @@ public class CommandDumpHandlers extends CommandBase {
 
     @Override
     public boolean canCommandSenderUseCommand(ICommandSender sender) {
-        // if ((sender instanceof EntityPlayerMP) && ((EntityPlayerMP)sender).playerNetServerHandler.netManager
-        // instanceof MemoryConnection) return true;
         return super.canCommandSenderUseCommand(sender);
     }
 

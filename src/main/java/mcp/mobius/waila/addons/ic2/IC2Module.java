@@ -68,7 +68,6 @@ public class IC2Module {
             TileStirlingGenerator_maxStorage = TileStirlingGenerator.getDeclaredField("maxEUStorage");
             TileStirlingGenerator_production = TileStirlingGenerator.getDeclaredField("production");
 
-            // ModuleRegistrar.instance().addConfigRemote("Thermal Expansion", "thermalexpansion.energyhandler");
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerTEGenerator(), TileBaseGenerator);
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerTEGenerator(), TileGeoGenerator);
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerTEGenerator(), TileKineticGenerator);

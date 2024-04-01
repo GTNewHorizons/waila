@@ -138,8 +138,6 @@ public class ThermalExpansionModule {
             ModuleRegistrar.instance().addConfigRemote("Thermal Expansion", "thermalexpansion.owner");
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerISecureTile(), ISecureTile);
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerISecureTile(), ISecureTile);
-            // ModuleRegistrar.instance().registerSyncedNBTKey("Owner", ISecureTile);
-            // ModuleRegistrar.instance().registerSyncedNBTKey("Access", ISecureTile);
 
         } catch (Exception e) {
             Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading ISecureTile hooks." + e);
@@ -160,17 +158,6 @@ public class ThermalExpansionModule {
         } catch (Exception e) {
             Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Tesseract hooks." + e);
         }
-
-        // XXX : We register the IBlockInfo interface
-        /*
-         * try{ IBlockInfo = Class.forName("cofh.api.block.IBlockInfo"); IBlockInfo_getBlockInfo =
-         * IBlockInfo.getMethod("getBlockInfo", IBlockAccess.class, int.class, int.class, int.class,
-         * ForgeDirection.class, EntityPlayer.class, List.class, boolean.class);
-         * //ModuleRegistrar.instance().addConfigRemote("Thermal Expansion", "thermalexpansion.energyhandler");
-         * ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerIBlockInfo(), IBlockInfo);
-         * ModuleRegistrar.instance().registerNBTProvider (new HUDHandlerIBlockInfo(), IBlockInfo); } catch (Exception
-         * e){ Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading IBlockInfo hooks." + e); }
-         */
     }
 
 }

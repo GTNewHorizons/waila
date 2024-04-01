@@ -112,11 +112,6 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
                 }
             }
 
-            // for (int i = 0; i < aspects.tagCount(); i++){
-            // System.out.printf("%s : %s\n", aspects.getCompoundTagAt(i).getString("key"),
-            // aspects.getCompoundTagAt(i).getString("value"));
-            // }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

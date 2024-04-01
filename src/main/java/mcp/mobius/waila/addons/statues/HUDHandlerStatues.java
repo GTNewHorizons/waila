@@ -50,12 +50,6 @@ public class HUDHandlerStatues implements IWailaDataProvider {
             currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
         }
 
-        /*
-         * String skinName = accessor.getNBTData().getString("skin"); if (skinName.equals("")){ if
-         * (accessor.getWorld().getBlockTileEntity(accessor.getPosition().blockX, accessor.getPosition().blockY - 1,
-         * accessor.getPosition().blockZ) != null){ } }
-         */
-
         return currenttip;
     }
 

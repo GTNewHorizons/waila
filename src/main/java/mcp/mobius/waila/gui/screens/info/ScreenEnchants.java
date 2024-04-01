@@ -80,9 +80,4 @@ public class ScreenEnchants extends ScreenBase {
         this.getRoot().getWidget("Layout_Title").adjustSize();
         return this;
     }
-
-    /*
-     * public ScreenEnchants setStack(ItemStack stack){
-     * ((ItemStackDisplay)this.getRoot().getWidget("ItemStack")).setStack(stack); return this; }
-     */
 }

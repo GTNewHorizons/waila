@@ -13,13 +13,8 @@ public class ViewTable extends WidgetBase {
 
         public Cell(IWidget parent, String text, WAlign align) {
             super(parent);
-
-            // this.addWidget("Crop", new LayoutCropping(null)).setGeometry(new WidgetGeometry(50.0, 50.0, 90.0, 100.0,
-            // CType.RELXY, CType.RELXY, WAlign.CENTER, WAlign.CENTER));
-
             switch (align) {
                 case CENTER:
-                    // this.getWidget("Crop").addWidget("Text", new LabelFixedFont(null, text))
                     this.addWidget("Text", new LabelFixedFont(null, text)).setGeometry(
                             new WidgetGeometry(
                                     50.0,
@@ -32,7 +27,6 @@ public class ViewTable extends WidgetBase {
                                     WAlign.CENTER));
                     break;
                 case LEFT:
-                    // this.getWidget("Crop").addWidget("Text", new LabelFixedFont(null, text))
                     this.addWidget("Text", new LabelFixedFont(null, text)).setGeometry(
                             new WidgetGeometry(
                                     5.0,
@@ -45,7 +39,6 @@ public class ViewTable extends WidgetBase {
                                     WAlign.CENTER));
                     break;
                 case RIGHT:
-                    // this.getWidget("Crop").addWidget("Text", new LabelFixedFont(null, text))
                     this.addWidget("Text", new LabelFixedFont(null, text)).setGeometry(
                             new WidgetGeometry(
                                     5.0,

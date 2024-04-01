@@ -27,11 +27,6 @@ public class FontHelper {
 
     private static String formatEscape = "\u00A7";
 
-    /*
-     * public static void drawString(String s, float x, float y, TrueTypeFont font, float scaleX, float scaleY, float...
-     * rgba){ drawString(s,x,y,font,scaleX,scaleY,0,rgba); }
-     */
-
     public static void drawString(String s, float x, float y, TrueTypeFont font, float scaleX, float scaleY,
             float rotationZ, float... rgba) {
         Minecraft mc = Minecraft.getMinecraft();
@@ -84,7 +79,6 @@ public class FontHelper {
         mc.entityRenderer.setupOverlayRendering();
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPushMatrix();
-        // GL11.glLoadMatrix(matrixData);
 
         GL11.glLoadIdentity();
         GL11.glOrtho(0, mc.displayWidth, 0, mc.displayHeight, -1, 1);

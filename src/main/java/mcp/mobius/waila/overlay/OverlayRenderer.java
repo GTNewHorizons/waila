@@ -41,7 +41,6 @@ public class OverlayRenderer {
     }
 
     public static void renderOverlay(Tooltip tooltip) {
-        // TrueTypeFont font = (TrueTypeFont)mod_Waila.proxy.getFont();
 
         GL11.glPushMatrix();
         saveGLState();
@@ -84,11 +83,7 @@ public class OverlayRenderer {
     public static void saveGLState() {
         hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);
         hasLight = GL11.glGetBoolean(GL11.GL_LIGHTING);
-        // hasLight0 = GL11.glGetBoolean(GL11.GL_LIGHT0);
-        // hasLight1 = GL11.glGetBoolean(GL11.GL_LIGHT1);
         hasDepthTest = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
-        // hasRescaleNormal = GL11.glGetBoolean(GL12.GL_RESCALE_NORMAL);
-        // hasColorMaterial = GL11.glGetBoolean(GL11.GL_COLOR_MATERIAL);
         boundTexIndex = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
         GL11.glPushAttrib(GL11.GL_CURRENT_BIT);
     }
@@ -96,28 +91,20 @@ public class OverlayRenderer {
     public static void loadGLState() {
         if (hasBlending) GL11.glEnable(GL11.GL_BLEND);
         else GL11.glDisable(GL11.GL_BLEND);
-        // if (hasLight) GL11.glEnable(GL11.GL_LIGHTING); else GL11.glDisable(GL11.GL_LIGHTING);
-        // if (hasLight0) GL11.glEnable(GL11.GL_LIGHT0); else GL11.glDisable(GL11.GL_LIGHT0);
         if (hasLight1) GL11.glEnable(GL11.GL_LIGHT1);
         else GL11.glDisable(GL11.GL_LIGHT1);
         if (hasDepthTest) GL11.glEnable(GL11.GL_DEPTH_TEST);
         else GL11.glDisable(GL11.GL_DEPTH_TEST);
-        // if (hasRescaleNormal) GL11.glEnable(GL12.GL_RESCALE_NORMAL); else GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        // if (hasColorMaterial) GL11.glEnable(GL11.GL_COLOR_MATERIAL); else GL11.glDisable(GL11.GL_COLOR_MATERIAL);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
         GL11.glPopAttrib();
-        // GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     public static void drawTooltipBox(int x, int y, int w, int h, int bg, int grad1, int grad2) {
-        // int bg = 0xf0100010;
         DisplayUtil.drawGradientRect(x + 1, y, w - 1, 1, bg, bg);
         DisplayUtil.drawGradientRect(x + 1, y + h, w - 1, 1, bg, bg);
         DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, h - 1, bg, bg);// center
         DisplayUtil.drawGradientRect(x, y + 1, 1, h - 1, bg, bg);
         DisplayUtil.drawGradientRect(x + w, y + 1, 1, h - 1, bg, bg);
-        // int grad1 = 0x505000ff;
-        // int grad2 = 0x5028007F;
         DisplayUtil.drawGradientRect(x + 1, y + 2, 1, h - 3, grad1, grad2);
         DisplayUtil.drawGradientRect(x + w - 1, y + 2, 1, h - 3, grad1, grad2);
 

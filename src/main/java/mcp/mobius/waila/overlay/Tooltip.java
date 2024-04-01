@@ -186,8 +186,6 @@ public class Tooltip {
                         renderable = new Renderable(
                                 new TTRenderString(DisplayUtil.stripWailaSymbols(cs)),
                                 new Point(offsetX, offsetY));
-                        // renderable = new Renderable(new TTRenderTrueTyper(DisplayUtil.stripWailaSymbols(cs)), new
-                        // Point(offsetX, offsetY));
                         this.elements.add(renderable);
                     }
 

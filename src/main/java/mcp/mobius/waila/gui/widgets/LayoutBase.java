@@ -32,12 +32,4 @@ public class LayoutBase extends WidgetBase {
         this.bgcolor2 = bg2;
         this.renderBG = true;
     }
-
-    /*
-     * @Override public void onMouseEnter(MouseEvent event) { IWidget widget = this.getWidgetAtCoordinates(event.x,
-     * event.y); if (widget != null && widget != this) widget.onMouseEnter(event); }
-     * @Override public void onMouseLeave(MouseEvent event) { IWidget widget = this.getWidgetAtCoordinates(event.x,
-     * event.y); if (widget != null && widget != this) widget.onMouseLeave(event); }
-     */
-
 }

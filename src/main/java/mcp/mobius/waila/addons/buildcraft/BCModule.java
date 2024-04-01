@@ -14,11 +14,6 @@ public class BCModule {
     public static Class TileTank = null;
     public static Method TileTank_getTankInfo = null;
 
-    // public static Class IPowerReceptor = null;
-    // public static Class PipeTransportPower = null;
-    // public static Class TileGenericPipe = null;
-    // public static Class TileEngine = null;
-
     public static void register() {
         try {
             TileTank = Class.forName("buildcraft.factory.TileTank");

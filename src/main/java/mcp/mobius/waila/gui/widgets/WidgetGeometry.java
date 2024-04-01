@@ -8,10 +8,7 @@ import mcp.mobius.waila.gui.interfaces.CType;
 import mcp.mobius.waila.gui.interfaces.IWidget;
 import mcp.mobius.waila.gui.interfaces.WAlign;
 
-// public class WidgetGeometry implements Cloneable{
 public class WidgetGeometry {
-
-    // public enum Align {LEFT, CENTER, RIGHT, TOP, BOTTOM};
 
     double x = -1;
     double y = -1;
@@ -184,9 +181,4 @@ public class WidgetGeometry {
                 this.alignX,
                 this.alignY);
     }
-
-    // @Override
-    // public WidgetGeometry clone() throws CloneNotSupportedException{
-    // return (WidgetGeometry)super.clone();
-    // }
 }

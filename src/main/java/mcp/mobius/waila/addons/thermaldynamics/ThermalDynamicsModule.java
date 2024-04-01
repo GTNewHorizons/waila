@@ -23,17 +23,6 @@ public class ThermalDynamicsModule {
         } catch (Exception e) {
             Waila.log.log(Level.WARN, "[Thermal Dynamics] Error while loading FluidDuct hooks." + e);
         }
-
-        // XXX : We register the IBlockInfo interface
-        /*
-         * try{ IBlockInfo = Class.forName("cofh.api.block.IBlockInfo"); IBlockInfo_getBlockInfo =
-         * IBlockInfo.getMethod("getBlockInfo", IBlockAccess.class, int.class, int.class, int.class,
-         * ForgeDirection.class, EntityPlayer.class, List.class, boolean.class);
-         * //ModuleRegistrar.instance().addConfigRemote("Thermal Expansion", "thermalexpansion.energyhandler");
-         * ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerIBlockInfo(), IBlockInfo);
-         * ModuleRegistrar.instance().registerNBTProvider (new HUDHandlerIBlockInfo(), IBlockInfo); } catch (Exception
-         * e){ Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading IBlockInfo hooks." + e); }
-         */
     }
 
 }

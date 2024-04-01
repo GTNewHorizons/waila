@@ -87,8 +87,5 @@ public class HUDHandlerFurnace implements IWailaDataProvider {
         return tag;
     }
 
-    public static void register() {
-        // ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerFurnace(), TileEntityFurnace.class);
-        // ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerFurnace(), TileEntityFurnace.class);
-    }
+    public static void register() {}
 }

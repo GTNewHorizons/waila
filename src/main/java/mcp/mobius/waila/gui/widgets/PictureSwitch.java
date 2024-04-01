@@ -37,13 +37,11 @@ public class PictureSwitch extends WidgetBase {
 
     @Override
     public void onMouseEnter(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         mouseOver = true;
     }
 
     @Override
     public void onMouseLeave(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         mouseOver = false;
     }
 
