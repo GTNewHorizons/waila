@@ -39,7 +39,7 @@ import mcp.mobius.waila.utils.ModIdentification;
 @Mod(
         modid = "Waila",
         name = "Waila",
-        version = "GRADLETOKEN_VERSION",
+        version = Tags.GRADLETOKEN_VERSION,
         dependencies = "after:NotEnoughItems@[1.0.4.0,)",
         acceptableRemoteVersions = "*")
 public class Waila {
