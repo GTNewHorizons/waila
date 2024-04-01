@@ -23,58 +23,58 @@ package mcp.mobius.waila.api;
 public interface IWailaRegistrar {
 
     /* Add a config option in the section modname with displayed text configtext and access key keyname */
-    public void addConfig(String modname, String keyname, String configtext);
+    void addConfig(String modname, String keyname, String configtext);
 
-    public void addConfig(String modname, String keyname, String configtext, boolean defvalue);
+    void addConfig(String modname, String keyname, String configtext, boolean defvalue);
 
-    public void addConfigRemote(String modname, String keyname, String configtext);
+    void addConfigRemote(String modname, String keyname, String configtext);
 
-    public void addConfigRemote(String modname, String keyname, String configtext, boolean defvalue);
+    void addConfigRemote(String modname, String keyname, String configtext, boolean defvalue);
 
-    public void addConfig(String modname, String keyname);
+    void addConfig(String modname, String keyname);
 
-    public void addConfig(String modname, String keyname, boolean defvalue);
+    void addConfig(String modname, String keyname, boolean defvalue);
 
-    public void addConfigRemote(String modname, String keyname);
+    void addConfigRemote(String modname, String keyname);
 
-    public void addConfigRemote(String modname, String keyname, boolean defvalue);
+    void addConfigRemote(String modname, String keyname, boolean defvalue);
 
     /* Register a stack overrider for the given blockID */
-    public void registerStackProvider(IWailaDataProvider dataProvider, Class block);
+    void registerStackProvider(IWailaDataProvider dataProvider, Class block);
 
     /* Same thing, but works on a class hierarchy instead */
-    public void registerHeadProvider(IWailaDataProvider dataProvider, Class block);
+    void registerHeadProvider(IWailaDataProvider dataProvider, Class block);
 
-    public void registerBodyProvider(IWailaDataProvider dataProvider, Class block);
+    void registerBodyProvider(IWailaDataProvider dataProvider, Class block);
 
-    public void registerTailProvider(IWailaDataProvider dataProvider, Class block);
+    void registerTailProvider(IWailaDataProvider dataProvider, Class block);
 
     /* Registering an NBT Provider provides a way to override the default "writeToNBT" way of doing things. */
-    public void registerNBTProvider(IWailaDataProvider dataProvider, Class block);
+    void registerNBTProvider(IWailaDataProvider dataProvider, Class block);
 
     /* Entity text registration methods */
-    public void registerHeadProvider(IWailaEntityProvider dataProvider, Class entity);
+    void registerHeadProvider(IWailaEntityProvider dataProvider, Class entity);
 
-    public void registerBodyProvider(IWailaEntityProvider dataProvider, Class entity);
+    void registerBodyProvider(IWailaEntityProvider dataProvider, Class entity);
 
-    public void registerTailProvider(IWailaEntityProvider dataProvider, Class entity);
+    void registerTailProvider(IWailaEntityProvider dataProvider, Class entity);
 
-    public void registerOverrideEntityProvider(IWailaEntityProvider dataProvider, Class entity);
+    void registerOverrideEntityProvider(IWailaEntityProvider dataProvider, Class entity);
 
     /* Registering an NBT Provider provides a way to override the default "writeToNBT" way of doing things. */
-    public void registerNBTProvider(IWailaEntityProvider dataProvider, Class entity);
+    void registerNBTProvider(IWailaEntityProvider dataProvider, Class entity);
 
     /* FMP Providers */
-    public void registerHeadProvider(IWailaFMPProvider dataProvider, String name);
+    void registerHeadProvider(IWailaFMPProvider dataProvider, String name);
 
-    public void registerBodyProvider(IWailaFMPProvider dataProvider, String name);
+    void registerBodyProvider(IWailaFMPProvider dataProvider, String name);
 
-    public void registerTailProvider(IWailaFMPProvider dataProvider, String name);
+    void registerTailProvider(IWailaFMPProvider dataProvider, String name);
 
     /* The block decorators */
-    public void registerDecorator(IWailaBlockDecorator decorator, Class block);
+    void registerDecorator(IWailaBlockDecorator decorator, Class block);
 
-    public void registerDecorator(IWailaFMPDecorator decorator, String name);
+    void registerDecorator(IWailaFMPDecorator decorator, String name);
 
     /*
      * Selective NBT key syncing. Will register a key to sync over the network for the given class (block, te or ent).
@@ -83,11 +83,7 @@ public interface IWailaRegistrar {
      * is deprecated in favor to registerNBTProvider. It will be removed in MC 1.8 !!!
      */
     @Deprecated
-    public void registerSyncedNBTKey(String key, Class target);
+    void registerSyncedNBTKey(String key, Class target);
 
-    public void registerTooltipRenderer(String name, IWailaTooltipRenderer renderer);
-
-    /* UNUSED FOR NOW (Will be used for the ingame wiki */
-    // public void registerDocTextFile (String filename);
-    // public void registerShortDataProvider (IWailaSummaryProvider dataProvider, Class item);
+    void registerTooltipRenderer(String name, IWailaTooltipRenderer renderer);
 }

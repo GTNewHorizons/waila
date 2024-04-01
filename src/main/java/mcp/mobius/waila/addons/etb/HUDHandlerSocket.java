@@ -52,9 +52,9 @@ public class HUDHandlerSocket implements IWailaDataProvider {
 
                     String configstr = "[ ";
 
-                    if (tank != -1) configstr += "\u00a79" + String.valueOf(tank) + " ";
+                    if (tank != -1) configstr += "\u00a79" + tank + " ";
 
-                    if (inventory != -1) configstr += "\u00a7a" + String.valueOf(inventory) + " ";
+                    if (inventory != -1) configstr += "\u00a7a" + inventory + " ";
 
                     if (rsControl[0] || rsControl[1] || rsControl[2]) {
                         configstr += "\u00a7c";
@@ -75,12 +75,6 @@ public class HUDHandlerSocket implements IWailaDataProvider {
                     configstr += "\u00a7r]";
 
                     if (!configstr.equals("[ \u00a7r]")) tipstr += " " + configstr;
-
-                    /*
-                     * if ((tank != -1) && (inventory != -1)) tipstr += String.format("[ \u00a79%d \u00a7a%d \u00a7r]",
-                     * tank, inventory); else if (tank != -1) tipstr += String.format("[ \u00a79%d \u00a7r]", tank);
-                     * else if (inventory != -1) tipstr += String.format("[ \u00a7a%d \u00a7r]", inventory);
-                     */
 
                     currenttip.add(tipstr);
                 }

@@ -7,11 +7,11 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class HarvestcraftModule {
 
-    public static Class TileEntityPamCrop = null;
+    public static Class<?> TileEntityPamCrop = null;
 
     public static void register() {
         try {
-            Class PamHarvestCraft = Class.forName("assets.pamharvestcraft.PamHarvestCraft");
+            Class.forName("assets.pamharvestcraft.PamHarvestCraft");
             Waila.log.log(Level.INFO, "PamHarvestCraft mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[PamHarvestCraft] PamHarvestCraft mod not found.");

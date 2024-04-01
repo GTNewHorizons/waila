@@ -3,7 +3,6 @@ package mcp.mobius.waila.handlers.nei;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
@@ -25,7 +24,6 @@ import mcp.mobius.waila.utils.Constants;
 public class NEIHandler {
 
     public static void register() {
-        // GuiContainerManager.addTooltipHandler(new TooltipHandlerWaila());
         if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_NEWFILTERS, true)) {
             API.addSearchProvider(new ModNameFilter());
             API.addSearchProvider(new OreDictFilter());
@@ -33,14 +31,9 @@ public class NEIHandler {
 
         GuiContainerManager.addTooltipHandler(new TooltipHandlerWaila());
 
-        // KeyBindingRegistry.registerKeyBinding(new ConfigKeyHandler());
-
         // We mute the default keybind for displaying the tooltip
         NEIClientConfig.getSetting(Constants.BIND_NEI_SHOW).setIntValue(Keyboard.KEY_NONE);
         NEIClientConfig.getSetting(Constants.CFG_NEI_SHOW).setBooleanValue(false);
-
-        // API.addKeyBind(Constants.BIND_WIKI, "Display wiki", Keyboard.KEY_RSHIFT);
-        // API.addKeyBind(Constants.BIND_TECH, "Display techtree", Keyboard.KEY_RSHIFT);
 
         GuiContainerManager.addInputHandler(new HandlerEnchants());
         API.addKeyBind(Constants.BIND_SCREEN_ENCH, Keyboard.KEY_I);
@@ -50,18 +43,16 @@ public class NEIHandler {
 
     public static void openRecipeGUI(boolean recipe) {
         Minecraft mc = Minecraft.getMinecraft();
-        boolean uiResult;
-        String msg;
 
         if ((RayTracing.instance().getTarget() != null)
                 && (RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)) {
             List<ItemStack> stacks = RayTracing.instance().getIdentifierItems();
-            if (stacks.size() > 0) {
+            if (!stacks.isEmpty()) {
                 mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
                 if (firstInventory) {
                     try {
                         Thread.sleep(1000);
-                    } catch (Exception e) {} ;
+                    } catch (Exception ignored) {}
                     firstInventory = false;
                 }
 
@@ -72,7 +63,7 @@ public class NEIHandler {
                         mc.thePlayer.addChatMessage(
                                 new ChatComponentTranslation(
                                         "\u00a7f\u00a7o" + LangUtil.translateG("client.msg.norecipe")));
-                        mc.displayGuiScreen((GuiScreen) null);
+                        mc.displayGuiScreen(null);
                         mc.setIngameFocus();
                     }
                 }
@@ -84,7 +75,7 @@ public class NEIHandler {
                         mc.thePlayer.addChatMessage(
                                 new ChatComponentTranslation(
                                         "\u00a7f\u00a7o" + LangUtil.translateG("client.msg.nousage")));
-                        mc.displayGuiScreen((GuiScreen) null);
+                        mc.displayGuiScreen(null);
                         mc.setIngameFocus();
                     }
                 }

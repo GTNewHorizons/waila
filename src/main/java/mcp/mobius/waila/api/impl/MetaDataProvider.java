@@ -10,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -26,23 +25,19 @@ import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class MetaDataProvider {
 
-    private Map<Integer, List<IWailaDataProvider>> headBlockProviders = new TreeMap<Integer, List<IWailaDataProvider>>();
-    private Map<Integer, List<IWailaDataProvider>> bodyBlockProviders = new TreeMap<Integer, List<IWailaDataProvider>>();
-    private Map<Integer, List<IWailaDataProvider>> tailBlockProviders = new TreeMap<Integer, List<IWailaDataProvider>>();
+    private final Map<Integer, List<IWailaDataProvider>> headBlockProviders = new TreeMap<>();
+    private final Map<Integer, List<IWailaDataProvider>> bodyBlockProviders = new TreeMap<>();
+    private Map<Integer, List<IWailaDataProvider>> tailBlockProviders = new TreeMap<>();
 
-    private Map<Integer, List<IWailaEntityProvider>> headEntityProviders = new TreeMap<Integer, List<IWailaEntityProvider>>();
-    private Map<Integer, List<IWailaEntityProvider>> bodyEntityProviders = new TreeMap<Integer, List<IWailaEntityProvider>>();
-    private Map<Integer, List<IWailaEntityProvider>> tailEntityProviders = new TreeMap<Integer, List<IWailaEntityProvider>>();
-
-    private Class prevBlock = null;
-    private Class prevTile = null;
+    private final Map<Integer, List<IWailaEntityProvider>> headEntityProviders = new TreeMap<>();
+    private final Map<Integer, List<IWailaEntityProvider>> bodyEntityProviders = new TreeMap<>();
+    private final Map<Integer, List<IWailaEntityProvider>> tailEntityProviders = new TreeMap<>();
 
     public ItemStack identifyBlockHighlight(World world, EntityPlayer player, MovingObjectPosition mop,
             DataAccessorCommon accessor) {
         Block block = accessor.getBlock();
-        int blockID = accessor.getBlockID();
 
-        if (IWailaBlock.class.isInstance(block)) {
+        if (block instanceof IWailaBlock) {
             try {
                 return ((IWailaBlock) block).getWailaStack(accessor, ConfigHandler.instance());
             } catch (Throwable e) {
@@ -73,7 +68,7 @@ public class MetaDataProvider {
                 && accessor.isTimeElapsed(250)
                 && ConfigHandler.instance().showTooltip()) {
             accessor.resetTimer();
-            HashSet<String> keys = new HashSet<String>();
+            HashSet<String> keys = new HashSet<>();
 
             if (ModuleRegistrar.instance().hasSyncedNBTKeys(block))
                 keys.addAll(ModuleRegistrar.instance().getSyncedNBTKeys(block));
@@ -81,7 +76,7 @@ public class MetaDataProvider {
             if (ModuleRegistrar.instance().hasSyncedNBTKeys(accessor.getTileEntity()))
                 keys.addAll(ModuleRegistrar.instance().getSyncedNBTKeys(accessor.getTileEntity()));
 
-            if (keys.size() != 0 || ModuleRegistrar.instance().hasNBTProviders(block)
+            if (!keys.isEmpty() || ModuleRegistrar.instance().hasNBTProviders(block)
                     || ModuleRegistrar.instance().hasNBTProviders(accessor.getTileEntity()))
                 WailaPacketHandler.INSTANCE.sendToServer(new Message0x01TERequest(accessor.getTileEntity(), keys));
 
@@ -99,8 +94,7 @@ public class MetaDataProvider {
                 }
 
         /* Interface IWailaBlock */
-        if (IWailaBlock.class.isInstance(block)) {
-            TileEntity entity = world.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
+        if (block instanceof IWailaBlock) {
             if (layout == Layout.HEADER) try {
                 return ((IWailaBlock) block).getWailaHead(itemStack, currenttip, accessor, ConfigHandler.instance());
             } catch (Throwable e) {
@@ -173,12 +167,12 @@ public class MetaDataProvider {
 
         if (accessor.getEntity() != null && Waila.instance.serverPresent && accessor.isTimeElapsed(250)) {
             accessor.resetTimer();
-            HashSet<String> keys = new HashSet<String>();
+            HashSet<String> keys = new HashSet<>();
 
             if (ModuleRegistrar.instance().hasSyncedNBTKeys(accessor.getEntity()))
                 keys.addAll(ModuleRegistrar.instance().getSyncedNBTKeys(accessor.getEntity()));
 
-            if (keys.size() != 0 || ModuleRegistrar.instance().hasNBTEntityProviders(accessor.getEntity()))
+            if (!keys.isEmpty() || ModuleRegistrar.instance().hasNBTEntityProviders(accessor.getEntity()))
                 WailaPacketHandler.INSTANCE.sendToServer(new Message0x03EntRequest(accessor.getEntity(), keys));
 
         } else if (accessor.getEntity() != null && !Waila.instance.serverPresent && accessor.isTimeElapsed(250)) {

@@ -48,7 +48,6 @@ public class HUDHandlerEntities implements IWailaEntityProvider {
         if (!config.getConfig("general.showhp")) return currenttip;
 
         if (entity instanceof EntityLivingBase) {
-            String hptip = "";
 
             nhearts = nhearts <= 0 ? 20 : nhearts;
 
@@ -91,7 +90,7 @@ public class HUDHandlerEntities implements IWailaEntityProvider {
     }
 
     private static String getEntityMod(Entity entity) {
-        String modName = "";
+        String modName;
         try {
             EntityRegistration er = EntityRegistry.instance().lookupModSpawn(entity.getClass(), true);
             ModContainer modC = er.getContainer();

@@ -9,17 +9,12 @@ import mcp.mobius.waila.gui.interfaces.WAlign;
 
 public class ViewTable extends WidgetBase {
 
-    public class Cell extends WidgetBase {
+    public static class Cell extends WidgetBase {
 
         public Cell(IWidget parent, String text, WAlign align) {
             super(parent);
-
-            // this.addWidget("Crop", new LayoutCropping(null)).setGeometry(new WidgetGeometry(50.0, 50.0, 90.0, 100.0,
-            // CType.RELXY, CType.RELXY, WAlign.CENTER, WAlign.CENTER));
-
             switch (align) {
                 case CENTER:
-                    // this.getWidget("Crop").addWidget("Text", new LabelFixedFont(null, text))
                     this.addWidget("Text", new LabelFixedFont(null, text)).setGeometry(
                             new WidgetGeometry(
                                     50.0,
@@ -32,7 +27,6 @@ public class ViewTable extends WidgetBase {
                                     WAlign.CENTER));
                     break;
                 case LEFT:
-                    // this.getWidget("Crop").addWidget("Text", new LabelFixedFont(null, text))
                     this.addWidget("Text", new LabelFixedFont(null, text)).setGeometry(
                             new WidgetGeometry(
                                     5.0,
@@ -45,7 +39,6 @@ public class ViewTable extends WidgetBase {
                                     WAlign.CENTER));
                     break;
                 case RIGHT:
-                    // this.getWidget("Crop").addWidget("Text", new LabelFixedFont(null, text))
                     this.addWidget("Text", new LabelFixedFont(null, text)).setGeometry(
                             new WidgetGeometry(
                                     5.0,
@@ -241,7 +234,7 @@ public class ViewTable extends WidgetBase {
         IWidget tableLayout = ((ViewportScrollable) (this.getWidget("Viewport"))).getAttachedWidget();
         tableLayout.setSize(100.0, (this.nrows + 1) * 16);
 
-        Row newRow = (Row) new Row(null);
+        Row newRow = new Row(null);
         newRow.setColumnsWidth(this.widths);
         newRow.setColumnsText(strings);
         newRow.setColumnsAlign(this.aligns);

@@ -84,9 +84,4 @@ public interface IWidget {
     void emit(Signal signal, Object... params);
 
     void onWidgetEvent(IWidget srcwidget, Signal signal, Object... params);
-
-    // boolean onMouseEnter();
-    // boolean onMouseMoved();
-    // boolean onMouseLeave();
-
 }

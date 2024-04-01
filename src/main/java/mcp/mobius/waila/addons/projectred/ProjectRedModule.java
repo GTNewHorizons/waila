@@ -9,7 +9,7 @@ public class ProjectRedModule {
 
     public static void register() {
         try {
-            Class ModClass = Class.forName("mrtjp.projectred.ProjectRedIntegration");
+            Class.forName("mrtjp.projectred.ProjectRedIntegration");
             Waila.log.log(Level.INFO, "ProjectRed|Integration mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[ProjectRed] ProjectRed|Integration mod not found.");
@@ -32,10 +32,6 @@ public class ProjectRedModule {
         ModuleRegistrar.instance().registerDecorator(new HUDDecoratorRsGateLogic(), "pr_bgate");
         ModuleRegistrar.instance().registerDecorator(new HUDDecoratorRsGateLogic(), "pr_agate");
         ModuleRegistrar.instance().registerDecorator(new HUDDecoratorRsGateLogic(), "pr_rgate");
-
-        // ModuleRegistrar.instance().registerBlockDecorator(new HUDDecoratorRsGateLogic(), BlockMultipart);
-        // ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerRsGateLogic(), BlockMultipart);
-        // ModuleRegistrar.instance().registerSyncedNBTKey("*", BlockMultipart);
     }
 
 }

@@ -68,9 +68,6 @@ public class ProxyServer {
         /* ETB */
         ETBModule.register();
 
-        /* EnderIO */
-        // EnderIOModule.register();
-
         /* ProjectRed API */
         ProjectRedModule.register();
 
@@ -85,9 +82,6 @@ public class ProxyServer {
 
         /* Steve's Carts */
         StevesCartsModule.register();
-
-        /* Secret Rooms */
-        // SecretRoomsModule.register();
 
         /* Carpenter's Blocks */
         CarpentersModule.register();
@@ -108,9 +102,6 @@ public class ProxyServer {
             HUDHandlerFMP.register();
             DecoratorFMP.register();
         }
-
-        // ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerBlocks(), Block.class);
-        // ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerBlocks(), TileEntity.class);
     }
 
     public void registerIMCs() {
@@ -127,9 +118,9 @@ public class ProxyServer {
         Waila.log.info(String.format("Trying to reflect %s %s", className, methodName));
 
         try {
-            Class reflectClass = Class.forName(className);
+            Class<?> reflectClass = Class.forName(className);
             Method reflectMethod = reflectClass.getDeclaredMethod(methodName, IWailaRegistrar.class);
-            reflectMethod.invoke(null, (IWailaRegistrar) ModuleRegistrar.instance());
+            reflectMethod.invoke(null, ModuleRegistrar.instance());
 
             Waila.log.info(String.format("Success in registering %s", modname));
 
@@ -138,7 +129,7 @@ public class ProxyServer {
         } catch (NoSuchMethodException e) {
             Waila.log.warn(String.format("Could not find method %s", methodName));
         } catch (Exception e) {
-            Waila.log.warn(String.format("Exception while trying to access the method : %s", e.toString()));
+            Waila.log.warn(String.format("Exception while trying to access the method : %s", e));
         }
     }
 

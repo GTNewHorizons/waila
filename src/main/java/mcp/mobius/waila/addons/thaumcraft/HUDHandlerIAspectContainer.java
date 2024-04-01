@@ -43,7 +43,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
         if (tag.hasKey("Aspects")) {
             NBTTagList taglist = tag.getTagList("Aspects", 10);
 
-            List<String> unknownAspects = new ArrayList<String>();
+            List<String> unknownAspects = new ArrayList<>();
 
             for (int i = 0; i < taglist.tagCount(); i++) {
                 NBTTagCompound subtag = taglist.getCompoundTagAt(i);
@@ -97,25 +97,20 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
             }
 
             for (Object o : tileAspects.keySet()) {
-                if ((Integer) tileAspects.get(o) > 0) {
+                if (tileAspects.get(o) > 0) {
                     if (playerAspects.containsKey(o)) {
                         NBTTagCompound cmptag = new NBTTagCompound();
                         cmptag.setString("key", (String) ThaumcraftModule.Aspect_getName.invoke(o));
-                        cmptag.setInteger("value", (Integer) tileAspects.get(o));
+                        cmptag.setInteger("value", tileAspects.get(o));
                         aspects.appendTag(cmptag);
                     } else {
                         NBTTagCompound cmptag = new NBTTagCompound();
                         cmptag.setString("key", "???");
-                        cmptag.setInteger("value", (Integer) tileAspects.get(o));
+                        cmptag.setInteger("value", tileAspects.get(o));
                         aspects.appendTag(cmptag);
                     }
                 }
             }
-
-            // for (int i = 0; i < aspects.tagCount(); i++){
-            // System.out.printf("%s : %s\n", aspects.getCompoundTagAt(i).getString("key"),
-            // aspects.getCompoundTagAt(i).getString("value"));
-            // }
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -26,16 +26,12 @@ public class ProxyClient extends ProxyServer {
 
     TrueTypeFont minecraftiaFont;
 
-    // public static LangUtil lang = LangUtil.loadLangDir("waila");
-
     public ProxyClient() {}
 
     @Override
     public void registerHandlers() {
 
         LangUtil.loadLangDir("waila");
-
-        // TickRegistry.registerTickHandler(WailaTickHandler.instance(), Side.CLIENT);
 
         if (Loader.isModLoaded("NotEnoughItems")) {
             try {
@@ -54,8 +50,6 @@ public class ProxyClient extends ProxyServer {
         ModuleRegistrar.instance().registerHeadProvider(new HUDHandlerEntities(), Entity.class);
         ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerEntities(), Entity.class);
         ModuleRegistrar.instance().registerTailProvider(new HUDHandlerEntities(), Entity.class);
-
-        // ModuleRegistrar.instance().registerShortDataProvider(new SummaryProviderDefault(), Item.class);
 
         ModuleRegistrar.instance().addConfig("General", "general.showents");
         ModuleRegistrar.instance().addConfig("General", "general.showhp");

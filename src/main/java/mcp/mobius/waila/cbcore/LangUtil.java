@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.SortedSet;
+import java.nio.charset.StandardCharsets;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
@@ -37,16 +37,16 @@ public class LangUtil {
     public String translate(String s, Object... format) {
         if (prefix != null && !s.startsWith(prefix + ".")) s = prefix + "." + s;
         String ret = LanguageRegistry.instance().getStringLocalization(s);
-        if (ret.length() == 0) ret = LanguageRegistry.instance().getStringLocalization(s, "en_US");
-        if (ret.length() == 0) ret = StatCollector.translateToLocal(s);
-        if (ret.length() == 0) return s;
+        if (ret.isEmpty()) ret = LanguageRegistry.instance().getStringLocalization(s, "en_US");
+        if (ret.isEmpty()) ret = StatCollector.translateToLocal(s);
+        if (ret.isEmpty()) return s;
         if (format.length > 0) ret = String.format(ret, format);
         return ret;
     }
 
     public void addLangFile(InputStream resource, String lang) throws IOException {
         LanguageRegistry reg = LanguageRegistry.instance();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(resource, "UTF-8"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(resource, StandardCharsets.UTF_8));
         while (true) {
             String read = reader.readLine();
             if (read == null) break;
@@ -68,7 +68,7 @@ public class LangUtil {
     @SideOnly(Side.CLIENT)
     public LangUtil addLangDir(ResourceLocation dir) {
         IResourceManager resManager = Minecraft.getMinecraft().getResourceManager();
-        for (Language lang : (SortedSet<Language>) Minecraft.getMinecraft().getLanguageManager().getLanguages()) {
+        for (Language lang : Minecraft.getMinecraft().getLanguageManager().getLanguages()) {
             String langID = lang.getLanguageCode();
             IResource langRes;
             try {

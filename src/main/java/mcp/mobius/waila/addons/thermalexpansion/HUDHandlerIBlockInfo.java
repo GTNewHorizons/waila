@@ -44,7 +44,7 @@ public class HUDHandlerIBlockInfo implements IWailaDataProvider {
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
         try {
-            List info = new ArrayList();
+            List<Object> info = new ArrayList<>();
             Block block = world.getBlock(x, y, z);
             ThermalExpansionModule.IBlockInfo_getBlockInfo
                     .invoke(block, world, x, y, z, ForgeDirection.UNKNOWN, player, info, false);

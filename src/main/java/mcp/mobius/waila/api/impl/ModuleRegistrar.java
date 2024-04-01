@@ -29,34 +29,34 @@ public class ModuleRegistrar implements IWailaRegistrar {
 
     private static ModuleRegistrar instance = null;
 
-    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> headBlockProviders = new LinkedHashMap<Class, ArrayList<IWailaDataProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> bodyBlockProviders = new LinkedHashMap<Class, ArrayList<IWailaDataProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> tailBlockProviders = new LinkedHashMap<Class, ArrayList<IWailaDataProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> stackBlockProviders = new LinkedHashMap<Class, ArrayList<IWailaDataProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> NBTDataProviders = new LinkedHashMap<Class, ArrayList<IWailaDataProvider>>();
+    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> headBlockProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> bodyBlockProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> tailBlockProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> stackBlockProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> NBTDataProviders = new LinkedHashMap<>();
 
-    public LinkedHashMap<Class, ArrayList<IWailaBlockDecorator>> blockClassDecorators = new LinkedHashMap<Class, ArrayList<IWailaBlockDecorator>>();
+    public LinkedHashMap<Class, ArrayList<IWailaBlockDecorator>> blockClassDecorators = new LinkedHashMap<>();
 
-    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> headEntityProviders = new LinkedHashMap<Class, ArrayList<IWailaEntityProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> bodyEntityProviders = new LinkedHashMap<Class, ArrayList<IWailaEntityProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> tailEntityProviders = new LinkedHashMap<Class, ArrayList<IWailaEntityProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> overrideEntityProviders = new LinkedHashMap<Class, ArrayList<IWailaEntityProvider>>();
-    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> NBTEntityProviders = new LinkedHashMap<Class, ArrayList<IWailaEntityProvider>>();
+    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> headEntityProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> bodyEntityProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> tailEntityProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> overrideEntityProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> NBTEntityProviders = new LinkedHashMap<>();
 
-    public LinkedHashMap<String, ArrayList<IWailaFMPProvider>> headFMPProviders = new LinkedHashMap<String, ArrayList<IWailaFMPProvider>>();
-    public LinkedHashMap<String, ArrayList<IWailaFMPProvider>> bodyFMPProviders = new LinkedHashMap<String, ArrayList<IWailaFMPProvider>>();
-    public LinkedHashMap<String, ArrayList<IWailaFMPProvider>> tailFMPProviders = new LinkedHashMap<String, ArrayList<IWailaFMPProvider>>();
+    public LinkedHashMap<String, ArrayList<IWailaFMPProvider>> headFMPProviders = new LinkedHashMap<>();
+    public LinkedHashMap<String, ArrayList<IWailaFMPProvider>> bodyFMPProviders = new LinkedHashMap<>();
+    public LinkedHashMap<String, ArrayList<IWailaFMPProvider>> tailFMPProviders = new LinkedHashMap<>();
 
-    public LinkedHashMap<String, ArrayList<IWailaFMPDecorator>> FMPClassDecorators = new LinkedHashMap<String, ArrayList<IWailaFMPDecorator>>();
+    public LinkedHashMap<String, ArrayList<IWailaFMPDecorator>> FMPClassDecorators = new LinkedHashMap<>();
 
-    public LinkedHashMap<Class, HashSet<String>> syncedNBTKeys = new LinkedHashMap<Class, HashSet<String>>();
+    public LinkedHashMap<Class, HashSet<String>> syncedNBTKeys = new LinkedHashMap<>();
 
-    public LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>> wikiDescriptions = new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>();
-    public LinkedHashMap<Class, ArrayList<IWailaSummaryProvider>> summaryProviders = new LinkedHashMap<Class, ArrayList<IWailaSummaryProvider>>();
+    public LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>> wikiDescriptions = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaSummaryProvider>> summaryProviders = new LinkedHashMap<>();
 
-    public LinkedHashMap<String, String> IMCRequests = new LinkedHashMap<String, String>();
+    public LinkedHashMap<String, String> IMCRequests = new LinkedHashMap<>();
 
-    public LinkedHashMap<String, IWailaTooltipRenderer> tooltipRenderers = new LinkedHashMap<String, IWailaTooltipRenderer>();
+    public LinkedHashMap<String, IWailaTooltipRenderer> tooltipRenderers = new LinkedHashMap<>();
 
     private ModuleRegistrar() {
         instance = this;
@@ -201,7 +201,7 @@ public class ModuleRegistrar implements IWailaRegistrar {
                         dataProvider.getClass().getName(),
                         clazz));
 
-        if (!target.containsKey(clazz)) target.put(clazz, new ArrayList<T>());
+        if (!target.containsKey(clazz)) target.put(clazz, new ArrayList<>());
 
         ArrayList<T> providers = target.get(clazz);
         if (providers.contains(dataProvider)) return;
@@ -212,7 +212,7 @@ public class ModuleRegistrar implements IWailaRegistrar {
     @Deprecated
     @Override
     public void registerSyncedNBTKey(String key, Class target) {
-        if (!this.syncedNBTKeys.containsKey(target)) this.syncedNBTKeys.put(target, new HashSet<String>());
+        if (!this.syncedNBTKeys.containsKey(target)) this.syncedNBTKeys.put(target, new HashSet<>());
 
         this.syncedNBTKeys.get(target).add(key);
     }
@@ -298,7 +298,7 @@ public class ModuleRegistrar implements IWailaRegistrar {
     }
 
     private <T> Map<Integer, List<T>> getProviders(Object obj, LinkedHashMap<Class, ArrayList<T>> target) {
-        Map<Integer, List<T>> returnList = new TreeMap<Integer, List<T>>();
+        Map<Integer, List<T>> returnList = new TreeMap<>();
         Integer index = 0;
 
         for (Class clazz : target.keySet()) {
@@ -311,14 +311,14 @@ public class ModuleRegistrar implements IWailaRegistrar {
     }
 
     private <T> Map<Integer, List<T>> getProviders(String name, LinkedHashMap<String, ArrayList<T>> target) {
-        Map<Integer, List<T>> returnList = new TreeMap<Integer, List<T>>();
+        Map<Integer, List<T>> returnList = new TreeMap<>();
         returnList.put(0, target.get(name));
         return returnList;
     }
 
     @Deprecated
     public HashSet<String> getSyncedNBTKeys(Object target) {
-        HashSet<String> returnList = new HashSet<String>();
+        HashSet<String> returnList = new HashSet<>();
         for (Class clazz : this.syncedNBTKeys.keySet())
             if (clazz.isInstance(target)) returnList.addAll(this.syncedNBTKeys.get(clazz));
 
@@ -407,24 +407,6 @@ public class ModuleRegistrar implements IWailaRegistrar {
     }
 
     /* ----------------- */
-    /*
-     * @Override public void registerDocTextFile(String filename) { List<String[]> docData = null; int nentries = 0;
-     * try{ docData = this.readFileAsString(filename); } catch (IOException e){ Waila.log.log(Level.WARN,
-     * String.format("Error while accessing file %s : %s", filename, e)); return; } for (String[] ss : docData){ String
-     * modid = ss[0]; String name = ss[1]; String meta = ss[2]; String desc = ss[5].replace('$', '\n'); if
-     * (!(desc.trim().equals(""))){ if (!this.wikiDescriptions.containsKey(modid)) this.wikiDescriptions.put(modid, new
-     * LinkedHashMap <String, LinkedHashMap <String, String>>()); if
-     * (!this.wikiDescriptions.get(modid).containsKey(name)) this.wikiDescriptions.get(modid).put(name, new
-     * LinkedHashMap<String, String>()); this.wikiDescriptions.get(modid).get(name).put(meta, desc);
-     * System.out.printf("Registered %s %s %s\n", modid, name, meta); nentries += 1; } } // String[] sections =
-     * docData.split(">>>>"); // for (String s : sections){ // s.trim(); // if (!s.equals("")){ // try{ // String name =
-     * s.split("\r?\n",2)[0].trim(); // String desc = s.split("\r?\n",2)[1].trim(); // if
-     * (!this.wikiDescriptions.containsKey(modid)) // this.wikiDescriptions.put(modid, new LinkedHashMap <String,
-     * String>()); // this.wikiDescriptions.get(modid).put(name, desc); // nentries += 1; // }catch (Exception e){ //
-     * System.out.printf("%s\n", e); // } // } // } Waila.log.log(Level.INFO,
-     * String.format("Registered %s entries from %s", nentries, filename)); }
-     */
-
     public boolean hasDocTextModID(String modid) {
         return this.wikiDescriptions.containsKey(modid);
     }
@@ -465,10 +447,6 @@ public class ModuleRegistrar implements IWailaRegistrar {
     }
 
     private List<String[]> readFileAsString(String filePath) throws IOException {
-        // URL fileURL = this.getClass().getResource(filePath);
-        // File filedata = new File(fileURL);
-        // Reader paramReader = new InputStreamReader(this.getClass().getResourceAsStream(filePath));
-
         InputStream in = getClass().getResourceAsStream(filePath);
         BufferedReader input = new BufferedReader(new InputStreamReader(in));
         CSVReader reader = new CSVReader(input);
@@ -477,10 +455,5 @@ public class ModuleRegistrar implements IWailaRegistrar {
         reader.close();
 
         return myEntries;
-        /*
-         * StringBuffer fileData = new StringBuffer(); //BufferedReader reader = new BufferedReader(paramReader); char[]
-         * buf = new char[1024]; int numRead=0; while((numRead=input.read(buf)) != -1){ String readData =
-         * String.valueOf(buf, 0, numRead); fileData.append(readData); } input.close(); return fileData.toString();
-         */
     }
 }

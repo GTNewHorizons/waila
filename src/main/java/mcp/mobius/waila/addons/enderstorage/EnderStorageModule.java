@@ -10,17 +10,17 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class EnderStorageModule {
 
-    public static Class TileFrequencyOwner = null;
+    public static Class<?> TileFrequencyOwner = null;
     public static Field TileFrequencyOwner_Freq = null;
 
-    public static Class EnderStorageManager = null;
+    public static Class<?> EnderStorageManager = null;
     public static Method GetColourFromFreq = null;
 
-    public static Class TileEnderTank = null;
+    public static Class<?> TileEnderTank = null;
 
     public static void register() {
         try {
-            Class EnderStorage = Class.forName("codechicken.enderstorage.EnderStorage");
+            Class.forName("codechicken.enderstorage.EnderStorage");
             Waila.log.log(Level.INFO, "EnderStorage mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[EnderStorage] EnderStorage mod not found.");

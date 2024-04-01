@@ -39,7 +39,6 @@ public class HUDHandlerTesseract implements IWailaDataProvider {
             String channel = "%s : %s%s%s %s";
             String freq;
             String frequser;
-            String owner;
 
             if (config.getConfig("enderio.channel")) {
 

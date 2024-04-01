@@ -60,16 +60,16 @@ public class HUDMinecartModular implements IWailaEntityProvider {
             byte[] metas = tag.getByteArray("Modules");
 
             for (int i = 0; i < metas.length; i++) {
-                if (tag.hasKey("module" + String.valueOf(i) + "Fuel")) {
+                if (tag.hasKey("module" + i + "Fuel")) {
 
-                    int fuel = accessor.getNBTInteger(tag, "module" + String.valueOf(i) + "Fuel");
+                    int fuel = accessor.getNBTInteger(tag, "module" + i + "Fuel");
                     currenttip.add(
                             new ItemStack(ItemCartModule, 1, metas[i])
                                     .getDisplayName() + TAB + ALIGNRIGHT + " [ " + WHITE + fuel + GRAY + " POW ]");
 
-                } else if (tag.hasKey("module" + String.valueOf(i) + "Fluid")) {
+                } else if (tag.hasKey("module" + i + "Fluid")) {
 
-                    NBTTagCompound subtag = tag.getCompoundTag("module" + String.valueOf(i) + "Fluid");
+                    NBTTagCompound subtag = tag.getCompoundTag("module" + i + "Fluid");
                     if (subtag.hasKey("Amount")) {
                         int amount = accessor.getNBTInteger(subtag, "Amount");
                         String fluid = subtag.getString("FluidName");
@@ -78,7 +78,7 @@ public class HUDMinecartModular implements IWailaEntityProvider {
                                         + ALIGNRIGHT
                                         + " [ "
                                         + WHITE
-                                        + String.valueOf(amount)
+                                        + amount
                                         + GRAY
                                         + " mB of "
                                         + WHITE

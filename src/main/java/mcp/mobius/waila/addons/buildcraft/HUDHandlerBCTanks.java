@@ -50,8 +50,7 @@ public class HUDHandlerBCTanks implements IWailaDataProvider {
         int liquidAmount = stack != null ? stack.amount : 0;
         int capacity = tank != null ? tank.capacity : 0;
 
-        if (ConfigHandler.instance().getConfig("bc.tankamount"))
-            currenttip.add(String.valueOf(liquidAmount) + "/" + String.valueOf(capacity) + " mB");
+        if (ConfigHandler.instance().getConfig("bc.tankamount")) currenttip.add(liquidAmount + "/" + capacity + " mB");
 
         return currenttip;
     }
@@ -63,14 +62,12 @@ public class HUDHandlerBCTanks implements IWailaDataProvider {
     }
 
     public FluidTankInfo getTank(IWailaDataAccessor accessor) {
-        FluidTankInfo tank = null;
+        FluidTankInfo tank;
         try {
             tank = ((FluidTankInfo[]) BCModule.TileTank_getTankInfo
                     .invoke(BCModule.TileTank.cast(accessor.getTileEntity()), ForgeDirection.UNKNOWN))[0];
         } catch (Exception e) {
-            Waila.log.log(
-                    Level.ERROR,
-                    "[BC] Unhandled exception trying to access a tank for display !.\n" + String.valueOf(e));
+            Waila.log.log(Level.ERROR, "[BC] Unhandled exception trying to access a tank for display !.\n" + e);
             return null;
         }
         return tank;

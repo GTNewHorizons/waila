@@ -55,16 +55,12 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
 
         if (block == silverfish && config.getConfig("vanilla.silverfish")) {
             int metadata = accessor.getMetadata();
-            switch (metadata) {
-                case 0:
-                    return new ItemStack(Blocks.stone);
-                case 1:
-                    return new ItemStack(Blocks.cobblestone);
-                case 2:
-                    return new ItemStack(Blocks.brick_block);
-                default:
-                    return null;
-            }
+            return switch (metadata) {
+                case 0 -> new ItemStack(Blocks.stone);
+                case 1 -> new ItemStack(Blocks.cobblestone);
+                case 2 -> new ItemStack(Blocks.brick_block);
+                default -> null;
+            };
         }
 
         if (block == redstone) {
@@ -206,9 +202,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         if (config.getConfig("vanilla.comparator")) if ((block == comparatorIdl) || (block == comparatorAct)) {
             String mode = ((accessor.getMetadata() >> 2) & 1) == 0 ? LangUtil.translateG("hud.msg.comparator")
                     : LangUtil.translateG("hud.msg.substractor");
-            // int outputSignal = ((TileEntityComparator)entity).func_96100_a();
             currenttip.add("Mode : " + mode);
-            // currenttip.add(String.format("Out : %s", outputSignal));
             return currenttip;
         }
 
@@ -216,13 +210,6 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             currenttip.add(String.format("%s : %s", LangUtil.translateG("hud.msg.power"), accessor.getMetadata()));
             return currenttip;
         }
-
-        /*
-         * if (config.getConfig("vanilla.jukebox")) if (block == jukebox){ NBTTagCompound tag = accessor.getNBTData();
-         * Item record = null; if (tag.hasKey("Record")){ record = Item.itemsList[accessor.getNBTInteger(tag,
-         * "Record")]; currenttip.add(((ItemRecord)record).getRecordTitle()); } else {
-         * currenttip.add(LangUtil.translateG("hud.msg.empty")); } }
-         */
 
         return currenttip;
     }
@@ -266,7 +253,6 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerStackProvider(provider, BlockStoneSlab.class);
         ModuleRegistrar.instance().registerStackProvider(provider, BlockWoodSlab.class);
 
-        // ModuleRegistrar.instance().registerStackProvider(provider, Block.class);
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, melonStem.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, pumpkinStem.getClass());
@@ -274,8 +260,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerBodyProvider(provider, crops.getClass());
         ModuleRegistrar.instance().registerBodyProvider(provider, melonStem.getClass());
         ModuleRegistrar.instance().registerBodyProvider(provider, pumpkinStem.getClass());
-        // ModuleRegistrar.instance().registerBodyProvider(provider, carrot.getClass());
-        // ModuleRegistrar.instance().registerBodyProvider(provider, potato.getClass());
+
         ModuleRegistrar.instance().registerBodyProvider(provider, lever.getClass());
         ModuleRegistrar.instance().registerBodyProvider(provider, repeaterIdle.getClass());
         ModuleRegistrar.instance().registerBodyProvider(provider, repeaterActv.getClass());
@@ -303,10 +288,6 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerNBTProvider(provider, cocoa.getClass());
         ModuleRegistrar.instance().registerNBTProvider(provider, netherwart.getClass());
         ModuleRegistrar.instance().registerNBTProvider(provider, silverfish.getClass());
-
-        // ModuleRegistrar.instance().registerDocTextFile("/mcp/mobius/waila/addons/vanillamc/WikiData.csv");
-
-        // ExternalModulesHandler.instance().registerBlockDecorator(new HUDDecoratorVanilla(), repeaterIdle);
     }
 
 }

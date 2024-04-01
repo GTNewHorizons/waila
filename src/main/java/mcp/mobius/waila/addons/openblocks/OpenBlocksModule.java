@@ -7,12 +7,11 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class OpenBlocksModule {
 
-    public static Class ModOpenBlocks = null;
-    public static Class TileEntityTank = null;
+    public static Class<?> TileEntityTank = null;
 
     public static void register() {
         try {
-            Class ModOpenBlocks = Class.forName("openblocks.OpenBlocks");
+            Class.forName("openblocks.OpenBlocks");
             Waila.log.log(Level.INFO, "OpenBlocks mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[OpenBlocks] OpenBlocks mod not found.");

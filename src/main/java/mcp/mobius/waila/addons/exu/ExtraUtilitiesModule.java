@@ -7,13 +7,12 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class ExtraUtilitiesModule {
 
-    public static Class ModExtraUtilities = null;
-    public static Class TileEntityDrum = null;
+    public static Class<?> TileEntityDrum = null;
 
     public static void register() {
 
         try {
-            Class ModExtraUtilities = Class.forName("com.rwtema.extrautils.ExtraUtils");
+            Class.forName("com.rwtema.extrautils.ExtraUtils");
             Waila.log.log(Level.INFO, "ExtraUtilities mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[ExtraUtilities] ExtraUtilities mod not found.");

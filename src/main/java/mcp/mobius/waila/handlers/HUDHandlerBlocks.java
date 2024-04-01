@@ -39,7 +39,7 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
             if (s != null && !s.endsWith("Unnamed")) name = s;
 
             if (name != null) currenttip.add(name);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
 
         if (itemStack.getItem() == Items.redstone) {
             int md = accessor.getMetadata();
@@ -48,7 +48,7 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
             currenttip.set(currenttip.size() - 1, name + " " + s);
         }
 
-        if (currenttip.size() == 0) currenttip.add("< Unnamed >");
+        if (currenttip.isEmpty()) currenttip.add("< Unnamed >");
         else {
             if (ConfigHandler.instance()
                     .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_METADATA, true)) {
@@ -66,11 +66,6 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        /*
-         * if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTBLOCK, false)
-         * && currenttip.size() > 0 && !accessor.getPlayer().isSneaking()){ currenttip.clear(); currenttip.add(ITALIC +
-         * "Press shift for more data"); return currenttip; }
-         */
         return currenttip;
     }
 
@@ -80,7 +75,7 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
         currenttip.add(RENDER + "{Plip}" + RENDER + "{Plop,thisisatest,222,333}");
 
         String modName = ModIdentification.nameFromStack(itemStack);
-        if (modName != null && !modName.equals("")) {
+        if (modName != null && !modName.isEmpty()) {
             currenttip.add(BLUE + ITALIC + modName);
         }
 

@@ -37,18 +37,12 @@ public class HUDHandlerISecureTile implements IWailaDataProvider {
 
             if (owner.equals("[None]")) return currenttip;
 
-            String access = "INVALID";
-            switch (iaccess) {
-                case 0:
-                    access = LangUtil.translateG("hud.msg.public");
-                    break;
-                case 1:
-                    access = LangUtil.translateG("hud.msg.restricted");
-                    break;
-                case 2:
-                    access = LangUtil.translateG("hud.msg.private");
-                    break;
-            }
+            String access = switch (iaccess) {
+                case 0 -> LangUtil.translateG("hud.msg.public");
+                case 1 -> LangUtil.translateG("hud.msg.restricted");
+                case 2 -> LangUtil.translateG("hud.msg.private");
+                default -> "INVALID";
+            };
 
             currenttip.add(
                     String.format("%s : \u00a7f%s\u00a7r [ %s ]", LangUtil.translateG("hud.msg.owner"), owner, access));
@@ -69,7 +63,7 @@ public class HUDHandlerISecureTile implements IWailaDataProvider {
             int y, int z) {
         try {
             String owner = (String) ThermalExpansionModule.ISecureTile_getOwnerName.invoke(te);
-            int access = ((Enum) ThermalExpansionModule.ISecureTile_getAccess.invoke(te)).ordinal();
+            int access = ((Enum<?>) ThermalExpansionModule.ISecureTile_getAccess.invoke(te)).ordinal();
 
             tag.setString("Owner", owner);
             tag.setInteger("Access", access);

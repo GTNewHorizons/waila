@@ -11,13 +11,8 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class BCModule {
 
-    public static Class TileTank = null;
+    public static Class<?> TileTank = null;
     public static Method TileTank_getTankInfo = null;
-
-    // public static Class IPowerReceptor = null;
-    // public static Class PipeTransportPower = null;
-    // public static Class TileGenericPipe = null;
-    // public static Class TileEngine = null;
 
     public static void register() {
         try {
@@ -31,10 +26,8 @@ public class BCModule {
 
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.WARN, "[BC] Class not found. " + e);
-            return;
         } catch (NoSuchMethodException e) {
             Waila.log.log(Level.WARN, "[BC] Method not found." + e);
-            return;
         }
 
     }

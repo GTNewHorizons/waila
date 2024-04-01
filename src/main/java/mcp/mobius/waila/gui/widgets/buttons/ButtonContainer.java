@@ -27,7 +27,6 @@ public class ButtonContainer extends WidgetBase {
         String buttonName = String.format("Button_%d", nButtons);
         String layoutName = String.format("Layout_%d", nButtons);
         String layoutLabelName = String.format("LayoutLabel_%d", nButtons);
-        String labelName = String.format("Label_%d", nButtons);
 
         this.addWidget(layoutName, new LayoutBase(this));
         this.addWidget(layoutLabelName, new LayoutBase(this));

@@ -9,27 +9,27 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class IC2Module {
 
-    public static Class TileBaseGenerator = null;
+    public static Class<?> TileBaseGenerator = null;
     public static Field TileBaseGenerator_storage = null;
     public static Field TileBaseGenerator_maxStorage = null;
     public static Field TileBaseGenerator_production = null;
 
-    public static Class TileGeoGenerator = null;
+    public static Class<?> TileGeoGenerator = null;
     public static Field TileGeoGenerator_storage = null;
     public static Field TileGeoGenerator_maxStorage = null;
     public static Field TileGeoGenerator_production = null;
 
-    public static Class TileKineticGenerator = null;
+    public static Class<?> TileKineticGenerator = null;
     public static Field TileKineticGenerator_storage = null;
     public static Field TileKineticGenerator_maxStorage = null;
     public static Field TileKineticGenerator_production = null;
 
-    public static Class TileSemifluidGenerator = null;
+    public static Class<?> TileSemifluidGenerator = null;
     public static Field TileSemifluidGenerator_storage = null;
     public static Field TileSemifluidGenerator_maxStorage = null;
     public static Field TileSemifluidGenerator_production = null;
 
-    public static Class TileStirlingGenerator = null;
+    public static Class<?> TileStirlingGenerator = null;
     public static Field TileStirlingGenerator_storage = null;
     public static Field TileStirlingGenerator_maxStorage = null;
     public static Field TileStirlingGenerator_production = null;
@@ -68,7 +68,6 @@ public class IC2Module {
             TileStirlingGenerator_maxStorage = TileStirlingGenerator.getDeclaredField("maxEUStorage");
             TileStirlingGenerator_production = TileStirlingGenerator.getDeclaredField("production");
 
-            // ModuleRegistrar.instance().addConfigRemote("Thermal Expansion", "thermalexpansion.energyhandler");
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerTEGenerator(), TileBaseGenerator);
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerTEGenerator(), TileGeoGenerator);
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerTEGenerator(), TileKineticGenerator);

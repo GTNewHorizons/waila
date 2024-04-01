@@ -34,8 +34,6 @@ public class ThaumcraftModule {
 
     public static Class<?> IGoggles = null;
 
-    // public static Class<?> TileAlchemyFurnace = null;
-
     public static void register() {
         try {
             Thaumcraft = Class.forName("thaumcraft.common.Thaumcraft");
@@ -69,10 +67,8 @@ public class ThaumcraftModule {
 
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.WARN, "[Thaumcraft] Class not found. " + e);
-            return;
         } catch (Exception e) {
             Waila.log.log(Level.WARN, "[Thaumcraft] Unhandled exception." + e);
-            return;
         }
 
     }

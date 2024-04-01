@@ -17,9 +17,8 @@ public class TTRenderHealth implements IWailaTooltipRenderer {
 
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
-        float maxhearts = Float.valueOf(params[0]);
-        float health = Float.valueOf(params[1]);
-        float maxhealth = Float.valueOf(params[2]);
+        float maxhearts = Float.parseFloat(params[0]);
+        float maxhealth = Float.parseFloat(params[2]);
 
         int heartsPerLine = (int) (Math.min(maxhearts, Math.ceil(maxhealth)));
         int nlines = (int) (Math.ceil(maxhealth / maxhearts));
@@ -29,9 +28,9 @@ public class TTRenderHealth implements IWailaTooltipRenderer {
 
     @Override
     public void draw(String[] params, IWailaCommonAccessor accessor) {
-        float maxhearts = Float.valueOf(params[0]);
-        float health = Float.valueOf(params[1]);
-        float maxhealth = Float.valueOf(params[2]);
+        float maxhearts = Float.parseFloat(params[0]);
+        float health = Float.parseFloat(params[1]);
+        float maxhealth = Float.parseFloat(params[2]);
 
         int nhearts = MathHelper.ceiling_float_int(maxhealth);
         int heartsPerLine = (int) (Math.min(maxhearts, Math.ceil(maxhealth)));

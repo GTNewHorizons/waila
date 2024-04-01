@@ -5,5 +5,5 @@ public enum WAlign {
     CENTER,
     RIGHT,
     TOP,
-    BOTTOM;
+    BOTTOM
 }

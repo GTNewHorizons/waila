@@ -14,7 +14,7 @@ import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class Message0x00ServerPing extends SimpleChannelInboundHandler<Message0x00ServerPing> implements IWailaMessage {
 
-    HashMap<String, Boolean> forcedKeys = new HashMap<String, Boolean>();
+    HashMap<String, Boolean> forcedKeys = new HashMap<>();
 
     public Message0x00ServerPing() {
         ConfigCategory serverForcingCfg = ConfigHandler.instance().config.getCategory(Constants.CATEGORY_SERVER);

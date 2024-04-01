@@ -11,7 +11,7 @@ import mcp.mobius.waila.overlay.DisplayUtil;
 
 public class ItemStackDisplay extends WidgetBase {
 
-    ItemStack stack = null;
+    ItemStack stack;
 
     public ItemStackDisplay(IWidget parent) {
         this(parent, null);

@@ -20,10 +20,10 @@ public abstract class WidgetBase implements IWidget {
 
     protected IWidget parent;
     protected WidgetGeometry geom;
-    protected LinkedHashMap<String, IWidget> widgets = new LinkedHashMap<String, IWidget>();
-    protected LinkedHashMap<String, IWidget> renderQueue_HIGH = new LinkedHashMap<String, IWidget>();
-    protected LinkedHashMap<String, IWidget> renderQueue_MEDIUM = new LinkedHashMap<String, IWidget>();
-    protected LinkedHashMap<String, IWidget> renderQueue_LOW = new LinkedHashMap<String, IWidget>();
+    protected LinkedHashMap<String, IWidget> widgets = new LinkedHashMap<>();
+    protected LinkedHashMap<String, IWidget> renderQueue_HIGH = new LinkedHashMap<>();
+    protected LinkedHashMap<String, IWidget> renderQueue_MEDIUM = new LinkedHashMap<>();
+    protected LinkedHashMap<String, IWidget> renderQueue_LOW = new LinkedHashMap<>();
     protected Minecraft mc;
     protected TextureManager texManager;
     protected ScaledResolution rez;
@@ -88,14 +88,12 @@ public abstract class WidgetBase implements IWidget {
 
     @Override
     public IWidget delWidget(String name) {
-        IWidget widget = this.getWidget(name);
-        this.widgets.remove(widget);
-        return widget;
+        return this.widgets.remove(name);
     }
 
     @Override
     public IWidget getWidgetAtCoordinates(double posX, double posY) {
-        for (IWidget widget : new ReverseIterator<IWidget>(this.widgets.values()))
+        for (IWidget widget : new ReverseIterator<>(this.widgets.values()))
             if ((posX >= widget.getPos().getX()) && (posX <= widget.getPos().getX() + widget.getSize().getX())
                     && (posY >= widget.getPos().getY())
                     && (posY <= widget.getPos().getY() + widget.getSize().getY()))
@@ -114,8 +112,7 @@ public abstract class WidgetBase implements IWidget {
         if (this.getLeft() > posx) return false;
         if (this.getRight() < posx) return false;
         if (this.getTop() > posy) return false;
-        if (this.getBottom() < posy) return false;
-        return true;
+        return !(this.getBottom() < posy);
     }
 
     ///////////////////////
@@ -140,10 +137,6 @@ public abstract class WidgetBase implements IWidget {
         GL11.glColor4f(1.0f, 1.0f, 1.0f, this.alpha);
 
         this.draw(this.getPos());
-
-        /*
-         * for (IWidget widget: this.widgets.values()) if (widget.shouldRender()) widget.draw();
-         */
 
         for (IWidget widget : this.renderQueue_LOW.values()) if (widget.shouldRender()) widget.draw();
 
@@ -215,7 +208,7 @@ public abstract class WidgetBase implements IWidget {
         this.geom.setPos(x, y, fracX, fracY);
         this.emit(Signal.GEOM_CHANGED, this.geom);
         return this;
-    };
+    }
 
     @Override
     public IWidget setSize(double sx, double sy) {
@@ -227,7 +220,7 @@ public abstract class WidgetBase implements IWidget {
         this.geom.setSize(sx, sy, fracX, fracY);
         this.emit(Signal.GEOM_CHANGED, this.geom);
         return this;
-    };
+    }
 
     @Override
     public IWidget adjustSize() {
@@ -270,33 +263,32 @@ public abstract class WidgetBase implements IWidget {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
         GL11.glPopMatrix();
         GL11.glPopAttrib();
-        // GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     @Override
     public void setAlpha(float alpha) {
         this.alpha = alpha;
-    };
+    }
 
     @Override
     public float getAlpha() {
         return this.alpha;
-    };
+    }
 
     @Override
     public void show() {
         this.isRendering = true;
-    };
+    }
 
     @Override
     public void hide() {
         this.isRendering = false;
-    };
+    }
 
     @Override
     public boolean shouldRender() {
         return this.isRendering;
-    };
+    }
 
     ////////////////////
     // INPUT HANDLING //
@@ -307,59 +299,36 @@ public abstract class WidgetBase implements IWidget {
 
     @Override
     public void onMouseClick(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseClick(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseClick(event);
     }
 
     @Override
     public void onMouseDrag(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseDrag(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseDrag(event);
     }
 
     @Override
     public void onMouseMove(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseMove(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseMove(event);
     }
 
     @Override
     public void onMouseRelease(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseRelease(event);
-
-        // IWidget widget = this.getWidgetAtCoordinates(event.x, event.y);
-        // if (widget != null && widget != this)
-        // widget.onMouseRelease(event);
     }
 
     @Override
     public void onMouseWheel(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseWheel(event);
     }
 
     @Override
     public void onMouseEnter(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseEnter(event);
     }
 
     @Override
     public void onMouseLeave(MouseEvent event) {
-        // System.out.printf("%s %s\n", this, event);
         if (this.parent != null) this.parent.onMouseLeave(event);
     }
 

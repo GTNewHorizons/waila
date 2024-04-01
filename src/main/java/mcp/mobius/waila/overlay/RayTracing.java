@@ -68,7 +68,6 @@ public class RayTracing {
         Vec3 vec31 = entity.getLook(par3);
         Vec3 vec32 = vec3.addVector(vec31.xCoord * par1, vec31.yCoord * par1, vec31.zCoord * par1);
 
-        // if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true))
         if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true))
             return entity.worldObj.rayTraceBlocks(vec3, vec32, true);
         else return entity.worldObj.rayTraceBlocks(vec3, vec32, false);
@@ -112,8 +111,7 @@ public class RayTracing {
         int x = this.target.blockX;
         int y = this.target.blockY;
         int z = this.target.blockZ;
-        // int blockID = world.getBlockId(x, y, z);
-        // Block mouseoverBlock = Block.blocksList[blockID];
+
         Block mouseoverBlock = world.getBlock(x, y, z);
         TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (mouseoverBlock == null) return items;
@@ -157,15 +155,9 @@ public class RayTracing {
             try {
                 ItemStack block = new ItemStack(mouseoverBlock, 1, world.getBlockMetadata(x, y, z));
 
-                // System.out.printf("%s %s %s\n", block, block.getDisplayName(), block.getItemDamage());
-
                 if (block.getItem() != null) items.add(block);
-                // else
-                // items.add(new ItemStack(new ItemBlock(mouseoverBlock)));
-                // else
-                // items.add(new ItemStack(Item.getItemFromBlock(mouseoverBlock)));
 
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
         }
 
         if (!items.isEmpty()) return items;
@@ -176,11 +168,6 @@ public class RayTracing {
         } catch (Exception e) {}
 
         if (!items.isEmpty()) return items;
-
-        /*
-         * try { items.addAll(mouseoverBlock.getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), 0)); }
-         * catch(Exception e){} if(items.size() > 0) return items;
-         */
 
         if (mouseoverBlock instanceof IShearable) {
             IShearable shearable = (IShearable) mouseoverBlock;

@@ -29,9 +29,9 @@ public class ConfigHandler implements IWailaConfigHandler {
     }
     /* === */
 
-    private LinkedHashMap<String, ConfigModule> modules = new LinkedHashMap<String, ConfigModule>();
-    private ArrayList<String> serverconfigs = new ArrayList<String>();
-    public HashMap<String, Boolean> forcedConfigs = new HashMap<String, Boolean>();
+    private LinkedHashMap<String, ConfigModule> modules = new LinkedHashMap<>();
+    private ArrayList<String> serverconfigs = new ArrayList<>();
+    public HashMap<String, Boolean> forcedConfigs = new HashMap<>();
     public Configuration config = null;
 
     public void addModule(String modName, HashMap<String, String> options) {

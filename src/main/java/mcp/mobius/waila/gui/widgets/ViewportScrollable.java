@@ -11,7 +11,7 @@ import mcp.mobius.waila.gui.interfaces.WAlign;
 
 public class ViewportScrollable extends WidgetBase {
 
-    public class Escalator extends WidgetBase {
+    public static class Escalator extends WidgetBase {
 
         int yOffset = 0;
         int sizeCursor = 8;
@@ -133,8 +133,6 @@ public class ViewportScrollable extends WidgetBase {
 
     @Override
     public void draw() {
-        // if (Display.wasResized())
-
         if ((this.attachedWidget != null) && (this.attachedWidget.getSize().getY() > this.getSize().getY()))
             this.getWidget("Escalator").show();
         else this.getWidget("Escalator").hide();

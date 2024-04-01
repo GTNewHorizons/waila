@@ -43,9 +43,9 @@ public class ScreenEnchants extends ScreenBase {
                 new WidgetGeometry(50.0, 50.0, 90.0, 80.0, CType.REL_X, CType.RELXY, WAlign.CENTER, WAlign.TOP));
 
         String columnName = "\u00a7a\u00a7o" + LangUtil.translateG("enchant.title.name");
-        String columnMinLvl = "\u00a7a\u00a7o" + LangUtil.translateG("enchant.title.minlvl");;
-        String columnMaxLvl = "\u00a7a\u00a7o" + LangUtil.translateG("enchant.title.maxlvl");;
-        String columnWeight = "\u00a7a\u00a7o" + LangUtil.translateG("enchant.title.weight");;
+        String columnMinLvl = "\u00a7a\u00a7o" + LangUtil.translateG("enchant.title.minlvl");
+        String columnMaxLvl = "\u00a7a\u00a7o" + LangUtil.translateG("enchant.title.maxlvl");
+        String columnWeight = "\u00a7a\u00a7o" + LangUtil.translateG("enchant.title.weight");
 
         ((ViewTable) this.getRoot().getWidget("Table"))
                 .setColumnsTitle(columnName, columnMinLvl, columnMaxLvl, columnWeight, "\u00a7a\u00a7oMod")
@@ -80,9 +80,4 @@ public class ScreenEnchants extends ScreenBase {
         this.getRoot().getWidget("Layout_Title").adjustSize();
         return this;
     }
-
-    /*
-     * public ScreenEnchants setStack(ItemStack stack){
-     * ((ItemStackDisplay)this.getRoot().getWidget("ItemStack")).setStack(stack); return this; }
-     */
 }
