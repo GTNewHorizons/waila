@@ -15,12 +15,12 @@ public class CommandDumpHandlers extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender p_71518_1_) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/dumphandlers";
     }
 
     @Override
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
+    public void processCommand(ICommandSender sender, String[] args) {
 
         System.out.printf("\n\n== HEAD BLOCK PROVIDERS ==\n");
         for (Class clazz : ModuleRegistrar.instance().headBlockProviders.keySet()) {
