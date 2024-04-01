@@ -82,32 +82,32 @@ public class HUDHandlerTEGenerator implements IWailaDataProvider {
 
             if (IC2Module.TileBaseGenerator.isInstance(te)) {
                 storage = IC2Module.TileBaseGenerator_storage.getDouble(te);
-                production = (long) IC2Module.TileBaseGenerator_production.getInt(te);
-                maxStorage = (long) IC2Module.TileBaseGenerator_maxStorage.getShort(te);
+                production = IC2Module.TileBaseGenerator_production.getInt(te);
+                maxStorage = IC2Module.TileBaseGenerator_maxStorage.getShort(te);
             }
 
             else if (IC2Module.TileGeoGenerator.isInstance(te)) {
                 storage = IC2Module.TileGeoGenerator_storage.getDouble(te);
-                production = (long) IC2Module.TileGeoGenerator_production.getInt(te);
-                maxStorage = (long) IC2Module.TileGeoGenerator_maxStorage.getShort(te);
+                production = IC2Module.TileGeoGenerator_production.getInt(te);
+                maxStorage = IC2Module.TileGeoGenerator_maxStorage.getShort(te);
             }
 
             else if (IC2Module.TileKineticGenerator.isInstance(te)) {
                 storage = IC2Module.TileKineticGenerator_storage.getDouble(te);
                 production = MathHelper.floor_double_long(IC2Module.TileKineticGenerator_production.getDouble(te));
-                maxStorage = (long) IC2Module.TileKineticGenerator_maxStorage.getInt(te);
+                maxStorage = IC2Module.TileKineticGenerator_maxStorage.getInt(te);
             }
 
             else if (IC2Module.TileSemifluidGenerator.isInstance(te)) {
                 storage = IC2Module.TileSemifluidGenerator_storage.getDouble(te);
                 production = MathHelper.floor_double_long(IC2Module.TileSemifluidGenerator_production.getDouble(te));
-                maxStorage = (long) IC2Module.TileSemifluidGenerator_maxStorage.getShort(te);
+                maxStorage = IC2Module.TileSemifluidGenerator_maxStorage.getShort(te);
             }
 
             else if (IC2Module.TileStirlingGenerator.isInstance(te)) {
                 storage = IC2Module.TileStirlingGenerator_storage.getDouble(te);
                 production = MathHelper.floor_double_long(IC2Module.TileStirlingGenerator_production.getDouble(te));
-                maxStorage = (long) IC2Module.TileStirlingGenerator_maxStorage.getShort(te);
+                maxStorage = IC2Module.TileStirlingGenerator_maxStorage.getShort(te);
             }
 
             tag.setDouble("storage", storage);

@@ -32,15 +32,14 @@ import mcp.mobius.waila.utils.WailaExceptionHandler;
 public class Tooltip {
 
     public static int TabSpacing = 8;
-    public static int IconSize = 8;
 
-    ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
-    ArrayList<ArrayList<Integer>> sizes = new ArrayList<ArrayList<Integer>>();
-    ArrayList<Integer> columnsWidth = new ArrayList<Integer>();
-    ArrayList<Integer> columnsPos = new ArrayList<Integer>();
+    ArrayList<ArrayList<String>> lines = new ArrayList<>();
+    ArrayList<ArrayList<Integer>> sizes = new ArrayList<>();
+    ArrayList<Integer> columnsWidth = new ArrayList<>();
+    ArrayList<Integer> columnsPos = new ArrayList<>();
 
-    ArrayList<Renderable> elements = new ArrayList<Renderable>();
-    ArrayList<Renderable> elements2nd = new ArrayList<Renderable>();
+    ArrayList<Renderable> elements = new ArrayList<>();
+    ArrayList<Renderable> elements2nd = new ArrayList<>();
 
     int w, h, x, y, ty;
     int offsetX;
@@ -52,7 +51,7 @@ public class Tooltip {
     IWailaCommonAccessor accessor = DataAccessorCommon.instance;
 
     ///////////////////////////////////// Renderable///////////////////////////////////////
-    private class Renderable {
+    private static class Renderable {
 
         final IWailaTooltipRenderer renderer;
         final Point pos;
@@ -112,8 +111,8 @@ public class Tooltip {
 
         for (String s : textData) {
 
-            ArrayList<String> line = new ArrayList<String>(Arrays.asList(patternTab.split(s)));
-            ArrayList<Integer> size = new ArrayList<Integer>();
+            ArrayList<String> line = new ArrayList<>(Arrays.asList(patternTab.split(s)));
+            ArrayList<Integer> size = new ArrayList<>();
             for (String ss : line) size.add(DisplayUtil.getDisplayWidth(ss));
 
             // This line.size() > 1 is to prevent columns to align on lines without column (ie : the name & modid)

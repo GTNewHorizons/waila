@@ -17,7 +17,7 @@ public class MouseEvent {
         WHEEL,
         ENTER,
         LEAVE
-    };
+    }
 
     public long timestamp;
     public Minecraft mc;
@@ -49,16 +49,22 @@ public class MouseEvent {
     }
 
     public String toString() {
-        String retstring = String
-                .format("MOUSE %s :  [%s] [ %.2f %.2f %d ] [", this.type, this.timestamp, this.x, this.y, this.z);
-        if (this.buttonCount < 5)
-            for (int i = 0; i < this.buttonCount; i++) retstring += String.format(" %s ", this.buttonState[i]);
-        else for (int i = 0; i < 5; i++) retstring += String.format(" %s ", this.buttonState[i]);
-        retstring += "]";
+        StringBuilder retstring = new StringBuilder(
+                String.format(
+                        "MOUSE %s :  [%s] [ %.2f %.2f %d ] [",
+                        this.type,
+                        this.timestamp,
+                        this.x,
+                        this.y,
+                        this.z));
+        if (buttonCount < 5)
+            for (int i = 0; i < buttonCount; i++) retstring.append(String.format(" %s ", this.buttonState[i]));
+        else for (int i = 0; i < 5; i++) retstring.append(String.format(" %s ", this.buttonState[i]));
+        retstring.append("]");
 
-        if (this.button != -1) retstring += String.format(" Button %s", this.button);
+        if (this.button != -1) retstring.append(String.format(" Button %s", this.button));
 
-        return retstring;
+        return retstring.toString();
     }
 
     // Returns the event type based on the previous mouse event.
@@ -76,9 +82,9 @@ public class MouseEvent {
             return this.type;
         }
 
-        for (int i = 0; i < this.buttonCount; i++) {
+        for (int i = 0; i < buttonCount; i++) {
             if (this.buttonState[i] != me.buttonState[i]) {
-                if (this.buttonState[i] == true) this.type = EventType.CLICK;
+                if (this.buttonState[i]) this.type = EventType.CLICK;
                 else this.type = EventType.RELEASED;
                 this.button = i;
                 return this.type;
@@ -87,7 +93,7 @@ public class MouseEvent {
 
         // MOVE & DRAG EVENTS (we moved the mouse and button 0 was clicked or not)
         if ((this.x != me.x) || (this.y != me.y)) {
-            if (this.buttonState[0] == true) this.type = EventType.DRAG;
+            if (this.buttonState[0]) this.type = EventType.DRAG;
             else this.type = EventType.MOVE;
             return this.type;
         }

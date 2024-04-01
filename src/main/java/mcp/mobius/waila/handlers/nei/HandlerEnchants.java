@@ -44,7 +44,7 @@ public class HandlerEnchants implements IContainerInputHandler {
             screen.setName(stackover.getDisplayName());
             screen.setEnchantability(String.valueOf(itemEnchantability));
 
-            Enchantment[] enchants = null;
+            Enchantment[] enchants;
             if (stackover.getItem() == Items.book) enchants = Enchantment.enchantmentsBookList;
             else enchants = Enchantment.enchantmentsList;
 
@@ -59,13 +59,12 @@ public class HandlerEnchants implements IContainerInputHandler {
                 if (enchant.canApplyAtEnchantingTable(stackover) || stackover.getItem() == Items.book) {
 
                     if (stackover.isItemEnchanted()) {
-                        Map stackenchants = EnchantmentHelper.getEnchantments(stackover);
-                        for (Object id : stackenchants.keySet()) {
-                            if (!enchant.canApplyTogether(Enchantment.enchantmentsList[(Integer) id]))
-                                isCompatible = false;
-                            if ((Integer) id == enchant.effectId) {
+                        Map<Integer, Integer> stackenchants = EnchantmentHelper.getEnchantments(stackover);
+                        for (Integer id : stackenchants.keySet()) {
+                            if (!enchant.canApplyTogether(Enchantment.enchantmentsList[id])) isCompatible = false;
+                            if (id == enchant.effectId) {
                                 isApplied = true;
-                                level = (Integer) stackenchants.get(id);
+                                level = stackenchants.get(id);
                             }
                         }
                     }
@@ -75,18 +74,13 @@ public class HandlerEnchants implements IContainerInputHandler {
                         int maxEnchantEnchantability = enchant.getMaxEnchantability(lvl);
 
                         int minItemEnchantability = 1;
-                        int meanItemEnchantability = 1 + itemEnchantability / 4;
                         int maxItemEnchantability = 1 + itemEnchantability / 2;
 
                         int minModifiedEnchantability = (int) (0.85 * minItemEnchantability + 0.5);
-                        int meanModifiedEnchantability = (int) (1.00 * meanItemEnchantability + 0.5);
                         int maxModifiedEnchantability = (int) (1.15 * maxItemEnchantability + 0.5);
 
                         int minLevel = (int) ((minEnchantEnchantability - minModifiedEnchantability) / 1.15);
                         int maxLevel = (int) ((maxEnchantEnchantability - maxModifiedEnchantability) / 0.85);
-
-                        int meanMinLevel = (int) ((minEnchantEnchantability - meanModifiedEnchantability) / 1.0);
-                        int meanMaxLevel = (int) ((maxEnchantEnchantability - meanModifiedEnchantability) / 1.0);
 
                         String colorcode = isCompatible ? "\u00a7f" : "\u00a7c";
 
@@ -94,9 +88,9 @@ public class HandlerEnchants implements IContainerInputHandler {
 
                         screen.addRow(
                                 colorcode + enchant.getTranslatedName(lvl),
-                                colorcode + String.valueOf(minLevel),
-                                colorcode + String.valueOf(maxLevel),
-                                colorcode + String.valueOf(enchant.getWeight()),
+                                colorcode + minLevel,
+                                colorcode + maxLevel,
+                                colorcode + enchant.getWeight(),
                                 "\u00a79\u00a7o" + ModIdentification.nameFromObject(enchant));
                     }
                 }

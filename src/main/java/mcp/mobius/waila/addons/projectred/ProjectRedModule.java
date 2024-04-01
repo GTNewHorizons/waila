@@ -9,7 +9,7 @@ public class ProjectRedModule {
 
     public static void register() {
         try {
-            Class ModClass = Class.forName("mrtjp.projectred.ProjectRedIntegration");
+            Class.forName("mrtjp.projectred.ProjectRedIntegration");
             Waila.log.log(Level.INFO, "ProjectRed|Integration mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[ProjectRed] ProjectRed|Integration mod not found.");

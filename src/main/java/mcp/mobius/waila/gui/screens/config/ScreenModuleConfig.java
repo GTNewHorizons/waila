@@ -16,12 +16,8 @@ import mcp.mobius.waila.utils.Constants;
 
 public class ScreenModuleConfig extends ScreenBase {
 
-    private String modName;
-
     public ScreenModuleConfig(GuiScreen parent, String modname) {
         super(parent);
-
-        this.modName = modname;
 
         this.getRoot().addWidget("ButtonContainer", new ButtonContainerLabel(this.getRoot(), 2, 100, 25.0));
         this.getRoot().getWidget("ButtonContainer").setGeometry(
@@ -29,7 +25,7 @@ public class ScreenModuleConfig extends ScreenBase {
 
         ButtonContainerLabel buttonContainer = ((ButtonContainerLabel) this.getRoot().getWidget("ButtonContainer"));
 
-        for (String key : ConfigHandler.instance().getConfigKeys(this.modName).keySet()) {
+        for (String key : ConfigHandler.instance().getConfigKeys(modname).keySet()) {
             if (ConfigHandler.instance().isServerRequired(key)) buttonContainer.addButton(
                     new ButtonBooleanConfigRemote(
                             this.getRoot(),
@@ -37,7 +33,7 @@ public class ScreenModuleConfig extends ScreenBase {
                             key,
                             "screen.button.no",
                             "screen.button.yes"),
-                    ConfigHandler.instance().getConfigKeys(this.modName).get(key));
+                    ConfigHandler.instance().getConfigKeys(modname).get(key));
             else buttonContainer.addButton(
                     new ButtonBooleanConfig(
                             this.getRoot(),
@@ -45,7 +41,7 @@ public class ScreenModuleConfig extends ScreenBase {
                             key,
                             "screen.button.no",
                             "screen.button.yes"),
-                    ConfigHandler.instance().getConfigKeys(this.modName).get(key));
+                    ConfigHandler.instance().getConfigKeys(modname).get(key));
         }
 
         this.getRoot().addWidget("LayoutBack", new LayoutBase(this.getRoot()));

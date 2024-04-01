@@ -118,9 +118,9 @@ public class ProxyServer {
         Waila.log.info(String.format("Trying to reflect %s %s", className, methodName));
 
         try {
-            Class reflectClass = Class.forName(className);
+            Class<?> reflectClass = Class.forName(className);
             Method reflectMethod = reflectClass.getDeclaredMethod(methodName, IWailaRegistrar.class);
-            reflectMethod.invoke(null, (IWailaRegistrar) ModuleRegistrar.instance());
+            reflectMethod.invoke(null, ModuleRegistrar.instance());
 
             Waila.log.info(String.format("Success in registering %s", modname));
 
@@ -129,7 +129,7 @@ public class ProxyServer {
         } catch (NoSuchMethodException e) {
             Waila.log.warn(String.format("Could not find method %s", methodName));
         } catch (Exception e) {
-            Waila.log.warn(String.format("Exception while trying to access the method : %s", e.toString()));
+            Waila.log.warn(String.format("Exception while trying to access the method : %s", e));
         }
     }
 

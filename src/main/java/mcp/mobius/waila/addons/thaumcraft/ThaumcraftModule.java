@@ -67,10 +67,8 @@ public class ThaumcraftModule {
 
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.WARN, "[Thaumcraft] Class not found. " + e);
-            return;
         } catch (Exception e) {
             Waila.log.log(Level.WARN, "[Thaumcraft] Unhandled exception." + e);
-            return;
         }
 
     }

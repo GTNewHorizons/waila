@@ -12,18 +12,18 @@ import mcp.mobius.waila.api.ITaggedList;
 
 public class TipList<E, T> extends ArrayList<E> implements ITaggedList<E, T> {
 
-    Map<E, Set<T>> tags = new HashMap();
+    Map<E, Set<T>> tags = new HashMap<>();
 
     @Override
     public boolean add(E e, T tag) {
-        if (!tags.containsKey(e)) tags.put(e, new HashSet<T>());
+        if (!tags.containsKey(e)) tags.put(e, new HashSet<>());
         tags.get(e).add(tag);
         return super.add(e);
     }
 
     @Override
     public boolean add(E e, Collection<? extends T> taglst) {
-        if (!tags.containsKey(e)) tags.put(e, new HashSet<T>());
+        if (!tags.containsKey(e)) tags.put(e, new HashSet<>());
         tags.get(e).addAll(taglst);
 
         return super.add(e);
@@ -33,7 +33,7 @@ public class TipList<E, T> extends ArrayList<E> implements ITaggedList<E, T> {
     public Set<T> getTags(E e) {
         Set<T> ret = tags.get(e);
         if (ret == null && this.contains(e)) {
-            tags.put(e, new HashSet<T>());
+            tags.put(e, new HashSet<>());
             ret = tags.get(e);
         }
         return ret;
@@ -46,7 +46,7 @@ public class TipList<E, T> extends ArrayList<E> implements ITaggedList<E, T> {
 
     @Override
     public void addTag(E e, T tag) {
-        if (this.contains(e) && !tags.containsKey(e)) tags.put(e, new HashSet<T>());
+        if (this.contains(e) && !tags.containsKey(e)) tags.put(e, new HashSet<>());
 
         tags.get(e).add(tag);
     }
@@ -58,7 +58,7 @@ public class TipList<E, T> extends ArrayList<E> implements ITaggedList<E, T> {
 
     @Override
     public void removeTag(E e, T tag) {
-        if (this.contains(e) && !tags.containsKey(e)) tags.put(e, new HashSet<T>());
+        if (this.contains(e) && !tags.containsKey(e)) tags.put(e, new HashSet<>());
 
         tags.get(e).remove(tag);
     }
@@ -70,7 +70,7 @@ public class TipList<E, T> extends ArrayList<E> implements ITaggedList<E, T> {
 
     @Override
     public Set<E> getEntries(T tag) {
-        Set<E> ret = new HashSet();
+        Set<E> ret = new HashSet<>();
         for (Entry<E, Set<T>> s : tags.entrySet()) {
             if (s.getValue().contains(tag)) ret.add(s.getKey());
         }
@@ -84,12 +84,13 @@ public class TipList<E, T> extends ArrayList<E> implements ITaggedList<E, T> {
 
     @Override
     public String getTagsAsString(E e) {
-        String ret = "";
-        for (T s : tags.get(e)) ret += s.toString() + ",";
+        StringBuilder ret = new StringBuilder();
+        for (T s : tags.get(e)) ret.append(s.toString()).append(",");
 
-        if (ret.length() > 0) ret = ret.substring(0, ret.length() - 1);
+        // noinspection SizeReplaceableByIsEmpty
+        if (ret.length() > 0) ret = new StringBuilder(ret.substring(0, ret.length() - 1));
 
-        return ret;
+        return ret.toString();
     }
 
     @Override

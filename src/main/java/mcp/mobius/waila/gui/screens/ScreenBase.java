@@ -19,7 +19,7 @@ public abstract class ScreenBase extends GuiScreen {
     public ScreenBase(GuiScreen parent) {
         this.parent = parent;
         this.mc = Minecraft.getMinecraft();
-        this.widgets = new HashMap<String, IWidget>();
+        this.widgets = new HashMap<>();
 
         this.addWidget("canvas", new LayoutCanvas());
 
@@ -41,9 +41,7 @@ public abstract class ScreenBase extends GuiScreen {
     }
 
     public IWidget delWidget(String name) {
-        IWidget widget = this.getWidget(name);
-        this.widgets.remove(widget);
-        return widget;
+        return this.widgets.remove(name);
     }
 
     public IWidget getRoot() {
@@ -75,7 +73,7 @@ public abstract class ScreenBase extends GuiScreen {
     @Override
     public void keyTyped(char keyChar, int keyID) {
         if (keyID == 1) if (this.parent == null) {
-            this.mc.displayGuiScreen((GuiScreen) null);
+            this.mc.displayGuiScreen(null);
             this.mc.setIngameFocus();
         } else this.mc.displayGuiScreen(this.parent);
     }

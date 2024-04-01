@@ -91,9 +91,7 @@ public class HUDHandlerCache implements IWailaDataProvider {
         try {
             tag.setInteger("MaxStored", (Integer) ThermalExpansionModule.TileCache_getMaxStored.invoke(te));
             tag.setInteger("Stored", (Integer) ThermalExpansionModule.TileCache_getStored.invoke(te));
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return tag;

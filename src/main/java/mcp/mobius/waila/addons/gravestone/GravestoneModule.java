@@ -7,12 +7,12 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class GravestoneModule {
 
-    public static Class BlockGraveStone = null;
+    public static Class<?> BlockGraveStone = null;
 
     public static void register() {
 
         try {
-            Class ModGravestone = Class.forName("GraveStone.ModGraveStone");
+            Class.forName("GraveStone.ModGraveStone");
             Waila.log.log(Level.INFO, "GraveStone mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[GraveStone] GraveStone mod not found.");

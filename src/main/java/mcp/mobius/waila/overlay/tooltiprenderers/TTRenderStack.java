@@ -20,10 +20,10 @@ public class TTRenderStack implements IWailaTooltipRenderer {
 
     @Override
     public void draw(String[] params, IWailaCommonAccessor accessor) {
-        int type = Integer.valueOf(params[0]); // 0 for block, 1 for item
+        int type = Integer.parseInt(params[0]); // 0 for block, 1 for item
         String name = params[1]; // Fully qualified name
-        int amount = Integer.valueOf(params[2]);
-        int meta = Integer.valueOf(params[3]);
+        int amount = Integer.parseInt(params[2]);
+        int meta = Integer.parseInt(params[3]);
 
         ItemStack stack = null;
         if (type == 0) stack = new ItemStack((Block) Block.blockRegistry.getObject(name), amount, meta);

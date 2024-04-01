@@ -52,9 +52,9 @@ public class HUDHandlerSocket implements IWailaDataProvider {
 
                     String configstr = "[ ";
 
-                    if (tank != -1) configstr += "\u00a79" + String.valueOf(tank) + " ";
+                    if (tank != -1) configstr += "\u00a79" + tank + " ";
 
-                    if (inventory != -1) configstr += "\u00a7a" + String.valueOf(inventory) + " ";
+                    if (inventory != -1) configstr += "\u00a7a" + inventory + " ";
 
                     if (rsControl[0] || rsControl[1] || rsControl[2]) {
                         configstr += "\u00a7c";

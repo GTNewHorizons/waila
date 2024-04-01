@@ -7,11 +7,11 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class MagicalCropsModule {
 
-    public static Class BlockMagicalCrops = null;
+    public static Class<?> BlockMagicalCrops = null;
 
     public static void register() {
         try {
-            Class MagicalCrops = Class.forName("magicalcrops.mod_sCrops");
+            Class.forName("magicalcrops.mod_sCrops");
             Waila.log.log(Level.INFO, "MagicalCrops mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[MagicalCrops] MagicalCrops mod not found.");

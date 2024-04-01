@@ -24,7 +24,7 @@ public class Message0x03EntRequest extends SimpleChannelInboundHandler<Message0x
 
     public int dim;
     public int id;
-    public HashSet<String> keys = new HashSet<String>();
+    public HashSet<String> keys = new HashSet<>();
 
     public Message0x03EntRequest() {}
 

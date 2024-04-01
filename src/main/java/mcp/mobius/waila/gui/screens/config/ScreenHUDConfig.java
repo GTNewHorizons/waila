@@ -23,7 +23,7 @@ import mcp.mobius.waila.utils.Constants;
 
 public class ScreenHUDConfig extends ScreenBase {
 
-    private class EventCanvas extends LayoutBase {
+    private static class EventCanvas extends LayoutBase {
 
         IWidget draggedWidget = null;
 
@@ -59,7 +59,7 @@ public class ScreenHUDConfig extends ScreenBase {
                                     WAlign.CENTER));
 
             this.addWidget("TextTuto1", new LabelFixedFont(null, "screen.label.dragtuto")).setGeometry(
-                    new WidgetGeometry(50.0, 30.0, 20, 20, CType.RELXY, CType.ABSXY, WAlign.CENTER, WAlign.CENTER));;
+                    new WidgetGeometry(50.0, 30.0, 20, 20, CType.RELXY, CType.ABSXY, WAlign.CENTER, WAlign.CENTER));
 
             IWidget layoutX = this.addWidget("LayoutX", new LayoutBase(this));
             layoutX.setGeometry(

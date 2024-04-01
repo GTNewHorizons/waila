@@ -18,7 +18,7 @@ public class TTRenderTrueTyper implements IWailaTooltipRenderer {
         this.data = data;
         this.size = new Dimension(
                 DisplayUtil.getDisplayWidth(data),
-                data.equals("") ? 0 : (int) ((TrueTypeFont) Waila.proxy.getFont()).getHeight() / 2);
+                data.isEmpty() ? 0 : (int) ((TrueTypeFont) Waila.proxy.getFont()).getHeight() / 2);
     }
 
     @Override

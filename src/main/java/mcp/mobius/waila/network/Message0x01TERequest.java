@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -25,21 +26,13 @@ import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x01TERequest> implements IWailaMessage {
 
-    private static Field classToNameMap = null;
+    private static final Field classToNameMap;
 
     static {
         try {
-            classToNameMap = TileEntity.class.getDeclaredField("classToNameMap");
-            classToNameMap.setAccessible(true);
+            classToNameMap = ReflectionHelper.findField(TileEntity.class, "classToNameMap", "field_145853_j");
         } catch (Exception e) {
-
-            try {
-                classToNameMap = TileEntity.class.getDeclaredField("field_145853_j");
-                classToNameMap.setAccessible(true);
-            } catch (Exception f) {
-                throw new RuntimeException(f);
-            }
-
+            throw new RuntimeException(e);
         }
     }
 
@@ -47,7 +40,7 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
     public int posX;
     public int posY;
     public int posZ;
-    public HashSet<String> keys = new HashSet<String>();
+    public HashSet<String> keys = new HashSet<>();
 
     public Message0x01TERequest() {}
 
@@ -115,9 +108,7 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
                     for (IWailaDataProvider provider : providersList) {
                         try {
                             tag = provider.getNBTData(player, entity, tag, world, msg.posX, msg.posY, msg.posZ);
-                        } catch (AbstractMethodError ame) {
-                            tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
-                        } catch (NoSuchMethodError nsm) {
+                        } catch (AbstractMethodError | NoSuchMethodError ame) {
                             tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
                         }
                     }
@@ -128,9 +119,7 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
                     for (IWailaDataProvider provider : providersList) {
                         try {
                             tag = provider.getNBTData(player, entity, tag, world, msg.posX, msg.posY, msg.posZ);
-                        } catch (AbstractMethodError ame) {
-                            tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
-                        } catch (NoSuchMethodError nsm) {
+                        } catch (AbstractMethodError | NoSuchMethodError ame) {
                             tag = AccessHelper.getNBTData(provider, entity, tag, world, msg.posX, msg.posY, msg.posZ);
                         }
                     }

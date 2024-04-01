@@ -9,15 +9,15 @@ import com.google.common.collect.Lists;
 
 public class ReverseIterator<T> implements Iterable<T> {
 
-    private ListIterator<T> listIterator;
+    private final ListIterator<T> listIterator;
 
     public ReverseIterator(Collection<T> wrappedList) {
-        List list = Lists.newArrayList(wrappedList);
+        List<T> list = Lists.newArrayList(wrappedList);
         this.listIterator = list.listIterator(wrappedList.size());
     }
 
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
 
             public boolean hasNext() {
                 return listIterator.hasPrevious();

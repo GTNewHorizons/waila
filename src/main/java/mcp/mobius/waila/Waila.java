@@ -69,7 +69,7 @@ public class Waila {
             eBus.setAccessible(true);
             EventBus FMLbus = (EventBus) eBus.get(FMLCommonHandler.instance().findContainerFor(this));
             FMLbus.register(this);
-        } catch (Throwable t) {}
+        } catch (Throwable ignored) {}
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
             MinecraftForge.EVENT_BUS.register(new DecoratorRenderer());

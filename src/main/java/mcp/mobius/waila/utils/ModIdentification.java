@@ -12,10 +12,8 @@ import cpw.mods.fml.common.registry.GameData;
 
 public class ModIdentification {
 
-    public static HashMap<String, String> modSource_Name = new HashMap<String, String>();
-    public static HashMap<String, String> modSource_ID = new HashMap<String, String>();
-    public static HashMap<Integer, String> itemMap = new HashMap<Integer, String>();
-    public static HashMap<String, String> keyhandlerStrings = new HashMap<String, String>();
+    public static HashMap<String, String> modSource_Name = new HashMap<>();
+    public static HashMap<String, String> modSource_ID = new HashMap<>();
 
     public static void init() {
 
@@ -60,8 +58,7 @@ public class ModIdentification {
     public static String nameFromStack(ItemStack stack) {
         try {
             ModContainer mod = GameData.findModOwner(GameData.itemRegistry.getNameForObject(stack.getItem()));
-            String modname = mod == null ? "Minecraft" : mod.getName();
-            return modname;
+            return mod == null ? "Minecraft" : mod.getName();
         } catch (NullPointerException e) {
             return "";
         }

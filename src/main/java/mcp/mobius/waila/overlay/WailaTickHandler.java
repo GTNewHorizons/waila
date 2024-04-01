@@ -7,7 +7,6 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -29,15 +28,9 @@ import mcp.mobius.waila.utils.Constants;
 
 public class WailaTickHandler {
 
-    private int ticks = 0;
-    public ItemStack identifiedHighlight = new ItemStack(Blocks.dirt);
-    private List<String> currenttip = new TipList<String, String>();
-    private List<String> currenttipHead = new TipList<String, String>();
-    private List<String> currenttipBody = new TipList<String, String>();
-    private List<String> currenttipTail = new TipList<String, String>();
     public Tooltip tooltip = null;
     public MetaDataProvider handler = new MetaDataProvider();
-    private Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getMinecraft();
 
     private static WailaTickHandler _instance;
 
@@ -71,6 +64,10 @@ public class WailaTickHandler {
             RayTracing.instance().fire();
             MovingObjectPosition target = RayTracing.instance().getTarget();
 
+            List<String> currenttip;
+            List<String> currenttipHead;
+            List<String> currenttipBody;
+            List<String> currenttipTail;
             if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 DataAccessorCommon accessor = DataAccessorCommon.instance;
                 accessor.set(world, player, target);
@@ -78,12 +75,12 @@ public class WailaTickHandler {
                                                                                 // or the override
 
                 if (targetStack != null) {
-                    this.currenttip = new TipList<String, String>();
-                    this.currenttipHead = new TipList<String, String>();
-                    this.currenttipBody = new TipList<String, String>();
-                    this.currenttipTail = new TipList<String, String>();
+                    currenttip = new TipList<String, String>();
+                    currenttipHead = new TipList<String, String>();
+                    currenttipBody = new TipList<String, String>();
+                    currenttipTail = new TipList<String, String>();
 
-                    this.currenttipHead = handler.handleBlockTextData(
+                    currenttipHead = handler.handleBlockTextData(
                             targetStack,
                             world,
                             player,
@@ -91,7 +88,7 @@ public class WailaTickHandler {
                             accessor,
                             currenttipHead,
                             Layout.HEADER);
-                    this.currenttipBody = handler.handleBlockTextData(
+                    currenttipBody = handler.handleBlockTextData(
                             targetStack,
                             world,
                             player,
@@ -99,7 +96,7 @@ public class WailaTickHandler {
                             accessor,
                             currenttipBody,
                             Layout.BODY);
-                    this.currenttipTail = handler.handleBlockTextData(
+                    currenttipTail = handler.handleBlockTextData(
                             targetStack,
                             world,
                             player,
@@ -110,17 +107,17 @@ public class WailaTickHandler {
 
                     if (ConfigHandler.instance()
                             .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTBLOCK, false)
-                            && currenttipBody.size() > 0
+                            && !currenttipBody.isEmpty()
                             && !accessor.getPlayer().isSneaking()) {
                         currenttipBody.clear();
                         currenttipBody.add(ITALIC + "Press shift for more data");
                     }
 
-                    this.currenttip.addAll(this.currenttipHead);
-                    this.currenttip.addAll(this.currenttipBody);
-                    this.currenttip.addAll(this.currenttipTail);
+                    currenttip.addAll(currenttipHead);
+                    currenttip.addAll(currenttipBody);
+                    currenttip.addAll(currenttipTail);
 
-                    this.tooltip = new Tooltip(this.currenttip, targetStack);
+                    this.tooltip = new Tooltip(currenttip, targetStack);
                 }
             } else if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
                 DataAccessorCommon accessor = DataAccessorCommon.instance;
@@ -130,12 +127,12 @@ public class WailaTickHandler {
                                                                             // check.
 
                 if (targetEnt != null) {
-                    this.currenttip = new TipList<String, String>();
-                    this.currenttipHead = new TipList<String, String>();
-                    this.currenttipBody = new TipList<String, String>();
-                    this.currenttipTail = new TipList<String, String>();
+                    currenttip = new TipList<String, String>();
+                    currenttipHead = new TipList<String, String>();
+                    currenttipBody = new TipList<String, String>();
+                    currenttipTail = new TipList<String, String>();
 
-                    this.currenttipHead = handler.handleEntityTextData(
+                    currenttipHead = handler.handleEntityTextData(
                             targetEnt,
                             world,
                             player,
@@ -143,7 +140,7 @@ public class WailaTickHandler {
                             accessor,
                             currenttipHead,
                             Layout.HEADER);
-                    this.currenttipBody = handler.handleEntityTextData(
+                    currenttipBody = handler.handleEntityTextData(
                             targetEnt,
                             world,
                             player,
@@ -151,7 +148,7 @@ public class WailaTickHandler {
                             accessor,
                             currenttipBody,
                             Layout.BODY);
-                    this.currenttipTail = handler.handleEntityTextData(
+                    currenttipTail = handler.handleEntityTextData(
                             targetEnt,
                             world,
                             player,
@@ -162,17 +159,17 @@ public class WailaTickHandler {
 
                     if (ConfigHandler.instance()
                             .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTENTS, false)
-                            && currenttipBody.size() > 0
+                            && !currenttipBody.isEmpty()
                             && !accessor.getPlayer().isSneaking()) {
                         currenttipBody.clear();
                         currenttipBody.add(ITALIC + "Press shift for more data");
                     }
 
-                    this.currenttip.addAll(this.currenttipHead);
-                    this.currenttip.addAll(this.currenttipBody);
-                    this.currenttip.addAll(this.currenttipTail);
+                    currenttip.addAll(currenttipHead);
+                    currenttip.addAll(currenttipBody);
+                    currenttip.addAll(currenttipTail);
 
-                    this.tooltip = new Tooltip(this.currenttip, false);
+                    this.tooltip = new Tooltip(currenttip, false);
                 }
             }
         }

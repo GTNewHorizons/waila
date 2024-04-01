@@ -10,10 +10,10 @@ import mcp.mobius.waila.gui.interfaces.WAlign;
 
 public class WidgetGeometry {
 
-    double x = -1;
-    double y = -1;
-    double sx = -1;
-    double sy = -1;
+    double x;
+    double y;
+    double sx;
+    double sy;
 
     CType posType;
     CType sizeType;
@@ -26,7 +26,7 @@ public class WidgetGeometry {
     WAlign alignX;
     WAlign alignY;
 
-    public class PointDouble {
+    public static class PointDouble {
 
         double x;
         double y;
@@ -34,7 +34,7 @@ public class WidgetGeometry {
         public PointDouble(double x, double y) {
             this.x = x;
             this.y = y;
-        };
+        }
 
         public double getX() {
             return this.x;

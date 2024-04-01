@@ -55,16 +55,12 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
 
         if (block == silverfish && config.getConfig("vanilla.silverfish")) {
             int metadata = accessor.getMetadata();
-            switch (metadata) {
-                case 0:
-                    return new ItemStack(Blocks.stone);
-                case 1:
-                    return new ItemStack(Blocks.cobblestone);
-                case 2:
-                    return new ItemStack(Blocks.brick_block);
-                default:
-                    return null;
-            }
+            return switch (metadata) {
+                case 0 -> new ItemStack(Blocks.stone);
+                case 1 -> new ItemStack(Blocks.cobblestone);
+                case 2 -> new ItemStack(Blocks.brick_block);
+                default -> null;
+            };
         }
 
         if (block == redstone) {

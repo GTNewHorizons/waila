@@ -2,8 +2,6 @@ package mcp.mobius.waila.utils;
 
 public final class Constants {
 
-    public static String BIND_SCREEN_WIKI = "showwiki";
-    public static String BIND_SCREEN_TECH = "showtechtree";
     public static String BIND_SCREEN_ENCH = "showenchant";
 
     public static String BIND_WAILA_CFG = "waila.keybind.wailaconfig";
@@ -11,7 +9,6 @@ public final class Constants {
     public static String BIND_WAILA_LIQUID = "waila.keybind.liquid";
     public static String BIND_WAILA_RECIPE = "waila.keybind.recipe";
     public static String BIND_WAILA_USAGE = "waila.keybind.usage";
-    public static String BIND_WAILA_TESTING = "waila.keybind.testing";
 
     public static String CFG_NEI_SHOW = "world.highlight_tips";
     public static String BIND_NEI_SHOW = "keys.world.highlight_tips";
@@ -40,6 +37,5 @@ public final class Constants {
     public static String CATEGORY_MODULES = "modules";
     public static String CATEGORY_SERVER = "server_forcing";
     public static boolean SERVER_FREE = false;
-    public static boolean SERVER_FORCED = true;
 
 }

@@ -22,8 +22,8 @@ import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class HUDCargoManager implements IWailaDataProvider {
 
-    private static String colors[] = { "NA", "Red", "Blue", "Yellow", "Green", "Dis." };
-    private static String sides[] = { "Yellow", "Blue", "Green", "Red" };
+    private static String[] colors = { "NA", "Red", "Blue", "Yellow", "Green", "Dis." };
+    private static String[] sides = { "Yellow", "Blue", "Green", "Red" };
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -73,15 +73,14 @@ public class HUDCargoManager implements IWailaDataProvider {
             int doReturn = accessor.getNBTInteger(tag, "doReturn");
 
             for (int i = 0; i < 4; i++) {
-                int target = accessor.getNBTInteger(tag, "target" + String.valueOf(i));
-                int color = accessor.getNBTInteger(tag, "color" + String.valueOf(i));
-                int amount = accessor.getNBTInteger(tag, "amount" + String.valueOf(i));
+                int target = accessor.getNBTInteger(tag, "target" + i);
+                int color = accessor.getNBTInteger(tag, "color" + i);
+                int amount = accessor.getNBTInteger(tag, "amount" + i);
                 if (color == 5) continue;
 
                 String direction = (toCart & (1 << i)) != 0 ? "Load" : "Unload";
                 String shouldReturn = (doReturn & (1 << i)) != 0 ? "Ret." : "Cont.";
-                String sAmount = amount == 0 ? "All"
-                        : String.valueOf(this.getAmount(amount) + " " + this.getAmountType(amount));
+                String sAmount = amount == 0 ? "All" : this.getAmount(amount) + " " + this.getAmountType(amount);
 
                 String selection = (String) StevesCartsModule.GetSelectionName
                         .invoke(StevesCartsModule.CargoItemSelection.cast(itemSelection.get(target)));
@@ -112,40 +111,17 @@ public class HUDCargoManager implements IWailaDataProvider {
     }
 
     public int getAmount(int id) {
-        switch (id) {
-            case 1:
-                return 1;
-
-            case 2:
-                return 3;
-
-            case 3:
-                return 8;
-
-            case 4:
-                return 16;
-
-            case 5:
-                return 32;
-
-            case 6:
-                return 64;
-
-            case 7:
-                return 1;
-
-            case 8:
-                return 2;
-
-            case 9:
-                return 3;
-
-            case 10:
-                return 5;
-
-            default:
-                return 0;
-        }
+        return switch (id) {
+            case 1, 7 -> 1;
+            case 2, 9 -> 3;
+            case 3 -> 8;
+            case 4 -> 16;
+            case 5 -> 32;
+            case 6 -> 64;
+            case 8 -> 2;
+            case 10 -> 5;
+            default -> 0;
+        };
     }
 
     // 0 - MAX

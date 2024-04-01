@@ -7,14 +7,14 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class TwilightForestModule {
 
-    public static Class BlockTFRoots = null;
-    public static Class BlockTFPlant = null;
-    public static Class BlockTFSapling = null;
+    public static Class<?> BlockTFRoots = null;
+    public static Class<?> BlockTFPlant = null;
+    public static Class<?> BlockTFSapling = null;
 
     public static void register() {
 
         try {
-            Class TwilightForestMod = Class.forName("twilightforest.TwilightForestMod");
+            Class.forName("twilightforest.TwilightForestMod");
             Waila.log.log(Level.INFO, "TwilightForestMod mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[TwilightForestMod] TwilightForestMod mod not found.");

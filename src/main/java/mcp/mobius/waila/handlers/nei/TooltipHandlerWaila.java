@@ -19,7 +19,7 @@ public class TooltipHandlerWaila implements IContainerTooltipHandler {
     public List<String> handleItemTooltip(GuiContainer arg0, ItemStack itemstack, int arg2, int arg3,
             List<String> currenttip) {
         String canonicalName = ModIdentification.nameFromStack(itemstack);
-        if (canonicalName != null && !canonicalName.equals("")) currenttip.add("\u00a79\u00a7o" + canonicalName);
+        if (canonicalName != null && !canonicalName.isEmpty()) currenttip.add("\u00a79\u00a7o" + canonicalName);
         return currenttip;
     }
 

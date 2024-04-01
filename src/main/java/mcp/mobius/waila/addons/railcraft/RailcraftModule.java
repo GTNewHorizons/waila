@@ -9,13 +9,13 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class RailcraftModule {
 
-    public static Class TileTankBase = null;
-    public static Class ITankTile = null;
+    public static Class<?> TileTankBase = null;
+    public static Class<?> ITankTile = null;
     public static Method ITankTile_getTank = null;
 
     public static void register() {
         try {
-            Class ModRailcraft = Class.forName("mods.railcraft.common.core.Railcraft");
+            Class.forName("mods.railcraft.common.core.Railcraft");
             Waila.log.log(Level.INFO, "Railcraft mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[Railcraft] Railcraft mod not found.");

@@ -9,14 +9,14 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class ETBModule {
 
-    public static Class TileSocket = null;
+    public static Class<?> TileSocket = null;
     public static Field Socket_sides = null;
     public static Field Socket_configs = null;
 
-    public static Class SocketsMod = null;
+    public static Class<?> SocketsMod = null;
     public static Field module = null;
 
-    public static Class SideConfig = null;
+    public static Class<?> SideConfig = null;
     public static Field SC_tank = null;
     public static Field SC_inventory = null;
     public static Field SC_rsControl = null;
@@ -24,7 +24,7 @@ public class ETBModule {
 
     public static void register() {
         try {
-            Class ModClass = Class.forName("emasher.sockets.TileSocket");
+            Class.forName("emasher.sockets.TileSocket");
             Waila.log.log(Level.INFO, "Engineer Toolbox mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[Engineer Toolbox] Engineer Toolbox mod not found.");

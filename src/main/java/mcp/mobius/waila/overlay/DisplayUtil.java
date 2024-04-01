@@ -34,7 +34,7 @@ public class DisplayUtil {
     private static RenderItem renderItem = new RenderItem();
 
     public static int getDisplayWidth(String s) {
-        if (s == null || s.equals("")) return 0;
+        if (s == null || s.isEmpty()) return 0;
 
         int width = 0;
 
@@ -112,11 +112,11 @@ public class DisplayUtil {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_F(f1, f2, f3, f);
-        tessellator.addVertex((double) (x + w), (double) y, (double) zLevel);
-        tessellator.addVertex((double) x, (double) y, (double) zLevel);
+        tessellator.addVertex(x + w, y, zLevel);
+        tessellator.addVertex(x, y, zLevel);
         tessellator.setColorRGBA_F(f5, f6, f7, f4);
-        tessellator.addVertex((double) x, (double) (y + h), (double) zLevel);
-        tessellator.addVertex((double) (x + w), (double) (y + h), (double) zLevel);
+        tessellator.addVertex(x, y + h, zLevel);
+        tessellator.addVertex(x + w, y + h, zLevel);
         tessellator.draw();
         GL11.glShadeModel(GL11.GL_FLAT);
         GL11.glDisable(GL11.GL_BLEND);
@@ -131,10 +131,10 @@ public class DisplayUtil {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_F(1, 1, 1);
-        tessellator.addVertexWithUV(x + 0, y + h, zLevel, (u + 0) * f, (v + th) * f1);
+        tessellator.addVertexWithUV(x, y + h, zLevel, (u) * f, (v + th) * f1);
         tessellator.addVertexWithUV(x + w, y + h, zLevel, (u + tw) * f, (v + th) * f1);
-        tessellator.addVertexWithUV(x + w, y + 0, zLevel, (u + tw) * f, (v + 0) * f1);
-        tessellator.addVertexWithUV(x + 0, y + 0, zLevel, (u + 0) * f, (v + 0) * f1);
+        tessellator.addVertexWithUV(x + w, y, zLevel, (u + tw) * f, (v) * f1);
+        tessellator.addVertexWithUV(x, y, zLevel, (u) * f, (v) * f1);
         tessellator.draw();
     }
 
@@ -151,11 +151,11 @@ public class DisplayUtil {
                     Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
         } catch (Throwable ignored) {}
 
-        if (namelist == null) namelist = new ArrayList<String>();
+        if (namelist == null) namelist = new ArrayList<>();
 
-        if (namelist.size() == 0) namelist.add("Unnamed");
+        if (namelist.isEmpty()) namelist.add("Unnamed");
 
-        if (namelist.get(0) == null || namelist.get(0).equals("")) namelist.set(0, "Unnamed");
+        if (namelist.get(0) == null || namelist.get(0).isEmpty()) namelist.set(0, "Unnamed");
 
         namelist.set(0, itemstack.getRarity().rarityColor.toString() + namelist.get(0));
         for (int i = 1; i < namelist.size(); i++) namelist.set(i, "\u00a77" + namelist.get(i));

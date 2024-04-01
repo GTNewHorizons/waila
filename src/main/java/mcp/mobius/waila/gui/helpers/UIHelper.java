@@ -21,25 +21,10 @@ public class UIHelper {
 
         Tessellator tess = Tessellator.instance;
         tess.startDrawingQuads();
-        tess.addVertexWithUV(
-                (double) (posX + 0),
-                (double) (posY + sizeY),
-                (double) zLevel,
-                texU * f,
-                (texV + texSizeV) * f);
-        tess.addVertexWithUV(
-                (double) (posX + sizeX),
-                (double) (posY + sizeY),
-                (double) zLevel,
-                (texU + texSizeU) * f,
-                (texV + texSizeV) * f);
-        tess.addVertexWithUV(
-                (double) (posX + sizeX),
-                (double) (posY + 0),
-                (double) zLevel,
-                (texU + texSizeU) * f,
-                texV * f);
-        tess.addVertexWithUV((double) (posX + 0), (double) (posY + 0), (double) zLevel, texU * f, texV * f);
+        tess.addVertexWithUV(posX, posY + sizeY, zLevel, texU * f, (texV + texSizeV) * f);
+        tess.addVertexWithUV(posX + sizeX, posY + sizeY, zLevel, (texU + texSizeU) * f, (texV + texSizeV) * f);
+        tess.addVertexWithUV(posX + sizeX, posY, zLevel, (texU + texSizeU) * f, texV * f);
+        tess.addVertexWithUV(posX, posY, zLevel, texU * f, texV * f);
         tess.draw();
     }
 
@@ -60,11 +45,11 @@ public class UIHelper {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_F(red1, green1, blue1, alpha1);
-        tessellator.addVertex((double) maxx, (double) miny, (double) zlevel);
-        tessellator.addVertex((double) minx, (double) miny, (double) zlevel);
+        tessellator.addVertex(maxx, miny, zlevel);
+        tessellator.addVertex(minx, miny, zlevel);
         tessellator.setColorRGBA_F(red2, green2, blue2, alpha2);
-        tessellator.addVertex((double) minx, (double) maxy, (double) zlevel);
-        tessellator.addVertex((double) maxx, (double) maxy, (double) zlevel);
+        tessellator.addVertex(minx, maxy, zlevel);
+        tessellator.addVertex(maxx, maxy, zlevel);
         tessellator.draw();
         GL11.glShadeModel(GL11.GL_FLAT);
         GL11.glDisable(GL11.GL_BLEND);
@@ -123,7 +108,6 @@ public class UIHelper {
     public static void drawBillboard(float posX, float posY, float posZ, float offX, float offY, float offZ, float rotX,
             float rotY, float rotZ, double x1, double y1, double x2, double y2, int r, int g, int b, int a) {
         float f = 1.6F;
-        float f1 = 0.016666668F * f;
         GL11.glPushMatrix();
 
         GL11.glTranslatef(posX + offX, posY + offY, posZ + offZ);
@@ -211,17 +195,7 @@ public class UIHelper {
 
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         int j = fontrenderer.getStringWidth(text) / 2;
-        drawRectangle(
-                (double) (-j - 1),
-                (double) (8 + b0),
-                0.0,
-                (double) (j + 1),
-                (double) (-1 + b0),
-                0.0,
-                0,
-                0,
-                0,
-                64);
+        drawRectangle(-j - 1, 8 + b0, 0.0, j + 1, -1 + b0, 0.0, 0, 0, 0, 64);
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         fontrenderer.drawString(text, -fontrenderer.getStringWidth(text) / 2, b0, 553648127);

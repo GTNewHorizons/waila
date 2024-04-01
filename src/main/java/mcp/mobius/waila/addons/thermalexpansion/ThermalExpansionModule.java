@@ -12,45 +12,42 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class ThermalExpansionModule {
 
-    public static Class IEnergyProvider = null;
+    public static Class<?> IEnergyProvider = null;
     public static Method IEnergyProvider_getMaxStorage = null;
     public static Method IEnergyProvider_getCurStorage = null;
 
-    public static Class IEnergyReceiver = null;
+    public static Class<?> IEnergyReceiver = null;
     public static Method IEnergyReceiver_getMaxStorage = null;
     public static Method IEnergyReceiver_getCurStorage = null;
 
-    public static Class IEnergyInfo = null;
+    public static Class<?> IEnergyInfo = null;
     public static Method IEnergyInfo_getMaxStorage = null;
     public static Method IEnergyInfo_getCurStorage = null;
 
-    public static Class TileEnergyCell = null;
+    public static Class<?> TileEnergyCell = null;
     public static Field TileEnergyCell_Recv = null;
     public static Field TileEnergyCell_Send = null;
 
-    public static Class TileTank = null;
+    public static Class<?> TileTank = null;
     public static Method TileTank_getTankFluid = null;
     public static Method TileTank_getTankCapacity = null;
     public static Method TileTank_getTankAmount = null;
     public static Field TileTank_mode = null;
 
-    public static Class TileTesseract = null;
+    public static Class<?> TileTesseract = null;
     public static Field TileTesseract_Item = null;
     public static Field TileTesseract_Fluid = null;
     public static Field TileTesseract_Energy = null;
 
-    public static Class ISecureTile = null;
+    public static Class<?> ISecureTile = null;
     public static Method ISecureTile_getAccess = null;
     public static Method ISecureTile_getOwnerName = null;
 
-    public static Class TileCache = null;
+    public static Class<?> TileCache = null;
     public static Method TileCache_getItemStack = null;
     public static Method TileCache_getMaxStored = null;
     public static Method TileCache_getStored = null;
 
-    public static Class BlockMultipart = null;
-
-    public static Class IBlockInfo = null;
     public static Method IBlockInfo_getBlockInfo = null;
 
     public static void register() {

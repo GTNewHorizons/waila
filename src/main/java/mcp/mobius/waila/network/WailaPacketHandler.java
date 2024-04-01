@@ -27,7 +27,7 @@ public enum WailaPacketHandler {
 
     public EnumMap<Side, FMLEmbeddedChannel> channels;
 
-    private WailaPacketHandler() {
+    WailaPacketHandler() {
         this.channels = NetworkRegistry.INSTANCE.newChannel("Waila", new WailaCodec());
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             addClientHandlers();
@@ -55,7 +55,7 @@ public enum WailaPacketHandler {
         channel.pipeline().addAfter("TERequest", "EntRequest", new Message0x03EntRequest());
     }
 
-    private class WailaCodec extends FMLIndexedMessageToMessageCodec<IWailaMessage> {
+    private static class WailaCodec extends FMLIndexedMessageToMessageCodec<IWailaMessage> {
 
         public WailaCodec() {
             addDiscriminator(0, Message0x00ServerPing.class);
@@ -117,8 +117,7 @@ public enum WailaPacketHandler {
 
     public String readString(ByteBuf buffer) throws IOException {
         int j = buffer.readShort();
-        String s = new String(buffer.readBytes(j).array(), Charsets.UTF_8);
-        return s;
+        return new String(buffer.readBytes(j).array(), Charsets.UTF_8);
     }
 
     public static EntityPlayerMP getPlayer(ChannelHandlerContext ctx) {

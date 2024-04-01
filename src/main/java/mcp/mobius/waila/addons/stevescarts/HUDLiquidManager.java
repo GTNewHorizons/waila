@@ -20,8 +20,8 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 
 public class HUDLiquidManager implements IWailaDataProvider {
 
-    private static String colors[] = { "NA", "Red", "Blue", "Yellow", "Green", "Dis." };
-    private static String sides[] = { "Yellow", "Blue", "Green", "Red" };
+    private static String[] colors = { "NA", "Red", "Blue", "Yellow", "Green", "Dis." };
+    private static String[] sides = { "Yellow", "Blue", "Green", "Red" };
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -67,9 +67,8 @@ public class HUDLiquidManager implements IWailaDataProvider {
         int doReturn = accessor.getNBTInteger(tag, "doReturn");
 
         for (int i = 0; i < 4; i++) {
-            int target = accessor.getNBTInteger(tag, "target" + String.valueOf(i));
-            int color = accessor.getNBTInteger(tag, "color" + String.valueOf(i));
-            int amount = accessor.getNBTInteger(tag, "amount" + String.valueOf(i));
+            int color = accessor.getNBTInteger(tag, "color" + i);
+            int amount = accessor.getNBTInteger(tag, "amount" + i);
 
             String fluidName = "<Empty>";
             int fluidAmount = 0;
@@ -84,7 +83,7 @@ public class HUDLiquidManager implements IWailaDataProvider {
 
             String direction = (toCart & (1 << i)) != 0 ? "Load" : "Unload";
             String shouldReturn = (doReturn & (1 << i)) != 0 ? "Ret." : "Cont.";
-            String sAmount = amount == 0 ? "All" : String.valueOf(this.getMaxAmountBuckets(amount)) + " mB";
+            String sAmount = amount == 0 ? "All" : this.getMaxAmountBuckets(amount) + " mB";
 
             currenttip.add(
                     String.format(
@@ -110,30 +109,19 @@ public class HUDLiquidManager implements IWailaDataProvider {
     }
 
     public int getMaxAmountBuckets(int id) {
-        switch (id) {
-            case 1:
-                return 250;
-            case 2:
-                return 500;
-            case 3:
-                return 750;
-            case 4:
-                return 1000;
-            case 5:
-                return 2000;
-            case 6:
-                return 3000;
-            case 7:
-                return 5000;
-            case 8:
-                return 7500;
-            case 9:
-                return 10000;
-            case 10:
-                return 15000;
-            default:
-                return 0;
-        }
+        return switch (id) {
+            case 1 -> 250;
+            case 2 -> 500;
+            case 3 -> 750;
+            case 4 -> 1000;
+            case 5 -> 2000;
+            case 6 -> 3000;
+            case 7 -> 5000;
+            case 8 -> 7500;
+            case 9 -> 10000;
+            case 10 -> 15000;
+            default -> 0;
+        };
     }
 
     @Override

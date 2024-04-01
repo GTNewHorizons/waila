@@ -11,7 +11,7 @@ import mcp.mobius.waila.gui.interfaces.WAlign;
 
 public class ViewportScrollable extends WidgetBase {
 
-    public class Escalator extends WidgetBase {
+    public static class Escalator extends WidgetBase {
 
         int yOffset = 0;
         int sizeCursor = 8;

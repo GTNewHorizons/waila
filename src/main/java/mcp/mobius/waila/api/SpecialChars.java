@@ -67,17 +67,13 @@ public class SpecialChars {
     /**
      * Helper method to get a proper RENDER string. Just put the name of the renderer and the params in, and it will
      * give back a directly usable String for the tooltip.
-     * 
-     * @param name
-     * @param params
-     * @return
      */
     public static String getRenderString(String name, String... params) {
-        String result = RENDER + "{" + name;
+        StringBuilder result = new StringBuilder(RENDER + "{" + name);
         for (String s : params) {
-            result += "," + s;
+            result.append(",").append(s);
         }
-        result += "}";
-        return result;
+        result.append("}");
+        return result.toString();
     }
 }

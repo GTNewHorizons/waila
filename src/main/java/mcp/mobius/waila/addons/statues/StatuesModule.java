@@ -9,12 +9,12 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class StatuesModule {
 
-    public static Class TileEntityStatue = null;
+    public static Class<?> TileEntityStatue = null;
     public static Field skinName = null;
 
     public static void register() {
         try {
-            Class Statues = Class.forName("info.jbcs.minecraft.statues.Statues");
+            Class.forName("info.jbcs.minecraft.statues.Statues");
             Waila.log.log(Level.INFO, "Statues mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[Statues] Statues mod not found.");
@@ -24,10 +24,7 @@ public class StatuesModule {
         try {
             TileEntityStatue = Class.forName("info.jbcs.minecraft.statues.TileEntityStatue");
             skinName = TileEntityStatue.getDeclaredField("skinName");
-        } catch (ClassNotFoundException e) {
-            Waila.log.log(Level.WARN, "[Statues] Class not found. " + e);
-            return;
-        } catch (NoSuchFieldException e) {
+        } catch (ClassNotFoundException | NoSuchFieldException e) {
             Waila.log.log(Level.WARN, "[Statues] Class not found. " + e);
             return;
         }

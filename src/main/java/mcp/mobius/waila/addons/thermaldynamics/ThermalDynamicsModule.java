@@ -7,7 +7,7 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class ThermalDynamicsModule {
 
-    public static Class TileFluidDuct = null;
+    public static Class<?> TileFluidDuct = null;
 
     public static void register() {
         // XXX : We register the Fluiduct

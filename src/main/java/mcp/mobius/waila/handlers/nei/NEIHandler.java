@@ -3,7 +3,6 @@ package mcp.mobius.waila.handlers.nei;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
@@ -44,18 +43,16 @@ public class NEIHandler {
 
     public static void openRecipeGUI(boolean recipe) {
         Minecraft mc = Minecraft.getMinecraft();
-        boolean uiResult;
-        String msg;
 
         if ((RayTracing.instance().getTarget() != null)
                 && (RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)) {
             List<ItemStack> stacks = RayTracing.instance().getIdentifierItems();
-            if (stacks.size() > 0) {
+            if (!stacks.isEmpty()) {
                 mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
                 if (firstInventory) {
                     try {
                         Thread.sleep(1000);
-                    } catch (Exception e) {} ;
+                    } catch (Exception ignored) {}
                     firstInventory = false;
                 }
 
@@ -66,7 +63,7 @@ public class NEIHandler {
                         mc.thePlayer.addChatMessage(
                                 new ChatComponentTranslation(
                                         "\u00a7f\u00a7o" + LangUtil.translateG("client.msg.norecipe")));
-                        mc.displayGuiScreen((GuiScreen) null);
+                        mc.displayGuiScreen(null);
                         mc.setIngameFocus();
                     }
                 }
@@ -78,7 +75,7 @@ public class NEIHandler {
                         mc.thePlayer.addChatMessage(
                                 new ChatComponentTranslation(
                                         "\u00a7f\u00a7o" + LangUtil.translateG("client.msg.nousage")));
-                        mc.displayGuiScreen((GuiScreen) null);
+                        mc.displayGuiScreen(null);
                         mc.setIngameFocus();
                     }
                 }

@@ -12,7 +12,7 @@ public enum IconUI {
     EHEART(52, 9, 9, 9, "c"),
     BUBBLEEXP(25, 18, 9, 9, "x");
 
-    private final static HashMap<String, IconUI> lk = new HashMap<String, IconUI>();
+    private final static HashMap<String, IconUI> lk = new HashMap<>();
     static {
         for (IconUI icon : IconUI.values()) {
             lk.put(icon.symbol, icon);
@@ -23,11 +23,11 @@ public enum IconUI {
     public final int bu, bv, bsu, bsv;
     public final String symbol;
 
-    private IconUI(int u, int v, int su, int sv, String symbol) {
+    IconUI(int u, int v, int su, int sv, String symbol) {
         this(u, v, su, sv, -1, -1, -1, -1, symbol);
     }
 
-    private IconUI(int u, int v, int su, int sv, int bu, int bv, int bsu, int bsv, String symbol) {
+    IconUI(int u, int v, int su, int sv, int bu, int bv, int bsu, int bsv, String symbol) {
         this.u = u;
         this.v = v;
         this.su = su;

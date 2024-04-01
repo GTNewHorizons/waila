@@ -43,7 +43,7 @@ public class DecoratorFMP implements IWailaBlockDecorator {
     }
 
     public static void register() {
-        Class BlockMultipart = null;
+        Class<?> BlockMultipart;
         try {
             BlockMultipart = Class.forName("codechicken.multipart.BlockMultipart");
         } catch (ClassNotFoundException e) {

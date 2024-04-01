@@ -9,18 +9,18 @@ import mcp.mobius.waila.api.impl.ModuleRegistrar;
 
 public class EnderIOModule {
 
-    public static Class TileCapacitorBank = null;
+    public static Class<?> TileCapacitorBank = null;
     public static Method TCB_getMaxInput = null;
     public static Method TCB_getMaxOutput = null;
     public static Method TCB_getEnergyStored = null;
     public static Method TCB_getMaxEnergyStored = null;
     public static Method TCB_getMaxIO = null;
 
-    public static Class TileTesseract = null;
+    public static Class<?> TileTesseract = null;
 
     public static void register() {
         try {
-            Class ModClass = Class.forName("crazypants.enderio.EnderIO");
+            Class.forName("crazypants.enderio.EnderIO");
             Waila.log.log(Level.INFO, "EnderIO mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[EnderIO] EnderIO mod not found.");

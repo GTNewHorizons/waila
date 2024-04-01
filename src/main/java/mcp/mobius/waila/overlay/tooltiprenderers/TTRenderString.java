@@ -14,7 +14,7 @@ public class TTRenderString implements IWailaTooltipRenderer {
 
     public TTRenderString(String data) {
         this.data = data;
-        this.size = new Dimension(DisplayUtil.getDisplayWidth(data), data.equals("") ? 0 : 8);
+        this.size = new Dimension(DisplayUtil.getDisplayWidth(data), data.isEmpty() ? 0 : 8);
     }
 
     @Override

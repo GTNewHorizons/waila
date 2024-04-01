@@ -29,7 +29,7 @@ public class HUDHandlerStatues implements IWailaDataProvider {
             IWailaConfigHandler config) {
         try {
             String skinName = (String) StatuesModule.skinName.get(accessor.getTileEntity());
-            if (skinName.equals("")) {
+            if (skinName.isEmpty()) {
                 TileEntity belowEnt = accessor.getWorld().getTileEntity(
                         accessor.getPosition().blockX,
                         accessor.getPosition().blockY - 1,
@@ -38,7 +38,7 @@ public class HUDHandlerStatues implements IWailaDataProvider {
                     skinName = (String) StatuesModule.skinName.get(belowEnt);
             }
 
-            if (skinName.equals("")) {
+            if (skinName.isEmpty()) {
                 currenttip.clear();
                 currenttip.add(WHITE + "Statue : Unknown");
             } else {

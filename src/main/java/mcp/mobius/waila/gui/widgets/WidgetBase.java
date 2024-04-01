@@ -20,10 +20,10 @@ public abstract class WidgetBase implements IWidget {
 
     protected IWidget parent;
     protected WidgetGeometry geom;
-    protected LinkedHashMap<String, IWidget> widgets = new LinkedHashMap<String, IWidget>();
-    protected LinkedHashMap<String, IWidget> renderQueue_HIGH = new LinkedHashMap<String, IWidget>();
-    protected LinkedHashMap<String, IWidget> renderQueue_MEDIUM = new LinkedHashMap<String, IWidget>();
-    protected LinkedHashMap<String, IWidget> renderQueue_LOW = new LinkedHashMap<String, IWidget>();
+    protected LinkedHashMap<String, IWidget> widgets = new LinkedHashMap<>();
+    protected LinkedHashMap<String, IWidget> renderQueue_HIGH = new LinkedHashMap<>();
+    protected LinkedHashMap<String, IWidget> renderQueue_MEDIUM = new LinkedHashMap<>();
+    protected LinkedHashMap<String, IWidget> renderQueue_LOW = new LinkedHashMap<>();
     protected Minecraft mc;
     protected TextureManager texManager;
     protected ScaledResolution rez;
@@ -88,14 +88,12 @@ public abstract class WidgetBase implements IWidget {
 
     @Override
     public IWidget delWidget(String name) {
-        IWidget widget = this.getWidget(name);
-        this.widgets.remove(widget);
-        return widget;
+        return this.widgets.remove(name);
     }
 
     @Override
     public IWidget getWidgetAtCoordinates(double posX, double posY) {
-        for (IWidget widget : new ReverseIterator<IWidget>(this.widgets.values()))
+        for (IWidget widget : new ReverseIterator<>(this.widgets.values()))
             if ((posX >= widget.getPos().getX()) && (posX <= widget.getPos().getX() + widget.getSize().getX())
                     && (posY >= widget.getPos().getY())
                     && (posY <= widget.getPos().getY() + widget.getSize().getY()))
@@ -114,8 +112,7 @@ public abstract class WidgetBase implements IWidget {
         if (this.getLeft() > posx) return false;
         if (this.getRight() < posx) return false;
         if (this.getTop() > posy) return false;
-        if (this.getBottom() < posy) return false;
-        return true;
+        return !(this.getBottom() < posy);
     }
 
     ///////////////////////
@@ -211,7 +208,7 @@ public abstract class WidgetBase implements IWidget {
         this.geom.setPos(x, y, fracX, fracY);
         this.emit(Signal.GEOM_CHANGED, this.geom);
         return this;
-    };
+    }
 
     @Override
     public IWidget setSize(double sx, double sy) {
@@ -223,7 +220,7 @@ public abstract class WidgetBase implements IWidget {
         this.geom.setSize(sx, sy, fracX, fracY);
         this.emit(Signal.GEOM_CHANGED, this.geom);
         return this;
-    };
+    }
 
     @Override
     public IWidget adjustSize() {
@@ -271,27 +268,27 @@ public abstract class WidgetBase implements IWidget {
     @Override
     public void setAlpha(float alpha) {
         this.alpha = alpha;
-    };
+    }
 
     @Override
     public float getAlpha() {
         return this.alpha;
-    };
+    }
 
     @Override
     public void show() {
         this.isRendering = true;
-    };
+    }
 
     @Override
     public void hide() {
         this.isRendering = false;
-    };
+    }
 
     @Override
     public boolean shouldRender() {
         return this.isRendering;
-    };
+    }
 
     ////////////////////
     // INPUT HANDLING //

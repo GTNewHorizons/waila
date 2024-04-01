@@ -57,7 +57,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
             this.blockResource = GameData.getBlockRegistry().getNameForObject(this.block);
             try {
                 this.stack = new ItemStack(this.block, 1, this.metadata);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
 
         } else if (this.mop.typeOfHit == MovingObjectType.ENTITY) {
             this.block = null;
@@ -131,7 +131,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
             NBTTagCompound tag = new NBTTagCompound();
             try {
                 this.tileEntity.writeToNBT(tag);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
             return tag;
         }
 
