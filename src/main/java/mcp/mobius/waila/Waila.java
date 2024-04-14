@@ -1,6 +1,7 @@
 package mcp.mobius.waila;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 import net.minecraftforge.common.MinecraftForge;
 
@@ -23,6 +24,9 @@ import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkCheckHandler;
+import cpw.mods.fml.common.versioning.ArtifactVersion;
+import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import cpw.mods.fml.relauncher.Side;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
@@ -52,6 +56,7 @@ public class Waila {
     public static ProxyServer proxy;
     public static Logger log = LogManager.getLogger("Waila");
     public boolean serverPresent = false;
+    private final ArtifactVersion minimumClientJoinVersion = new DefaultArtifactVersion("1.7.3");
 
     /* INIT SEQUENCE */
     @EventHandler
@@ -129,5 +134,17 @@ public class Waila {
     @EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandDumpHandlers());
+    }
+
+    /**
+     * Block any clients older than 1.7.3 to ensure the vanilla.show_invisible_players property is respected
+     */
+    @SuppressWarnings("unused")
+    @NetworkCheckHandler
+    public boolean checkModList(Map<String, String> versions, Side side) {
+        if (side == Side.CLIENT && versions.containsKey("Waila")) {
+            return minimumClientJoinVersion.compareTo(new DefaultArtifactVersion(versions.get("Waila"))) <= 0;
+        }
+        return true;
     }
 }
