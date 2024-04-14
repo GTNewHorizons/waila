@@ -51,6 +51,7 @@ public class ThermalExpansionModule {
     public static Method IBlockInfo_getBlockInfo = null;
 
     public static void register() {
+        boolean printedThermalExpansionNotFound = false;
         // XXX : We register the Energy interface first
         try {
             IEnergyProvider = Class.forName("cofh.api.energy.IEnergyProvider");
@@ -74,7 +75,12 @@ public class ThermalExpansionModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerIEnergyHandler(), IEnergyInfo);
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Energy hooks." + e);
+            if (e instanceof ClassNotFoundException) {
+                Waila.log.log(Level.INFO, "[Thermal Expansion] Thermal Expansion mod not found.");
+                printedThermalExpansionNotFound = true;
+            } else {
+                Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Energy hooks. {}", e);
+            }
         }
 
         // XXX : We register the energy cell
@@ -88,7 +94,14 @@ public class ThermalExpansionModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerEnergyCell(), TileEnergyCell);
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Energy Cell hooks." + e);
+            if (e instanceof ClassNotFoundException || e instanceof NoSuchFieldException) {
+                if (!printedThermalExpansionNotFound) {
+                    printedThermalExpansionNotFound = true;
+                    Waila.log.log(Level.INFO, "[Thermal Expansion] Thermal Expansion mod not found.");
+                }
+            } else {
+                Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Energy Cell hooks. {}", e);
+            }
         }
 
         // XXX : We register the Tank interface
@@ -107,7 +120,14 @@ public class ThermalExpansionModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerTank(), TileTank);
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Tank hooks." + e);
+            if (e instanceof ClassNotFoundException || e instanceof NoSuchFieldException) {
+                if (!printedThermalExpansionNotFound) {
+                    printedThermalExpansionNotFound = true;
+                    Waila.log.log(Level.INFO, "[Thermal Expansion] Thermal Expansion mod not found.");
+                }
+            } else {
+                Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Tank hooks. {}", e);
+            }
         }
 
         // XXX : We register the Tesseract interface
@@ -123,7 +143,14 @@ public class ThermalExpansionModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerTesseract(), TileTesseract);
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Tesseract hooks." + e);
+            if (e instanceof ClassNotFoundException || e instanceof NoSuchFieldException) {
+                if (!printedThermalExpansionNotFound) {
+                    printedThermalExpansionNotFound = true;
+                    Waila.log.log(Level.INFO, "[Thermal Expansion] Thermal Expansion mod not found.");
+                }
+            } else {
+                Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Tesseract hooks. {}", e);
+            }
         }
 
         // XXX : We register the ISecureTile interface
@@ -137,7 +164,14 @@ public class ThermalExpansionModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerISecureTile(), ISecureTile);
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading ISecureTile hooks." + e);
+            if (e instanceof ClassNotFoundException) {
+                if (!printedThermalExpansionNotFound) {
+                    printedThermalExpansionNotFound = true;
+                    Waila.log.log(Level.INFO, "[Thermal Expansion] Thermal Expansion mod not found.");
+                }
+            } else {
+                Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading ISecureTile hooks. {}", e);
+            }
         }
 
         // XXX : We register the Cache interface
@@ -153,7 +187,17 @@ public class ThermalExpansionModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerCache(), TileCache);
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Tesseract hooks." + e);
+            if (e instanceof ClassNotFoundException) {
+                if (!printedThermalExpansionNotFound) {
+                    printedThermalExpansionNotFound = true;
+                    Waila.log.log(Level.INFO, "[Thermal Expansion] Thermal Expansion mod not found.");
+                }
+            } else {
+                Waila.log.log(Level.WARN, "[Thermal Expansion] Error while loading Tesseract hooks. {}", e);
+            }
+        }
+        if (!printedThermalExpansionNotFound) {
+            Waila.log.log(Level.INFO, "Thermal Expansion mod found.");
         }
     }
 
