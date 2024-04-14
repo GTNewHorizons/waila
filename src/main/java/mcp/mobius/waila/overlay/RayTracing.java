@@ -134,7 +134,7 @@ public class RayTracing {
                             .getWailaStack(DataAccessorCommon.instance, ConfigHandler.instance());
                     if (providerStack != null) {
 
-                        if (providerStack.getItem() == null) return new ArrayList<ItemStack>();
+                        if (providerStack.getItem() == null) return new ArrayList<>();
 
                         items.add(providerStack);
                     }
@@ -151,7 +151,7 @@ public class RayTracing {
                             .getWailaStack(DataAccessorCommon.instance, ConfigHandler.instance());
                     if (providerStack != null) {
 
-                        if (providerStack.getItem() == null) return new ArrayList<ItemStack>();
+                        if (providerStack.getItem() == null) return new ArrayList<>();
 
                         items.add(providerStack);
                     }
@@ -175,12 +175,11 @@ public class RayTracing {
         try {
             ItemStack pick = mouseoverBlock.getPickBlock(this.target, world, x, y, z);
             if (pick != null) items.add(pick);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
 
         if (!items.isEmpty()) return items;
 
-        if (mouseoverBlock instanceof IShearable) {
-            IShearable shearable = (IShearable) mouseoverBlock;
+        if (mouseoverBlock instanceof IShearable shearable) {
             if (shearable.isShearable(new ItemStack(Items.shears), world, x, y, z)) {
                 items.addAll(shearable.onSheared(new ItemStack(Items.shears), world, x, y, z, 0));
             }
