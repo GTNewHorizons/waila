@@ -21,8 +21,14 @@ public class ThermalDynamicsModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerDuct(), TileFluidDuct);
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thermal Dynamics] Error while loading FluidDuct hooks." + e);
+            if (e instanceof ClassNotFoundException) {
+                Waila.log.log(Level.INFO, "[Thermal Dynamics] Thermal Dynamics mod not found.");
+            } else {
+                Waila.log.log(Level.WARN, "[Thermal Dynamics] Error while loading FluidDuct hooks. {}", e);
+            }
+            return;
         }
+        Waila.log.log(Level.INFO, "Thermal Dynamics mod found.");
     }
 
 }

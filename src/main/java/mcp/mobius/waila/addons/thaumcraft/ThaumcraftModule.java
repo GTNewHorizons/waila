@@ -66,10 +66,13 @@ public class ThaumcraftModule {
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerIAspectContainer(), TileAlchemyFurnace);
 
         } catch (ClassNotFoundException e) {
-            Waila.log.log(Level.WARN, "[Thaumcraft] Class not found. " + e);
+            Waila.log.log(Level.INFO, "[Thaumcraft] Thaumcraft mod not found.");
+            return;
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[Thaumcraft] Unhandled exception." + e);
+            Waila.log.log(Level.WARN, "[Thaumcraft] Unhandled exception. {}", e);
+            return;
         }
+        Waila.log.log(Level.INFO, "Thaumcraft mod found.");
 
     }
 

@@ -24,11 +24,11 @@ public class BCModule {
             ModuleRegistrar.instance().registerHeadProvider(new HUDHandlerBCTanks(), TileTank);
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerBCTanks(), TileTank);
 
-        } catch (ClassNotFoundException e) {
-            Waila.log.log(Level.WARN, "[BC] Class not found. " + e);
-        } catch (NoSuchMethodException e) {
-            Waila.log.log(Level.WARN, "[BC] Method not found." + e);
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            Waila.log.log(Level.INFO, "[BC] Buildcraft mod not found.");
+            return;
         }
+        Waila.log.log(Level.INFO, "Buildcraft mod found.");
 
     }
 

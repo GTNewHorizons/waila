@@ -84,8 +84,14 @@ public class IC2Module {
             ModuleRegistrar.instance().addConfigRemote("IndustrialCraft2", "ic2.outputeu");
 
         } catch (Exception e) {
-            Waila.log.log(Level.WARN, "[IndustrialCraft 2] Error while loading generator hooks." + e);
+            if (e instanceof ClassNotFoundException || e instanceof NoSuchFieldException) {
+                Waila.log.log(Level.INFO, "[IndustrialCraft 2] IndustrialCraft 2 mod not found.");
+            } else {
+                Waila.log.log(Level.WARN, "[IndustrialCraft 2] Error while loading generator hooks." + e);
+            }
+            return;
         }
+        Waila.log.log(Level.INFO, "IndustrialCraft 2 mod found.");
     }
 
 }
