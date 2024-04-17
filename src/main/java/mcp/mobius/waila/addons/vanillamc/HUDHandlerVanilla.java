@@ -235,6 +235,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.redstone");
         ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.silverfish");
         ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.jukebox");
+        ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.show_invisible_players");
 
         IWailaDataProvider provider = new HUDHandlerVanilla();
 

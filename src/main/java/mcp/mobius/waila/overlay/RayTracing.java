@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -38,8 +39,8 @@ public class RayTracing {
     private final Minecraft mc = Minecraft.getMinecraft();
 
     public void fire() {
-        if (mc.objectMouseOver != null
-                && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
+        if (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY
+                && !shouldHidePlayer(mc.objectMouseOver.entityHit)) {
             this.target = mc.objectMouseOver;
             return;
         }
@@ -48,6 +49,15 @@ public class RayTracing {
         if (viewpoint == null) return;
 
         this.target = this.rayTrace(viewpoint, mc.playerController.getBlockReachDistance(), 0);
+    }
+
+    private static boolean shouldHidePlayer(Entity targetEnt) {
+        // Check if entity is player with invisibility effect
+        if (targetEnt instanceof EntityPlayer thePlayer) {
+            boolean shouldHidePlayerSetting = !ConfigHandler.instance().getConfig("vanilla.show_invisible_players");
+            return shouldHidePlayerSetting && thePlayer.isInvisible();
+        }
+        return false;
     }
 
     public MovingObjectPosition getTarget() {
@@ -124,7 +134,7 @@ public class RayTracing {
                             .getWailaStack(DataAccessorCommon.instance, ConfigHandler.instance());
                     if (providerStack != null) {
 
-                        if (providerStack.getItem() == null) return new ArrayList<ItemStack>();
+                        if (providerStack.getItem() == null) return new ArrayList<>();
 
                         items.add(providerStack);
                     }
@@ -141,7 +151,7 @@ public class RayTracing {
                             .getWailaStack(DataAccessorCommon.instance, ConfigHandler.instance());
                     if (providerStack != null) {
 
-                        if (providerStack.getItem() == null) return new ArrayList<ItemStack>();
+                        if (providerStack.getItem() == null) return new ArrayList<>();
 
                         items.add(providerStack);
                     }
@@ -165,12 +175,11 @@ public class RayTracing {
         try {
             ItemStack pick = mouseoverBlock.getPickBlock(this.target, world, x, y, z);
             if (pick != null) items.add(pick);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
 
         if (!items.isEmpty()) return items;
 
-        if (mouseoverBlock instanceof IShearable) {
-            IShearable shearable = (IShearable) mouseoverBlock;
+        if (mouseoverBlock instanceof IShearable shearable) {
             if (shearable.isShearable(new ItemStack(Items.shears), world, x, y, z)) {
                 items.addAll(shearable.onSheared(new ItemStack(Items.shears), world, x, y, z, 0));
             }
