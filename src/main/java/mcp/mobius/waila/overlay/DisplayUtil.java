@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import mcp.mobius.waila.api.elements.IItemStyle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -82,6 +84,33 @@ public class DisplayUtil {
         }
         enable2DRender();
     }
+
+    //Inject start
+    public static void elementRenderStack(int x, int y, ItemStack stack, IItemStyle itemStyle) {
+        RenderHelper.enableGUIStandardItemLighting();
+        GL11.glDisable(GL11.GL_LIGHTING);
+
+        float xScale = (float) itemStyle.getWidth() / 16;
+        float yScale = (float) itemStyle.getHeight() / 16;
+        try {
+            GL11.glPushMatrix(); // マトリックスを保存
+
+            // スケールを適用
+            GL11.glScalef(xScale, yScale, 1);
+
+            // アイテムを描画
+            renderItem.renderItemAndEffectIntoGUI(fontRenderer, textureManager, stack, (int)(x / xScale), (int)(y / yScale));
+            renderItem.renderItemOverlayIntoGUI(fontRenderer, textureManager, stack, (int)(x / xScale), (int)(y / yScale));
+        } catch (Exception e) {
+            String stackStr = stack != null ? stack.toString() : "NullStack";
+            WailaExceptionHandler.handleErr(e, "renderStack | " + stackStr, null);
+        } finally {
+            GL11.glPopMatrix(); // マトリックスを復元
+        }
+
+        RenderHelper.disableStandardItemLighting();
+    }
+    //Inject end
 
     public static void enable3DRender() {
         GL11.glEnable(GL11.GL_LIGHTING);

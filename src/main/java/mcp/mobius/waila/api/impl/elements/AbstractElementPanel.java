@@ -2,8 +2,10 @@ package mcp.mobius.waila.api.impl.elements;
 
 import mcp.mobius.waila.api.elements.ElementAlignment;
 import mcp.mobius.waila.api.elements.IElement;
+import mcp.mobius.waila.api.elements.IItemStyle;
 import mcp.mobius.waila.api.elements.IProbeInfo;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,21 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
         ElementVertical e = new ElementVertical(null, 2, ElementAlignment.ALIGN_TOPLEFT);
         this.children.add(e);
         return e;
+    }
+
+    public IProbeInfo horizontal() {
+        ElementHorizontal e = new ElementHorizontal((Integer)null, this.spacing, ElementAlignment.ALIGN_TOPLEFT);
+        this.children.add(e);
+        return e;
+    }
+
+    public IProbeInfo item(ItemStack stack, IItemStyle style) {
+        this.children.add(new ElementItemStack(stack, style));
+        return this;
+    }
+
+    public IProbeInfo item(ItemStack stack) {
+        return this.item(stack, new ItemStyle());
     }
 
     //tmp

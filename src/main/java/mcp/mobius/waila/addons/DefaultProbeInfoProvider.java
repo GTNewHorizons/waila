@@ -31,11 +31,13 @@ public class DefaultProbeInfoProvider {
 //        }
 
         HUDHandlerBlocks hudHandlerBlocks = new HUDHandlerBlocks();
-        IProbeInfo vertical = probeInfo.vertical();
-        vertical.text(hudHandlerBlocks.getWailaHead(itemStack, new ArrayList<>(), accessor, config).get(0));
+        IProbeInfo row = probeInfo.horizontal();
+        row.item(itemStack);
+        IProbeInfo row_vertical = row.vertical();
+        row_vertical.text(hudHandlerBlocks.getWailaHead(itemStack, new ArrayList<>(), accessor, config).get(0));
         String modName = ModIdentification.nameFromStack(itemStack);
         if (modName != null && !modName.isEmpty()) {
-            vertical.text(BLUE + ITALIC + modName);
+            row_vertical.text(BLUE + ITALIC + modName);
         }
     }
 }
