@@ -2,8 +2,13 @@ package mcp.mobius.waila.overlay;
 
 import static mcp.mobius.waila.api.SpecialChars.ITALIC;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import mcp.mobius.waila.api.elements.IProbeDataProvider;
+import mcp.mobius.waila.api.impl.elements.MetaProbeDataProvider;
+import mcp.mobius.waila.api.impl.elements.ProbeInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,6 +35,10 @@ public class WailaTickHandler {
 
     public Tooltip tooltip = null;
     public MetaDataProvider handler = new MetaDataProvider();
+    //Inject new Waila Render Handler
+    public ProbeInfo probe = null;
+    public MetaProbeDataProvider elementHandler = new MetaProbeDataProvider();
+    //Injection end
     private final Minecraft mc = Minecraft.getMinecraft();
 
     private static WailaTickHandler _instance;
@@ -44,6 +53,12 @@ public class WailaTickHandler {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void tickRender(TickEvent.RenderTickEvent event) {
+        //Injection start
+        if (probe != null) {
+            TOPOverlayRenderer.renderOverlay();
+            return;
+        }
+        //Injection end
         OverlayRenderer.renderOverlay();
     }
 
@@ -63,6 +78,28 @@ public class WailaTickHandler {
         if (world != null && player != null) {
             RayTracing.instance().fire();
             MovingObjectPosition target = RayTracing.instance().getTarget();
+
+            //Inject new Waila Render Handler
+            probe = null;
+            if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+                DataAccessorCommon accessor = DataAccessorCommon.instance;
+                accessor.set(world, player, target);
+                ItemStack targetStack = RayTracing.instance().getTargetStack();
+
+                if (targetStack != null) {
+                    probe = elementHandler.handleBlockElementData(
+                            targetStack,
+                            world,
+                            player,
+                            target,
+                            accessor
+                    );
+                    if(probe != null) {
+                        return;
+                    }
+                }
+            }
+            //Injection end
 
             List<String> currenttip;
             List<String> currenttipHead;

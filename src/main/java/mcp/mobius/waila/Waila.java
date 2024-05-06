@@ -3,6 +3,8 @@ package mcp.mobius.waila;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import mcp.mobius.waila.addons.vanillamc.TestHandler;
+import mcp.mobius.waila.api.impl.elements.ModuleProbeRegistrar;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.LogManager;
@@ -83,6 +85,9 @@ public class Waila {
 
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
+        //Injection start
+        TestHandler.init();
+        //Injection end
     }
 
     @EventHandler
@@ -128,6 +133,17 @@ public class Waila {
                                 imcMessage.getStringValue()));
                 ModuleRegistrar.instance().addIMCRequest(imcMessage.getStringValue(), imcMessage.getSender());
             }
+
+            //Injection start
+            if (imcMessage.key.equalsIgnoreCase("elementregister")) {
+                Waila.log.info(
+                        String.format(
+                                "Receiving registration request from [ %s ] for method %s",
+                                imcMessage.getSender(),
+                                imcMessage.getStringValue()));
+                ModuleProbeRegistrar.instance().addIMCRequest(imcMessage.getStringValue(), imcMessage.getSender());
+            }
+            //Injection end
         }
     }
 
