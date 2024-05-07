@@ -6,7 +6,6 @@ import mcp.mobius.waila.api.elements.IElement;
 import mcp.mobius.waila.api.elements.IProgressStyle;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.overlay.OverlayConfig;
-import net.minecraft.client.Minecraft;
 
 import java.text.DecimalFormat;
 
@@ -82,7 +81,7 @@ public class ElementProgress implements IElement {
         }
 
         if (style.isShowText()) {
-            DisplayUtil.drawString(style.getPrefix() + ElementProgress.format(current, style.getNumberFormat(), style.getSuffix()), x + 3, y + 2, OverlayConfig.fontcolor, true);
+            DisplayUtil.drawString(style.getText(), x + 3, y + 2, style.getTextColor(), style.isTextShadow());
         }
     }
 

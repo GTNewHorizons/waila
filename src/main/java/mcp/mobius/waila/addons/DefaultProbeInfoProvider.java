@@ -47,8 +47,7 @@ public class DefaultProbeInfoProvider {
         float damage = accessor.getBlockBreakDamage();
         if (damage > 0) {
             probeInfo.vertical().progress((long) (damage * 100), 100, new ProgressStyle()
-                    .prefix("Progress ")
-                    .suffix("%")
+                    .text("Progress " + damage * 100 + "%")
                     .width(85)
                     .borderColor(0)
                     .filledColor(0xff990000)

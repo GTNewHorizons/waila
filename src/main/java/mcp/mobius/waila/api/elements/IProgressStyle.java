@@ -1,6 +1,7 @@
 package mcp.mobius.waila.api.elements;
 
 import mcp.mobius.waila.api.NumberFormat;
+import mcp.mobius.waila.api.impl.elements.ProgressStyle;
 
 public interface IProgressStyle {
     /// The color that is used for the border of the progress bar
@@ -21,9 +22,11 @@ public interface IProgressStyle {
     /// The number format to use for the text inside the progress bar
     IProgressStyle numberFormat(NumberFormat f);
 
-    IProgressStyle prefix(String prefix);
+    IProgressStyle text(String text);
 
-    IProgressStyle suffix(String suffix);
+    IProgressStyle textColor(int color);
+
+    IProgressStyle textShadow(boolean b);
 
     /// If the progressbar is a lifebar then this is the maximum width
     IProgressStyle width(int w);
@@ -46,9 +49,11 @@ public interface IProgressStyle {
 
     NumberFormat getNumberFormat();
 
-    String getPrefix();
+    String getText();
 
-    String getSuffix();
+    int getTextColor();
+
+    boolean isTextShadow();
 
     int getWidth();
 

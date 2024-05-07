@@ -2,6 +2,7 @@ package mcp.mobius.waila.api.impl.elements;
 
 import mcp.mobius.waila.api.NumberFormat;
 import mcp.mobius.waila.api.elements.IProgressStyle;
+import mcp.mobius.waila.overlay.OverlayConfig;
 
 public class ProgressStyle implements IProgressStyle {
     private int borderColor = -1;
@@ -9,8 +10,9 @@ public class ProgressStyle implements IProgressStyle {
     private int filledColor = -5592406;
     private int alternatefilledColor = -5592406;
     private boolean showText = true;
-    private String prefix = "";
-    private String suffix = "";
+    private String text;
+    private int textColor = 0xffffffff;
+    private boolean textShadow = true;
     private int width = 100;
     private int height = 12;
     private boolean lifeBar = false;
@@ -51,13 +53,18 @@ public class ProgressStyle implements IProgressStyle {
         return this;
     }
 
-    public ProgressStyle prefix(String prefix) {
-        this.prefix = prefix;
+    public ProgressStyle text(String text) {
+        this.text = text;
         return this;
     }
 
-    public ProgressStyle suffix(String suffix) {
-        this.suffix = suffix;
+    public ProgressStyle textColor(int color) {
+        this.textColor = color;
+        return this;
+    }
+
+    public ProgressStyle textShadow(boolean b) {
+        this.textShadow = b;
         return this;
     }
 
@@ -105,12 +112,16 @@ public class ProgressStyle implements IProgressStyle {
         return this.numberFormat;
     }
 
-    public String getPrefix() {
-        return this.prefix;
+    public String getText() {
+        return this.text;
     }
 
-    public String getSuffix() {
-        return this.suffix;
+    public int getTextColor() {
+        return this.textColor;
+    }
+
+    public boolean isTextShadow() {
+        return this.textShadow;
     }
 
     public int getWidth() {

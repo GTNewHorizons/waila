@@ -4,6 +4,28 @@ import net.minecraft.item.ItemStack;
 
 public interface IProbeInfo {
 
+    /**
+     * Create a default layout style for the horizontal or vertical elements
+     */
+    ILayoutStyle defaultLayoutStyle();
+
+    /**
+     * Create a default style for the progress bar
+     */
+    IProgressStyle defaultProgressStyle();
+
+    /**
+     * Create a default style for the text element
+     */
+    ITextStyle defaultTextStyle();
+
+    /**
+     * Create a default style for the item element
+     */
+    IItemStyle defaultItemStyle();
+
+    IProbeInfo text(String text, ITextStyle style);
+
     IProbeInfo text(String text);
 
     IProbeInfo vertical(ILayoutStyle style);

@@ -31,6 +31,11 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
         this.alignment = alignment;
     }
 
+    public IProbeInfo text(String text, ITextStyle style) {
+        this.children.add(new ElementText(text, style));
+        return this;
+    }
+
     public IProbeInfo text(String text) {
         this.children.add(new ElementText(text));
         return this;
@@ -95,5 +100,25 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
     //tmp
     public static void drawVerticalLine(int x1, int y1, int y2, int color) {
         Gui.drawRect(x1, y1, x1 + 1, y2, color);
+    }
+
+    @Override
+    public ILayoutStyle defaultLayoutStyle() {
+        return new LayoutStyle();
+    }
+
+    @Override
+    public IProgressStyle defaultProgressStyle() {
+        return new ProgressStyle();
+    }
+
+    @Override
+    public ITextStyle defaultTextStyle() {
+        return new TextStyle();
+    }
+
+    @Override
+    public IItemStyle defaultItemStyle() {
+        return new ItemStyle();
     }
 }
