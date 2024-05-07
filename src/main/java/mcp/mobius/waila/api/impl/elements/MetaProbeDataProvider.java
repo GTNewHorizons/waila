@@ -2,6 +2,7 @@ package mcp.mobius.waila.api.impl.elements;
 
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.addons.DefaultProbeInfoProvider;
+import mcp.mobius.waila.api.ProbeMode;
 import mcp.mobius.waila.api.elements.IProbeDataProvider;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
@@ -9,6 +10,7 @@ import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +29,8 @@ public class MetaProbeDataProvider {
         if (!ModuleProbeRegistrar.instance().hasProviders(block) && !ModuleProbeRegistrar.instance().hasProviders(accessor.getTileEntity())) {
             return null;
         }
+
+        ProbeMode probeMode = player.isSneaking() ? ProbeMode.EXTENDED : player.capabilities.isCreativeMode ? ProbeMode.DEBUG : ProbeMode.NORMAL;
 
         if (accessor.getTileEntity() != null && Waila.instance.serverPresent
                 && accessor.isTimeElapsed(250)
@@ -56,7 +60,7 @@ public class MetaProbeDataProvider {
             ProbeInfo probeInfo = new ProbeInfo();
             DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
             for (IProbeDataProvider probeDataProvider : probeDataProviders) {
-                probeDataProvider.addProveInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
+                probeDataProvider.addProveInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
             }
             return probeInfo;
         }
@@ -67,7 +71,7 @@ public class MetaProbeDataProvider {
             ProbeInfo probeInfo = new ProbeInfo();
             DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
             for (IProbeDataProvider probeDataProvider : probeDataProviders) {
-                probeDataProvider.addProveInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
+                probeDataProvider.addProveInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
             }
             return probeInfo;
         }

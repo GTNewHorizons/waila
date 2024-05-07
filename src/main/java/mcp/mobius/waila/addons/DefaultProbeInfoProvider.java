@@ -2,15 +2,19 @@ package mcp.mobius.waila.addons;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.elements.IElement;
 import mcp.mobius.waila.api.elements.IProbeInfo;
+import mcp.mobius.waila.api.impl.elements.ElementProgress;
+import mcp.mobius.waila.api.impl.elements.ElementText;
+import mcp.mobius.waila.api.impl.elements.ProgressStyle;
 import mcp.mobius.waila.handlers.HUDHandlerBlocks;
 import mcp.mobius.waila.utils.ModIdentification;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 
-import static mcp.mobius.waila.api.SpecialChars.BLUE;
-import static mcp.mobius.waila.api.SpecialChars.ITALIC;
+import static mcp.mobius.waila.api.SpecialChars.*;
 
 public class DefaultProbeInfoProvider {
 
@@ -38,6 +42,17 @@ public class DefaultProbeInfoProvider {
         String modName = ModIdentification.nameFromStack(itemStack);
         if (modName != null && !modName.isEmpty()) {
             row_vertical.text(BLUE + ITALIC + modName);
+        }
+
+        float damage = accessor.getBlockBreakDamage();
+        if (damage > 0) {
+            probeInfo.vertical().progress((long) (damage * 100), 100, new ProgressStyle()
+                    .prefix("Progress ")
+                    .suffix("%")
+                    .width(85)
+                    .borderColor(0)
+                    .filledColor(0xff990000)
+                    .alternateFilledColor(0xff550000));
         }
     }
 }

@@ -1,9 +1,6 @@
 package mcp.mobius.waila.api.impl.elements;
 
-import mcp.mobius.waila.api.elements.ElementAlignment;
-import mcp.mobius.waila.api.elements.IElement;
-import mcp.mobius.waila.api.elements.IItemStyle;
-import mcp.mobius.waila.api.elements.IProbeInfo;
+import mcp.mobius.waila.api.elements.*;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.item.ItemStack;
 
@@ -39,8 +36,20 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
         return this;
     }
 
+    public IProbeInfo vertical(ILayoutStyle style) {
+        ElementVertical e = new ElementVertical(style.getBorderColor(), style.getSpacing(), style.getAlignment());
+        this.children.add(e);
+        return e;
+    }
+
     public IProbeInfo vertical() {
         ElementVertical e = new ElementVertical(null, 2, ElementAlignment.ALIGN_TOPLEFT);
+        this.children.add(e);
+        return e;
+    }
+
+    public IProbeInfo horizontal(ILayoutStyle style) {
+        ElementHorizontal e = new ElementHorizontal(style.getBorderColor(), style.getSpacing(), style.getAlignment());
         this.children.add(e);
         return e;
     }
@@ -58,6 +67,24 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
 
     public IProbeInfo item(ItemStack stack) {
         return this.item(stack, new ItemStyle());
+    }
+
+    public IProbeInfo progress(int current, int max) {
+        return this.progress(current, max, new ProgressStyle());
+    }
+
+    public IProbeInfo progress(int current, int max, IProgressStyle style) {
+        this.children.add(new ElementProgress((long)current, (long)max, style));
+        return this;
+    }
+
+    public IProbeInfo progress(long current, long max) {
+        return this.progress(current, max, new ProgressStyle());
+    }
+
+    public IProbeInfo progress(long current, long max, IProgressStyle style) {
+        this.children.add(new ElementProgress(current, max, style));
+        return this;
     }
 
     //tmp

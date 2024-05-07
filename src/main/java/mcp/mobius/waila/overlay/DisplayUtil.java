@@ -210,4 +210,20 @@ public class DisplayUtil {
         DisplayUtil.drawTexturedModalRect(x, y, icon.u, icon.v, sx, sy, icon.su, icon.sv);
     }
 
+    //Injection Start
+    public static void drawThickBeveledBox(int x1, int y1, int x2, int y2, int thickness, int topleftcolor, int botrightcolor, int fillcolor) {
+        if (fillcolor != -1) {
+            Gui.drawRect(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillcolor);
+        }
+
+        Gui.drawRect(x1, y1, x2 - 1, y1 + thickness, topleftcolor);
+        Gui.drawRect(x1, y1, x1 + thickness, y2 - 1, topleftcolor);
+        Gui.drawRect(x2 - thickness, y1, x2, y2 - 1, botrightcolor);
+        Gui.drawRect(x1, y2 - thickness, x2, y2, botrightcolor);
+    }
+
+    public static void drawVerticalLine(int x1, int y1, int y2, int color) {
+        Gui.drawRect(x1, y1, x1 + 1, y2, color);
+    }
+    //Injection End
 }
