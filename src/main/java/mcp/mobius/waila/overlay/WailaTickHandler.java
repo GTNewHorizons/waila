@@ -81,7 +81,8 @@ public class WailaTickHandler {
 
             //Inject new Waila Render Handler
             probe = null;
-            if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK
+                    && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
                 DataAccessorCommon accessor = DataAccessorCommon.instance;
                 accessor.set(world, player, target);
                 ItemStack targetStack = RayTracing.instance().getTargetStack();
