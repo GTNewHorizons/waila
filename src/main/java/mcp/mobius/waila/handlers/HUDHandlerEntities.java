@@ -1,10 +1,6 @@
 package mcp.mobius.waila.handlers;
 
-import static mcp.mobius.waila.api.SpecialChars.BLUE;
-import static mcp.mobius.waila.api.SpecialChars.GRAY;
-import static mcp.mobius.waila.api.SpecialChars.ITALIC;
-import static mcp.mobius.waila.api.SpecialChars.WHITE;
-import static mcp.mobius.waila.api.SpecialChars.getRenderString;
+import static mcp.mobius.waila.api.SpecialChars.*;
 
 import java.util.List;
 

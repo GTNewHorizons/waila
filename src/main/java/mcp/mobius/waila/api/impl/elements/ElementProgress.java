@@ -1,13 +1,11 @@
 package mcp.mobius.waila.api.impl.elements;
 
+import java.text.DecimalFormat;
 
 import mcp.mobius.waila.api.NumberFormat;
 import mcp.mobius.waila.api.elements.IElement;
 import mcp.mobius.waila.api.elements.IProgressStyle;
 import mcp.mobius.waila.overlay.DisplayUtil;
-import mcp.mobius.waila.overlay.OverlayConfig;
-
-import java.text.DecimalFormat;
 
 public class ElementProgress implements IElement {
 
@@ -63,17 +61,32 @@ public class ElementProgress implements IElement {
         render(style, current, max, x, y, getWidth(), getHeight());
     }
 
-
     private static void render(IProgressStyle style, long current, long max, int x, int y, int w, int h) {
-        DisplayUtil.drawThickBeveledBox(x, y, x + w, y + h, 1, style.getBorderColor(), style.getBorderColor(), style.getBackgroundColor());
+        DisplayUtil.drawThickBeveledBox(
+                x,
+                y,
+                x + w,
+                y + h,
+                1,
+                style.getBorderColor(),
+                style.getBorderColor(),
+                style.getBackgroundColor());
         if (current > 0L && max > 0L) {
-            int dx = (int)Math.min(current * (long)(w - 2) / max, (long)(w - 2));
+            int dx = (int) Math.min(current * (long) (w - 2) / max, (long) (w - 2));
             if (style.getFilledColor() == style.getAlternatefilledColor()) {
                 if (dx > 0) {
-                    DisplayUtil.drawThickBeveledBox(x + 1, y + 1, x + dx + 1, y + h - 1, 1, style.getFilledColor(), style.getFilledColor(), style.getFilledColor());
+                    DisplayUtil.drawThickBeveledBox(
+                            x + 1,
+                            y + 1,
+                            x + dx + 1,
+                            y + h - 1,
+                            1,
+                            style.getFilledColor(),
+                            style.getFilledColor(),
+                            style.getFilledColor());
                 }
             } else {
-                for(int xx = x + 1; xx <= x + dx + 1; ++xx) {
+                for (int xx = x + 1; xx <= x + dx + 1; ++xx) {
                     int color = (xx & 1) == 0 ? style.getFilledColor() : style.getAlternatefilledColor();
                     DisplayUtil.drawVerticalLine(xx, y + 1, y + h - 1, color);
                 }

@@ -1,12 +1,12 @@
 package mcp.mobius.waila.api.impl.elements;
 
-import io.netty.buffer.ByteBuf;
+import java.util.Iterator;
+
 import mcp.mobius.waila.api.elements.ElementAlignment;
 import mcp.mobius.waila.api.elements.IElement;
 
-import java.util.Iterator;
-
 public class ElementVertical extends AbstractElementPanel {
+
     public ElementVertical(Integer borderColor, int spacing, ElementAlignment alignment) {
         super(borderColor, spacing, alignment);
     }
@@ -21,8 +21,8 @@ public class ElementVertical extends AbstractElementPanel {
         int totWidth = this.getWidth();
 
         IElement element;
-        for(Iterator var4 = this.children.iterator(); var4.hasNext(); y += element.getHeight() + this.spacing) {
-            element = (IElement)var4.next();
+        for (Iterator var4 = this.children.iterator(); var4.hasNext(); y += element.getHeight() + this.spacing) {
+            element = (IElement) var4.next();
             int w = element.getWidth();
             int cx = x;
             switch (this.alignment) {
@@ -49,8 +49,8 @@ public class ElementVertical extends AbstractElementPanel {
         int h = 0;
 
         IElement element;
-        for(Iterator var2 = this.children.iterator(); var2.hasNext(); h += element.getHeight()) {
-            element = (IElement)var2.next();
+        for (Iterator var2 = this.children.iterator(); var2.hasNext(); h += element.getHeight()) {
+            element = (IElement) var2.next();
         }
 
         return h + this.spacing * (this.children.size() - 1) + this.getBorderSpacing();
@@ -60,8 +60,8 @@ public class ElementVertical extends AbstractElementPanel {
         int w = 0;
         Iterator var2 = this.children.iterator();
 
-        while(var2.hasNext()) {
-            IElement element = (IElement)var2.next();
+        while (var2.hasNext()) {
+            IElement element = (IElement) var2.next();
             int ww = element.getWidth();
             if (ww > w) {
                 w = ww;

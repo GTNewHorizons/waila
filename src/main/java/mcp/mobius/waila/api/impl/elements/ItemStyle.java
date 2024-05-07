@@ -3,6 +3,7 @@ package mcp.mobius.waila.api.impl.elements;
 import mcp.mobius.waila.api.elements.IItemStyle;
 
 public class ItemStyle implements IItemStyle {
+
     private int width = 20;
     private int height = 20;
 
@@ -11,8 +12,7 @@ public class ItemStyle implements IItemStyle {
         height = h;
     }
 
-    public ItemStyle() {
-    }
+    public ItemStyle() {}
 
     public IItemStyle width(int w) {
         this.width = w;

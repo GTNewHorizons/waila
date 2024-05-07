@@ -1,9 +1,11 @@
 package mcp.mobius.waila.api.impl.elements;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 import mcp.mobius.waila.api.elements.IProbeDataProvider;
 import mcp.mobius.waila.api.elements.IProbeRegistrar;
-
-import java.util.*;
 
 public class ModuleProbeRegistrar implements IProbeRegistrar {
 
@@ -32,10 +34,10 @@ public class ModuleProbeRegistrar implements IProbeRegistrar {
         this.registerProvider(dataProvider, block, this.probeProviders);
     }
 
-    private void registerProvider(IProbeDataProvider dataProvider, Class<?> clazz, LinkedHashMap<Class<?>, ArrayList<IProbeDataProvider>> target) {
+    private void registerProvider(IProbeDataProvider dataProvider, Class<?> clazz,
+            LinkedHashMap<Class<?>, ArrayList<IProbeDataProvider>> target) {
         if (clazz == null || dataProvider == null) throw new RuntimeException(
-                "Trying to register a null provider or null block ! Please check the stacktrace to know what was the original registration method."
-        );
+                "Trying to register a null provider or null block ! Please check the stacktrace to know what was the original registration method.");
 
         if (!target.containsKey(clazz)) target.put(clazz, new ArrayList<>());
 

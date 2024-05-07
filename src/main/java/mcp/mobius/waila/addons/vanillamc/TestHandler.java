@@ -1,9 +1,9 @@
 package mcp.mobius.waila.addons.vanillamc;
 
-import cpw.mods.fml.common.event.FMLInterModComms;
-import mcp.mobius.waila.Waila;
-import mcp.mobius.waila.api.elements.IProbeRegistrar;
 import net.minecraft.block.BlockFurnace;
+
+import cpw.mods.fml.common.event.FMLInterModComms;
+import mcp.mobius.waila.api.elements.IProbeRegistrar;
 
 // example class for registering IMC
 public class TestHandler {

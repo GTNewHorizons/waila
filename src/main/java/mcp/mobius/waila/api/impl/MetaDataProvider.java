@@ -78,7 +78,8 @@ public class MetaDataProvider {
 
             if (!keys.isEmpty() || ModuleRegistrar.instance().hasNBTProviders(block)
                     || ModuleRegistrar.instance().hasNBTProviders(accessor.getTileEntity()))
-                WailaPacketHandler.INSTANCE.sendToServer(new Message0x01TERequest(accessor.getTileEntity(), keys, false));
+                WailaPacketHandler.INSTANCE
+                        .sendToServer(new Message0x01TERequest(accessor.getTileEntity(), keys, false));
 
         } else if (accessor.getTileEntity() != null && !Waila.instance.serverPresent
                 && accessor.isTimeElapsed(250)

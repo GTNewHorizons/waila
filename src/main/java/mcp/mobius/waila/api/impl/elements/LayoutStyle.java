@@ -4,6 +4,7 @@ import mcp.mobius.waila.api.elements.ElementAlignment;
 import mcp.mobius.waila.api.elements.ILayoutStyle;
 
 public class LayoutStyle implements ILayoutStyle {
+
     private Integer borderColor = null;
     private ElementAlignment alignment;
     private int spacing;

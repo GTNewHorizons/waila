@@ -18,7 +18,8 @@ public class TextStyle implements ITextStyle {
 
     @Override
     public ITextStyle copy() {
-        return new TextStyle().bottomPadding(bottom).leftPadding(left).rightPadding(right).topPadding(top).bounds(width, height).alignment(align);
+        return new TextStyle().bottomPadding(bottom).leftPadding(left).rightPadding(right).topPadding(top)
+                .bounds(width, height).alignment(align);
     }
 
     @Override

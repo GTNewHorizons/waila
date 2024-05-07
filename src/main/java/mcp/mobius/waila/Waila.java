@@ -3,8 +3,6 @@ package mcp.mobius.waila;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import mcp.mobius.waila.addons.vanillamc.TestHandler;
-import mcp.mobius.waila.api.impl.elements.ModuleProbeRegistrar;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,19 +17,16 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
-import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import cpw.mods.fml.relauncher.Side;
+import mcp.mobius.waila.addons.vanillamc.TestHandler;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.api.impl.elements.ModuleProbeRegistrar;
 import mcp.mobius.waila.client.KeyEvent;
 import mcp.mobius.waila.commands.CommandDumpHandlers;
 import mcp.mobius.waila.network.NetworkHandler;
@@ -85,9 +80,9 @@ public class Waila {
 
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
-        //Injection start
+
         TestHandler.init();
-        //Injection end
+
     }
 
     @EventHandler
@@ -134,7 +129,6 @@ public class Waila {
                 ModuleRegistrar.instance().addIMCRequest(imcMessage.getStringValue(), imcMessage.getSender());
             }
 
-            //Injection start
             if (imcMessage.key.equalsIgnoreCase("elementregister")) {
                 Waila.log.info(
                         String.format(
@@ -143,7 +137,6 @@ public class Waila {
                                 imcMessage.getStringValue()));
                 ModuleProbeRegistrar.instance().addIMCRequest(imcMessage.getStringValue(), imcMessage.getSender());
             }
-            //Injection end
         }
     }
 

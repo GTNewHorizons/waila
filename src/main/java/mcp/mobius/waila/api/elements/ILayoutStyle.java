@@ -1,6 +1,7 @@
 package mcp.mobius.waila.api.elements;
 
 public interface ILayoutStyle {
+
     ILayoutStyle borderColor(Integer var1);
 
     ILayoutStyle spacing(int var1);

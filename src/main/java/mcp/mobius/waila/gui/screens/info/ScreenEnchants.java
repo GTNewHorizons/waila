@@ -7,11 +7,7 @@ import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.gui.interfaces.CType;
 import mcp.mobius.waila.gui.interfaces.WAlign;
 import mcp.mobius.waila.gui.screens.ScreenBase;
-import mcp.mobius.waila.gui.widgets.ItemStackDisplay;
-import mcp.mobius.waila.gui.widgets.LabelFixedFont;
-import mcp.mobius.waila.gui.widgets.LayoutBase;
-import mcp.mobius.waila.gui.widgets.ViewTable;
-import mcp.mobius.waila.gui.widgets.WidgetGeometry;
+import mcp.mobius.waila.gui.widgets.*;
 
 public class ScreenEnchants extends ScreenBase {
 

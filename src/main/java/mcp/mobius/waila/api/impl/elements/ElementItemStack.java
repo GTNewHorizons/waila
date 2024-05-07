@@ -1,12 +1,12 @@
 package mcp.mobius.waila.api.impl.elements;
 
+import net.minecraft.item.ItemStack;
+
+import org.lwjgl.opengl.GL11;
 
 import mcp.mobius.waila.api.elements.IElement;
 import mcp.mobius.waila.api.elements.IItemStyle;
 import mcp.mobius.waila.overlay.DisplayUtil;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 public class ElementItemStack implements IElement {
 

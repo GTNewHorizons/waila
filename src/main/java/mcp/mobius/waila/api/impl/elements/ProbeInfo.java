@@ -1,14 +1,12 @@
 package mcp.mobius.waila.api.impl.elements;
 
-import io.netty.buffer.ByteBuf;
+import java.util.List;
+
 import mcp.mobius.waila.api.elements.ElementAlignment;
 import mcp.mobius.waila.api.elements.IElement;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 public class ProbeInfo extends ElementVertical {
+
     public List<IElement> getElements() {
         return this.children;
     }

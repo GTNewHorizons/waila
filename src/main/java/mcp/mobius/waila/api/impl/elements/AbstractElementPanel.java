@@ -1,13 +1,15 @@
 package mcp.mobius.waila.api.impl.elements;
 
-import mcp.mobius.waila.api.elements.*;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.gui.Gui;
+import net.minecraft.item.ItemStack;
+
+import mcp.mobius.waila.api.elements.*;
+
 public abstract class AbstractElementPanel implements IElement, IProbeInfo {
+
     protected List<IElement> children = new ArrayList();
     protected Integer borderColor;
     protected int spacing;
@@ -60,7 +62,7 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
     }
 
     public IProbeInfo horizontal() {
-        ElementHorizontal e = new ElementHorizontal((Integer)null, this.spacing, ElementAlignment.ALIGN_TOPLEFT);
+        ElementHorizontal e = new ElementHorizontal((Integer) null, this.spacing, ElementAlignment.ALIGN_TOPLEFT);
         this.children.add(e);
         return e;
     }
@@ -79,7 +81,7 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
     }
 
     public IProbeInfo progress(int current, int max, IProgressStyle style) {
-        this.children.add(new ElementProgress((long)current, (long)max, style));
+        this.children.add(new ElementProgress((long) current, (long) max, style));
         return this;
     }
 
@@ -92,12 +94,12 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
         return this;
     }
 
-    //tmp
+    // tmp
     public static void drawHorizontalLine(int x1, int y1, int x2, int color) {
         Gui.drawRect(x1, y1, x2, y1 + 1, color);
     }
 
-    //tmp
+    // tmp
     public static void drawVerticalLine(int x1, int y1, int y2, int color) {
         Gui.drawRect(x1, y1, x1 + 1, y2, color);
     }

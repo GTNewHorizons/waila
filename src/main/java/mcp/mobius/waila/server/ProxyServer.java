@@ -110,11 +110,10 @@ public class ProxyServer {
         for (String s : ModuleRegistrar.instance().IMCRequests.keySet()) {
             this.callbackRegistration(s, ModuleRegistrar.instance().IMCRequests.get(s));
         }
-        //Injection start
+
         for (String s : ModuleProbeRegistrar.instance().IMCRequests.keySet()) {
             this.callbackProbeRegistration(s, ModuleProbeRegistrar.instance().IMCRequests.get(s));
         }
-        //Injection end
     }
 
     public void callbackRegistration(String method, String modname) {
@@ -140,7 +139,6 @@ public class ProxyServer {
         }
     }
 
-    //Injection start
     public void callbackProbeRegistration(String method, String modname) {
         String[] splitName = method.split("\\.");
         String methodName = splitName[splitName.length - 1];
@@ -163,7 +161,6 @@ public class ProxyServer {
             Waila.log.warn(String.format("Exception while trying to access the method : %s", e));
         }
     }
-    //Injection end
 
     public Object getFont() {
         return null;

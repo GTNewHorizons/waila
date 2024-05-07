@@ -1,9 +1,9 @@
 package mcp.mobius.waila.api.elements;
 
 import mcp.mobius.waila.api.NumberFormat;
-import mcp.mobius.waila.api.impl.elements.ProgressStyle;
 
 public interface IProgressStyle {
+
     /// The color that is used for the border of the progress bar
     IProgressStyle borderColor(int c);
 

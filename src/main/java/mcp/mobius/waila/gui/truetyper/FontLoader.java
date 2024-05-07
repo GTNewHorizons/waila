@@ -14,7 +14,7 @@ package mcp.mobius.waila.gui.truetyper;
  * <http://www.gnu.org/licenses/>.
  */
 
-import java.awt.Font;
+import java.awt.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

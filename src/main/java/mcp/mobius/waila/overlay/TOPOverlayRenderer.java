@@ -1,19 +1,17 @@
 package mcp.mobius.waila.overlay;
 
-import mcp.mobius.waila.api.elements.IElement;
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.api.impl.elements.ProbeInfo;
-import mcp.mobius.waila.utils.Constants;
+import java.awt.*;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import org.apache.commons.lang3.tuple.Pair;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.awt.*;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.api.impl.elements.ProbeInfo;
+import mcp.mobius.waila.utils.Constants;
 
 public class TOPOverlayRenderer {
 
@@ -39,7 +37,6 @@ public class TOPOverlayRenderer {
                 && RayTracing.instance().getTarget() != null))
             return;
 
-
         computePositionAndSize(WailaTickHandler.instance().probe);
         renderElements(WailaTickHandler.instance().probe);
     }
@@ -55,14 +52,7 @@ public class TOPOverlayRenderer {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-        drawTooltipBox(
-                x,
-                y,
-                w,
-                h,
-                OverlayConfig.bgcolor,
-                OverlayConfig.gradient1,
-                OverlayConfig.gradient2);
+        drawTooltipBox(x, y, w, h, OverlayConfig.bgcolor, OverlayConfig.gradient1, OverlayConfig.gradient2);
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -73,7 +63,6 @@ public class TOPOverlayRenderer {
         GL11.glPopMatrix();
 
     }
-
 
     public static void saveGLState() {
         hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);

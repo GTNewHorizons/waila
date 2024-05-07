@@ -1,11 +1,7 @@
 package mcp.mobius.waila.api.impl.elements;
 
-
 import mcp.mobius.waila.api.elements.ElementAlignment;
 import mcp.mobius.waila.api.elements.IElement;
-
-import static mcp.mobius.waila.api.elements.ElementAlignment.ALIGN_CENTER;
-import static mcp.mobius.waila.api.elements.ElementAlignment.ALIGN_TOPLEFT;
 
 public class ElementHorizontal extends AbstractElementPanel {
 

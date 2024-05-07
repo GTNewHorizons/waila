@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import mcp.mobius.waila.api.elements.IItemStyle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -23,12 +22,13 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
+import mcp.mobius.waila.api.elements.IItemStyle;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
-import org.lwjgl.opengl.GL12;
 
 public class DisplayUtil {
 
@@ -86,7 +86,6 @@ public class DisplayUtil {
         enable2DRender();
     }
 
-    //Inject start
     public static void elementRenderStack(int x, int y, ItemStack stack, IItemStyle itemStyle) {
         enable3DRender();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -101,8 +100,18 @@ public class DisplayUtil {
 
             // アイテムを描画
             RenderHelper.enableGUIStandardItemLighting();
-            renderItem.renderItemAndEffectIntoGUI(fontRenderer, textureManager, stack, (int)(x / xScale), (int)(y / yScale));
-            renderItem.renderItemOverlayIntoGUI(fontRenderer, textureManager, stack, (int)(x / xScale), (int)(y / yScale));
+            renderItem.renderItemAndEffectIntoGUI(
+                    fontRenderer,
+                    textureManager,
+                    stack,
+                    (int) (x / xScale),
+                    (int) (y / yScale));
+            renderItem.renderItemOverlayIntoGUI(
+                    fontRenderer,
+                    textureManager,
+                    stack,
+                    (int) (x / xScale),
+                    (int) (y / yScale));
             RenderHelper.disableStandardItemLighting();
         } catch (Exception e) {
             String stackStr = stack != null ? stack.toString() : "NullStack";
@@ -114,7 +123,6 @@ public class DisplayUtil {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         enable2DRender();
     }
-    //Inject end
 
     public static void enable3DRender() {
         GL11.glEnable(GL11.GL_LIGHTING);
@@ -210,8 +218,8 @@ public class DisplayUtil {
         DisplayUtil.drawTexturedModalRect(x, y, icon.u, icon.v, sx, sy, icon.su, icon.sv);
     }
 
-    //Injection Start
-    public static void drawThickBeveledBox(int x1, int y1, int x2, int y2, int thickness, int topleftcolor, int botrightcolor, int fillcolor) {
+    public static void drawThickBeveledBox(int x1, int y1, int x2, int y2, int thickness, int topleftcolor,
+            int botrightcolor, int fillcolor) {
         if (fillcolor != -1) {
             Gui.drawRect(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillcolor);
         }
@@ -225,5 +233,4 @@ public class DisplayUtil {
     public static void drawVerticalLine(int x1, int y1, int y2, int color) {
         Gui.drawRect(x1, y1, x1 + 1, y2, color);
     }
-    //Injection End
 }

@@ -1,8 +1,6 @@
 package mcp.mobius.waila.addons.thaumcraft;
 
-import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
-import static mcp.mobius.waila.api.SpecialChars.TAB;
-import static mcp.mobius.waila.api.SpecialChars.WHITE;
+import static mcp.mobius.waila.api.SpecialChars.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

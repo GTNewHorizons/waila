@@ -2,9 +2,9 @@ package mcp.mobius.waila.api.impl.elements;
 
 import mcp.mobius.waila.api.NumberFormat;
 import mcp.mobius.waila.api.elements.IProgressStyle;
-import mcp.mobius.waila.overlay.OverlayConfig;
 
 public class ProgressStyle implements IProgressStyle {
+
     private int borderColor = -1;
     private int backgroundColor = -16777216;
     private int filledColor = -5592406;

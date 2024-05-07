@@ -5,11 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.events.MouseEvent;
-import mcp.mobius.waila.gui.interfaces.CType;
-import mcp.mobius.waila.gui.interfaces.IWidget;
-import mcp.mobius.waila.gui.interfaces.RenderPriority;
-import mcp.mobius.waila.gui.interfaces.Signal;
-import mcp.mobius.waila.gui.interfaces.WAlign;
+import mcp.mobius.waila.gui.interfaces.*;
 import mcp.mobius.waila.gui.screens.ScreenBase;
 import mcp.mobius.waila.gui.widgets.LabelFixedFont;
 import mcp.mobius.waila.gui.widgets.LayoutBase;

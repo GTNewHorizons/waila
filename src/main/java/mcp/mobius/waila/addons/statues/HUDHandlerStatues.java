@@ -1,8 +1,6 @@
 package mcp.mobius.waila.addons.statues;
 
-import static mcp.mobius.waila.api.SpecialChars.BLUE;
-import static mcp.mobius.waila.api.SpecialChars.ITALIC;
-import static mcp.mobius.waila.api.SpecialChars.WHITE;
+import static mcp.mobius.waila.api.SpecialChars.*;
 
 import java.util.List;
 
