@@ -52,12 +52,9 @@ public class ModuleProbeRegistrar implements IProbeRegistrar {
 
     public List<IProbeDataProvider> getProviders(Object obj) {
         List<IProbeDataProvider> returnList = new ArrayList<>();
-        Integer index = 0;
 
         for (Class clazz : probeProviders.keySet()) {
-            if (clazz.isInstance(obj)) returnList.addAll(index, probeProviders.get(clazz));
-
-            index++;
+            if (clazz.isInstance(obj)) returnList.addAll(probeProviders.get(clazz));
         }
 
         return returnList;

@@ -19,7 +19,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 public class HUDElementHandlerFurnace implements IProbeDataProvider {
 
     @Override
-    public void addProveInfo(ProbeMode probeMode, ItemStack itemStack, IProbeInfo probeInfo, IWailaDataAccessor data, IWailaConfigHandler config) {
+    public void addProbeInfo(ProbeMode probeMode, ItemStack itemStack, IProbeInfo probeInfo, IWailaDataAccessor data, IWailaConfigHandler config) {
         TileEntityFurnace furnace = (TileEntityFurnace) data.getTileEntity();
 
         int cookTime = data.getNBTData().getShort("CookTime");

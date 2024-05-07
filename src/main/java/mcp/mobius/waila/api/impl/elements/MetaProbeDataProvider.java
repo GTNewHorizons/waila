@@ -59,7 +59,7 @@ public class MetaProbeDataProvider {
             ProbeInfo probeInfo = new ProbeInfo();
             DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
             for (IProbeDataProvider probeDataProvider : probeDataProviders) {
-                probeDataProvider.addProveInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
+                probeDataProvider.addProbeInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
             }
             return probeInfo;
         }
@@ -70,7 +70,7 @@ public class MetaProbeDataProvider {
             ProbeInfo probeInfo = new ProbeInfo();
             DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
             for (IProbeDataProvider probeDataProvider : probeDataProviders) {
-                probeDataProvider.addProveInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
+                probeDataProvider.addProbeInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
             }
             return probeInfo;
         }
