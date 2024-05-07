@@ -9,9 +9,7 @@ public class ModuleProbeRegistrar implements IProbeRegistrar {
 
     private static ModuleProbeRegistrar instance = null;
 
-    public LinkedHashMap<Class<?>, ArrayList<IProbeDataProvider>> probeProviders = new LinkedHashMap<>();
-
-    public LinkedHashMap<Class, HashSet<String>> syncedNBTKeys = new LinkedHashMap<>();
+    public LinkedHashMap<Class<?>, ArrayList<IProbeDataProvider>> probeProviders = new LinkedHashMap<>();;
 
     public LinkedHashMap<String, String> IMCRequests = new LinkedHashMap<>();
 

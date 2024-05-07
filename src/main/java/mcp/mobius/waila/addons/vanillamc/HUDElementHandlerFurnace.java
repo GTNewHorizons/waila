@@ -10,13 +10,11 @@ import mcp.mobius.waila.api.impl.elements.ItemStyle;
 import mcp.mobius.waila.api.impl.elements.LayoutStyle;
 import mcp.mobius.waila.api.impl.elements.ProgressStyle;
 import mcp.mobius.waila.overlay.DisplayUtil;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.StatCollector;
 
 public class HUDElementHandlerFurnace implements IProbeDataProvider {
 

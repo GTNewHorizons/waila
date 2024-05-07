@@ -10,7 +10,6 @@ import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -40,7 +39,7 @@ public class MetaProbeDataProvider {
 
             if (ModuleProbeRegistrar.instance().hasProviders(block)
                     || ModuleProbeRegistrar.instance().hasProviders(accessor.getTileEntity()))
-                WailaPacketHandler.INSTANCE.sendToServer(new Message0x01TERequest(accessor.getTileEntity(), keys));
+                WailaPacketHandler.INSTANCE.sendToServer(new Message0x01TERequest(accessor.getTileEntity(), keys, true));
         } else if (accessor.getTileEntity() != null && !Waila.instance.serverPresent
                 && accessor.isTimeElapsed(250)
                 && ConfigHandler.instance().showTooltip()) {
