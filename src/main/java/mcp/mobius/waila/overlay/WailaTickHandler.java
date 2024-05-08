@@ -75,7 +75,6 @@ public class WailaTickHandler {
             RayTracing.instance().fire();
             MovingObjectPosition target = RayTracing.instance().getTarget();
 
-            // Inject new Waila Render Handler
             probe = null;
             if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK
                     && !ConfigHandler.instance()
@@ -86,12 +85,8 @@ public class WailaTickHandler {
 
                 if (targetStack != null) {
                     probe = elementHandler.handleBlockElementData(targetStack, world, player, target, accessor);
-                    if (probe != null) {
-                        return;
-                    }
                 }
             }
-            // Injection end
 
             List<String> currenttip;
             List<String> currenttipHead;
@@ -147,6 +142,10 @@ public class WailaTickHandler {
                     currenttip.addAll(currenttipTail);
 
                     this.tooltip = new Tooltip(currenttip, targetStack);
+                    if(!ConfigHandler.instance()
+                            .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
+                        probe = elementHandler.appendTooltipData(probe, currenttipBody, targetStack, accessor);
+                    }
                 }
             } else if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
                 DataAccessorCommon accessor = DataAccessorCommon.instance;

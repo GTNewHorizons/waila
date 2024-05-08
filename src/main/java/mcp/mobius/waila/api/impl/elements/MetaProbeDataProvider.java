@@ -82,4 +82,22 @@ public class MetaProbeDataProvider {
 
         return null;
     }
+
+    //append legacy Tooltip into new ProbeInfo if possible
+    public ProbeInfo appendTooltipData(ProbeInfo probeInfo, List<String> tooltip, ItemStack itemStack, DataAccessorCommon accessor) {
+        if(probeInfo == null) {
+            probeInfo = new ProbeInfo();
+            DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
+        }
+
+        if(tooltip.isEmpty()) {
+            return probeInfo;
+        }
+
+        for (String s : tooltip) {
+            probeInfo.text(s);
+        }
+
+        return probeInfo;
+    }
 }
