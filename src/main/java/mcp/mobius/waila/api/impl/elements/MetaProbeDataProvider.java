@@ -3,6 +3,7 @@ package mcp.mobius.waila.api.impl.elements;
 import java.util.HashSet;
 import java.util.List;
 
+import mcp.mobius.waila.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,16 +20,19 @@ import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
+import net.minecraftforge.common.config.Configuration;
 
 public class MetaProbeDataProvider {
 
     public ProbeInfo handleBlockElementData(ItemStack itemStack, World world, EntityPlayer player,
             MovingObjectPosition mop, DataAccessorCommon accessor) {
         Block block = accessor.getBlock();
+        ProbeInfo probeInfo = new ProbeInfo();
+        DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
 
         if (!ModuleProbeRegistrar.instance().hasProviders(block)
                 && !ModuleProbeRegistrar.instance().hasProviders(accessor.getTileEntity())) {
-            return null;
+            return probeInfo;
         }
 
         ProbeMode probeMode = player.isSneaking() ? ProbeMode.EXTENDED
@@ -36,7 +40,8 @@ public class MetaProbeDataProvider {
 
         if (accessor.getTileEntity() != null && Waila.instance.serverPresent
                 && accessor.isTimeElapsed(250)
-                && ConfigHandler.instance().showTooltip()) {
+                && ConfigHandler.instance().showTooltip()
+                && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
             accessor.resetTimer();
             HashSet<String> keys = new HashSet<>();
 
@@ -60,36 +65,25 @@ public class MetaProbeDataProvider {
         /* Lookup by class (for blocks) */
         if (ModuleProbeRegistrar.instance().hasProviders(block)) {
             List<IProbeDataProvider> probeDataProviders = ModuleProbeRegistrar.instance().getProviders(block);
-            ProbeInfo probeInfo = new ProbeInfo();
-            DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
             for (IProbeDataProvider probeDataProvider : probeDataProviders) {
                 probeDataProvider.addProbeInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
             }
-            return probeInfo;
         }
 
         /* Lookup by class (for tileentities) */
         if (ModuleProbeRegistrar.instance().hasProviders(accessor.getTileEntity())) {
             List<IProbeDataProvider> probeDataProviders = ModuleProbeRegistrar.instance()
                     .getProviders(accessor.getTileEntity());
-            ProbeInfo probeInfo = new ProbeInfo();
-            DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
             for (IProbeDataProvider probeDataProvider : probeDataProviders) {
                 probeDataProvider.addProbeInfo(probeMode, itemStack, probeInfo, accessor, ConfigHandler.instance());
             }
-            return probeInfo;
         }
 
-        return null;
+        return probeInfo;
     }
 
     //append legacy Tooltip into new ProbeInfo if possible
     public ProbeInfo appendTooltipData(ProbeInfo probeInfo, List<String> tooltip, ItemStack itemStack, DataAccessorCommon accessor) {
-        if(probeInfo == null) {
-            probeInfo = new ProbeInfo();
-            DefaultProbeInfoProvider.addStandardBlockInfo(itemStack, probeInfo, accessor, ConfigHandler.instance());
-        }
-
         if(tooltip.isEmpty()) {
             return probeInfo;
         }

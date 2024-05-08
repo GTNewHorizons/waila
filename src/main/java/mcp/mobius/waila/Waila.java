@@ -3,6 +3,9 @@ package mcp.mobius.waila;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import cpw.mods.fml.common.*;
+import mcp.mobius.waila.addons.harvestability.MissingHarvestInfo;
+import mcp.mobius.waila.addons.harvestability.proxy.ProxyIguanaTweaks;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,12 +14,8 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLModContainer;
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.network.NetworkCheckHandler;
@@ -81,6 +80,7 @@ public class Waila {
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
 
+        MissingHarvestInfo.init();
         TestRegistrar.init();
 
     }
@@ -89,6 +89,9 @@ public class Waila {
     public void postInit(FMLPostInitializationEvent event) {
         proxy.registerHandlers();
         ModIdentification.init();
+        if (Loader.isModLoaded("IguanaTweaksTConstruct")) {
+            ProxyIguanaTweaks.init();
+        }
     }
 
     @Subscribe

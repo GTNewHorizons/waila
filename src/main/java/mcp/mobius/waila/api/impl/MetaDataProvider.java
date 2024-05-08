@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import mcp.mobius.waila.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +23,7 @@ import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.Message0x03EntRequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
+import net.minecraftforge.common.config.Configuration;
 
 public class MetaDataProvider {
 
@@ -66,7 +68,8 @@ public class MetaDataProvider {
 
         if (accessor.getTileEntity() != null && Waila.instance.serverPresent
                 && accessor.isTimeElapsed(250)
-                && ConfigHandler.instance().showTooltip()) {
+                && ConfigHandler.instance().showTooltip()
+                && ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
             accessor.resetTimer();
             HashSet<String> keys = new HashSet<>();
 
