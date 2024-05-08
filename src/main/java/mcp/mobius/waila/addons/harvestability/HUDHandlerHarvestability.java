@@ -1,18 +1,7 @@
 package mcp.mobius.waila.addons.harvestability;
 
-import mcp.mobius.waila.addons.harvestability.helpers.*;
-import mcp.mobius.waila.addons.harvestability.proxy.ProxyCreativeBlocks;
-import mcp.mobius.waila.addons.harvestability.proxy.ProxyGregTech;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.ProbeMode;
-import mcp.mobius.waila.api.elements.IProbeDataProvider;
-import mcp.mobius.waila.api.elements.IProbeInfo;
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.api.impl.ModuleRegistrar;
-import mcp.mobius.waila.api.impl.elements.ModuleProbeRegistrar;
-import mcp.mobius.waila.utils.Constants;
+import java.util.*;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +21,19 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.config.Configuration;
 
-import java.util.*;
+import mcp.mobius.waila.addons.harvestability.helpers.*;
+import mcp.mobius.waila.addons.harvestability.proxy.ProxyCreativeBlocks;
+import mcp.mobius.waila.addons.harvestability.proxy.ProxyGregTech;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.ProbeMode;
+import mcp.mobius.waila.api.elements.IProbeDataProvider;
+import mcp.mobius.waila.api.elements.IProbeInfo;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.api.impl.elements.ModuleProbeRegistrar;
+import mcp.mobius.waila.utils.Constants;
 
 public class HUDHandlerHarvestability implements IWailaDataProvider, IProbeDataProvider {
 
@@ -50,7 +51,7 @@ public class HUDHandlerHarvestability implements IWailaDataProvider, IProbeDataP
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> toolTip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if(!ConfigHandler.instance()
+        if (!ConfigHandler.instance()
                 .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
             return toolTip;
         }
@@ -291,7 +292,7 @@ public class HUDHandlerHarvestability implements IWailaDataProvider, IProbeDataP
     }
 
     public void addProbeInfo(ProbeMode probeMode, ItemStack itemStack, IProbeInfo probeInfo,
-                              IWailaDataAccessor accessor, IWailaConfigHandler config) {
+            IWailaDataAccessor accessor, IWailaConfigHandler config) {
         Block block = accessor.getBlock();
         int meta = accessor.getMetadata();
 

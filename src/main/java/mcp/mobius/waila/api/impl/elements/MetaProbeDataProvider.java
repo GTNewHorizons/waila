@@ -3,13 +3,13 @@ package mcp.mobius.waila.api.impl.elements;
 import java.util.HashSet;
 import java.util.List;
 
-import mcp.mobius.waila.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.addons.DefaultProbeInfoProvider;
@@ -19,8 +19,8 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
+import mcp.mobius.waila.utils.Constants;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
-import net.minecraftforge.common.config.Configuration;
 
 public class MetaProbeDataProvider {
 
@@ -41,7 +41,8 @@ public class MetaProbeDataProvider {
         if (accessor.getTileEntity() != null && Waila.instance.serverPresent
                 && accessor.isTimeElapsed(250)
                 && ConfigHandler.instance().showTooltip()
-                && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
+                && !ConfigHandler.instance()
+                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
             accessor.resetTimer();
             HashSet<String> keys = new HashSet<>();
 
@@ -82,9 +83,10 @@ public class MetaProbeDataProvider {
         return probeInfo;
     }
 
-    //append legacy Tooltip into new ProbeInfo if possible
-    public ProbeInfo appendTooltipData(ProbeInfo probeInfo, List<String> tooltip, ItemStack itemStack, DataAccessorCommon accessor) {
-        if(tooltip.isEmpty()) {
+    // append legacy Tooltip into new ProbeInfo if possible
+    public ProbeInfo appendTooltipData(ProbeInfo probeInfo, List<String> tooltip, ItemStack itemStack,
+            DataAccessorCommon accessor) {
+        if (tooltip.isEmpty()) {
             return probeInfo;
         }
 

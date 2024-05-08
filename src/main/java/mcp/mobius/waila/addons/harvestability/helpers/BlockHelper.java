@@ -1,14 +1,13 @@
 package mcp.mobius.waila.addons.harvestability.helpers;
 
-import mcp.mobius.waila.addons.harvestability.proxy.ProxyGregTech;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class BlockHelper {
 

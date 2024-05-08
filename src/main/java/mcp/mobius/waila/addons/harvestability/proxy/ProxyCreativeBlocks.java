@@ -1,9 +1,10 @@
 package mcp.mobius.waila.addons.harvestability.proxy;
 
-import cpw.mods.fml.common.Loader;
+import java.lang.reflect.Method;
+
 import net.minecraft.block.Block;
 
-import java.lang.reflect.Method;
+import cpw.mods.fml.common.Loader;
 
 public class ProxyCreativeBlocks {
 

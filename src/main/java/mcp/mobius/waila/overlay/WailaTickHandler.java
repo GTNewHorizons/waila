@@ -142,7 +142,7 @@ public class WailaTickHandler {
                     currenttip.addAll(currenttipTail);
 
                     this.tooltip = new Tooltip(currenttip, targetStack);
-                    if(!ConfigHandler.instance()
+                    if (!ConfigHandler.instance()
                             .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FORCE_LEGACY_MODE, false)) {
                         probe = elementHandler.appendTooltipData(probe, currenttipBody, targetStack, accessor);
                     }

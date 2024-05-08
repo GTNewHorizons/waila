@@ -69,16 +69,16 @@ public class TOPOverlayRenderer {
         GL11.glPopMatrix();
     }
 
-    private static void drawProgressBar(){
+    private static void drawProgressBar() {
         float elapsedSecond = (float) (System.currentTimeMillis() - lastMilliSecond) / 1000;
         float damage = Minecraft.getMinecraft().playerController.curBlockDamageMP;
-        if(damage == 0 && progressAlpha <= 0) {
+        if (damage == 0 && progressAlpha <= 0) {
             lastMilliSecond = System.currentTimeMillis();
             return;
         }
 
         int drawX = x + 1;
-        int drawY = y; //TODO: configurable top / bottom drawing
+        int drawY = y; // TODO: configurable top / bottom drawing
 
         if (damage > 0) {
             progressAlpha = Math.min(damage, 0.6F);
@@ -88,13 +88,13 @@ public class TOPOverlayRenderer {
             progressAlpha -= elapsedSecond;
         }
 
-        int color = applyAlpha(DEFAULT_COLOR, progressAlpha); //TODO: change color with harvestability
+        int color = applyAlpha(DEFAULT_COLOR, progressAlpha); // TODO: change color with harvestability
         int width = (int) ((w - 1) * savedProgress);
         DisplayUtil.drawGradientRect(drawX, drawY, width - 1, 2, color, color);
         lastMilliSecond = System.currentTimeMillis();
     }
 
-    private static int applyAlpha (int color, float alpha) {
+    private static int applyAlpha(int color, float alpha) {
         int red = (color >> 16) & 0xFF;
         int green = (color >> 8) & 0xFF;
         int blue = color & 0xFF;

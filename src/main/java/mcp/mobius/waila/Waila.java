@@ -3,9 +3,6 @@ package mcp.mobius.waila;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import cpw.mods.fml.common.*;
-import mcp.mobius.waila.addons.harvestability.MissingHarvestInfo;
-import mcp.mobius.waila.addons.harvestability.proxy.ProxyIguanaTweaks;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
+import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.*;
@@ -22,6 +20,8 @@ import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import cpw.mods.fml.relauncher.Side;
+import mcp.mobius.waila.addons.harvestability.MissingHarvestInfo;
+import mcp.mobius.waila.addons.harvestability.proxy.ProxyIguanaTweaks;
 import mcp.mobius.waila.addons.vanillamc.TestRegistrar;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;

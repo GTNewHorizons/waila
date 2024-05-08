@@ -1,12 +1,13 @@
 package mcp.mobius.waila.addons.harvestability.helpers;
 
-import cpw.mods.fml.common.Loader;
-import mcp.mobius.waila.addons.harvestability.proxy.ProxyIguanaTweaks;
+import java.lang.reflect.Method;
+import java.util.List;
+
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
-import java.lang.reflect.Method;
-import java.util.List;
+import cpw.mods.fml.common.Loader;
+import mcp.mobius.waila.addons.harvestability.proxy.ProxyIguanaTweaks;
 
 public class StringHelper {
 

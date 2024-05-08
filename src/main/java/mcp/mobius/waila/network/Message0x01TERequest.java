@@ -132,7 +132,7 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
 
             }
 
-            //We will try to use old tooltips regardless of the mode
+            // We will try to use old tooltips regardless of the mode
             if ((hasNBTBlock || hasNBTEnt)) {
                 tag.setInteger("x", msg.posX);
                 tag.setInteger("y", msg.posY);

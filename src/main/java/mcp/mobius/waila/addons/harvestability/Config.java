@@ -1,9 +1,5 @@
 package mcp.mobius.waila.addons.harvestability;
 
-import net.minecraftforge.common.config.Configuration;
-
-import java.io.File;
-
 public class Config {
 
     public static final String MINIMAL_SEPARATOR_STRING = " : ";

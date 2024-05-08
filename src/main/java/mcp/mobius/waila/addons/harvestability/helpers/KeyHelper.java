@@ -1,6 +1,7 @@
 package mcp.mobius.waila.addons.harvestability.helpers;
 
 import net.minecraft.client.Minecraft;
+
 import org.lwjgl.input.Keyboard;
 
 public class KeyHelper {

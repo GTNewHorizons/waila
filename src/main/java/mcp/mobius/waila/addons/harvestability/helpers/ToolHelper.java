@@ -1,16 +1,17 @@
 package mcp.mobius.waila.addons.harvestability.helpers;
 
-import cpw.mods.fml.common.Loader;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeHooks;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import cpw.mods.fml.common.Loader;
 
 public class ToolHelper {
 
