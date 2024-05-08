@@ -41,14 +41,5 @@ public class DefaultProbeInfoProvider {
         if (modName != null && !modName.isEmpty()) {
             row_vertical.text(BLUE + ITALIC + modName);
         }
-
-        float damage = accessor.getBlockBreakDamage();
-        if (damage > 0) {
-            probeInfo.vertical().progress(
-                    (long) (damage * 100),
-                    100,
-                    new ProgressStyle().text("Progress " + damage * 100 + "%").width(85).borderColor(0)
-                            .filledColor(0xff990000).alternateFilledColor(0xff550000));
-        }
     }
 }

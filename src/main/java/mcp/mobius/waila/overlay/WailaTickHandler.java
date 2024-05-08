@@ -32,10 +32,10 @@ public class WailaTickHandler {
 
     public Tooltip tooltip = null;
     public MetaDataProvider handler = new MetaDataProvider();
-    // Inject new Waila Render Handler
+
     public ProbeInfo probe = null;
     public MetaProbeDataProvider elementHandler = new MetaProbeDataProvider();
-    // Injection end
+
     private final Minecraft mc = Minecraft.getMinecraft();
 
     private static WailaTickHandler _instance;

@@ -25,8 +25,13 @@ public class TOPOverlayRenderer {
     protected static int boundTexIndex;
 
     static int w, h, x, y, ty;
+    private static float progressAlpha = 0;
+    private static long lastMilliSecond;
+    private static float savedProgress = 0;
 
     private static final int MARGIN = 5;
+    private static final int DEFAULT_COLOR = 0xFFA0A0A0;
+    private static final int FAILURE_COLOR = 0xFFAA0000;
 
     public static void renderOverlay() {
         Minecraft mc = Minecraft.getMinecraft();
@@ -53,6 +58,7 @@ public class TOPOverlayRenderer {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
         drawTooltipBox(x, y, w, h, OverlayConfig.bgcolor, OverlayConfig.gradient1, OverlayConfig.gradient2);
+        drawProgressBar();
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -61,7 +67,39 @@ public class TOPOverlayRenderer {
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         loadGLState();
         GL11.glPopMatrix();
+    }
 
+    private static void drawProgressBar(){
+        float elapsedSecond = (float) (System.currentTimeMillis() - lastMilliSecond) / 1000;
+        float damage = Minecraft.getMinecraft().playerController.curBlockDamageMP;
+        if(damage == 0 && progressAlpha <= 0) {
+            lastMilliSecond = System.currentTimeMillis();
+            return;
+        }
+
+        int drawX = x + 1;
+        int drawY = y; //TODO: configurable top / bottom drawing
+
+        if (damage > 0) {
+            progressAlpha = Math.min(damage, 0.6F);
+            progressAlpha += 0.4F * damage;
+            savedProgress = damage;
+        } else {
+            progressAlpha -= elapsedSecond;
+        }
+
+        int color = applyAlpha(DEFAULT_COLOR, progressAlpha); //TODO: change color with harvestability
+        int width = (int) ((w - 1) * savedProgress);
+        DisplayUtil.drawGradientRect(drawX, drawY, width - 1, 2, color, color);
+        lastMilliSecond = System.currentTimeMillis();
+    }
+
+    private static int applyAlpha (int color, float alpha) {
+        int red = (color >> 16) & 0xFF;
+        int green = (color >> 8) & 0xFF;
+        int blue = color & 0xFF;
+        int appliedAlpha = (int) (alpha * 255); // アルファ値を0〜255の範囲に変換
+        return (appliedAlpha << 24) | (red << 16) | (green << 8) | blue;
     }
 
     public static void saveGLState() {
