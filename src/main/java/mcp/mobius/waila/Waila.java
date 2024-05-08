@@ -23,7 +23,7 @@ import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import cpw.mods.fml.relauncher.Side;
-import mcp.mobius.waila.addons.vanillamc.TestHandler;
+import mcp.mobius.waila.addons.vanillamc.TestRegistrar;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.api.impl.elements.ModuleProbeRegistrar;
@@ -81,7 +81,7 @@ public class Waila {
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
 
-        TestHandler.init();
+        TestRegistrar.init();
 
     }
 

@@ -23,8 +23,6 @@ public class HUDElementHandlerFurnace implements IProbeDataProvider {
     @Override
     public void addProbeInfo(ProbeMode probeMode, ItemStack itemStack, IProbeInfo probeInfo, IWailaDataAccessor data,
             IWailaConfigHandler config) {
-        TileEntityFurnace furnace = (TileEntityFurnace) data.getTileEntity();
-
         int cookTime = data.getNBTData().getShort("CookTime");
         if (cookTime != 0) {
             cookTime = Math.round(cookTime / 20.0f);
