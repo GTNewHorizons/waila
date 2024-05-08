@@ -1,27 +1,47 @@
 package mcp.mobius.waila.gui.screens.config;
 
+import mcp.mobius.waila.gui.events.MouseEvent;
+import mcp.mobius.waila.gui.widgets.LayoutBase;
+import mcp.mobius.waila.gui.widgets.buttons.ButtonScreenChange;
 import net.minecraft.client.gui.GuiScreen;
 
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.interfaces.CType;
 import mcp.mobius.waila.gui.interfaces.WAlign;
 import mcp.mobius.waila.gui.screens.ScreenBase;
-import mcp.mobius.waila.gui.widgets.LayoutBase;
 import mcp.mobius.waila.gui.widgets.WidgetGeometry;
 import mcp.mobius.waila.gui.widgets.buttons.ButtonBooleanConfig;
 import mcp.mobius.waila.gui.widgets.buttons.ButtonBooleanConfigRemote;
 import mcp.mobius.waila.gui.widgets.buttons.ButtonContainerLabel;
-import mcp.mobius.waila.gui.widgets.buttons.ButtonScreenChange;
 import mcp.mobius.waila.utils.Constants;
+import org.lwjgl.util.Point;
 
 public class ScreenModuleConfig extends ScreenBase {
 
     public ScreenModuleConfig(GuiScreen parent, String modname) {
         super(parent);
 
-        this.getRoot().addWidget("ButtonContainer", new ButtonContainerLabel(this.getRoot(), 2, 100, 25.0));
+        this.getRoot().addWidget("ButtonContainer", new ButtonContainerLabel(this.getRoot(), 2, 100, 25.0){
+
+            protected int scrollValue = 0;
+
+            @Override
+            public void onMouseWheel(MouseEvent event) {
+                scrollValue += event.z * 4;
+                if (scrollValue > 0) {
+                    scrollValue = 0;
+                }
+            }
+
+            @Override
+            public void draw(Point pos) {
+                if(scrollValue <= 0) {
+                    geom.setPos(0, 20.0 + scrollValue, true, true);
+                }
+            }
+        });
         this.getRoot().getWidget("ButtonContainer").setGeometry(
-                new WidgetGeometry(0.0, 20.0, 100.0, 60.0, CType.RELXY, CType.RELXY, WAlign.LEFT, WAlign.TOP));
+                new WidgetGeometry(0.0, 20.0, 100.0, 200.0, CType.RELXY, CType.RELXY, WAlign.LEFT, WAlign.TOP));
 
         ButtonContainerLabel buttonContainer = ((ButtonContainerLabel) this.getRoot().getWidget("ButtonContainer"));
 
