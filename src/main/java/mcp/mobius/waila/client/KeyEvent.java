@@ -37,19 +37,20 @@ public class KeyEvent {
 
     @SubscribeEvent
     public void onKeyEvent(KeyInputEvent event) {
+        boolean showKey = key_show.isPressed();
         if (key_cfg.isPressed()) {
             Minecraft mc = Minecraft.getMinecraft();
             if (mc.currentScreen == null) {
                 mc.displayGuiScreen(new ScreenConfig(null));
             }
-        } else if (key_show.isPressed() && ConfigHandler.instance()
+        } else if (showKey && ConfigHandler.instance()
                 .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)) {
                     boolean status = ConfigHandler.instance()
                             .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, true);
                     ConfigHandler.instance()
                             .setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, !status);
                 } else
-            if (key_show.isPressed() && !ConfigHandler.instance()
+            if (showKey && !ConfigHandler.instance()
                     .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)) {
                         ConfigHandler.instance()
                                 .setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, true);
