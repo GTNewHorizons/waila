@@ -12,6 +12,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.screens.config.ScreenConfig;
+import mcp.mobius.waila.handlers.nei.NEIHandler;
 import mcp.mobius.waila.utils.Constants;
 
 public class KeyEvent {
@@ -43,38 +44,30 @@ public class KeyEvent {
             if (mc.currentScreen == null) {
                 mc.displayGuiScreen(new ScreenConfig(null));
             }
-        } else if (showKey && ConfigHandler.instance()
+            return;
+        }
+        if (showKey && ConfigHandler.instance()
                 .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)) {
-                    boolean status = ConfigHandler.instance()
-                            .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, true);
-                    ConfigHandler.instance()
-                            .setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, !status);
+            boolean status = ConfigHandler.instance()
+                    .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, true);
+            ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, !status);
+        } else if (showKey && !ConfigHandler.instance()
+                .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)) {
+                    ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, true);
                 } else
-            if (showKey && !ConfigHandler.instance()
-                    .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)) {
-                        ConfigHandler.instance()
-                                .setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, true);
-                    } else
-                if (key_liquid.isPressed()) {
-                    boolean status = ConfigHandler.instance()
-                            .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true);
-                    ConfigHandler.instance()
-                            .setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, !status);
-                } else if (key_recipe.isPressed()) {
-                    if (Loader.isModLoaded("NotEnoughItems")) {
-                        try {
-                            Class.forName("mcp.mobius.waila.handlers.nei.NEIHandler")
-                                    .getDeclaredMethod("openRecipeGUI", boolean.class).invoke(null, true);
-                        } catch (Exception ignored) {}
-                    }
-                } else if (key_usage.isPressed()) {
-                    if (Loader.isModLoaded("NotEnoughItems")) {
-                        try {
-                            Class.forName("mcp.mobius.waila.handlers.nei.NEIHandler")
-                                    .getDeclaredMethod("openRecipeGUI", boolean.class).invoke(null, false);
-                        } catch (Exception ignored) {}
-                    }
+            if (key_liquid.isPressed()) {
+                boolean status = ConfigHandler.instance()
+                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true);
+                ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, !status);
+            } else if (key_recipe.isPressed()) {
+                if (Loader.isModLoaded("NotEnoughItems")) {
+                    NEIHandler.openRecipeGUI(true);
                 }
+            } else if (key_usage.isPressed()) {
+                if (Loader.isModLoaded("NotEnoughItems")) {
+                    NEIHandler.openRecipeGUI(false);
+                }
+            }
     }
 
 }

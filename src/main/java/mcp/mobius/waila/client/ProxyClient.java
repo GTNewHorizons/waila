@@ -8,7 +8,6 @@ import net.minecraftforge.event.world.WorldEvent;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.cbcore.LangUtil;
@@ -17,6 +16,7 @@ import mcp.mobius.waila.gui.truetyper.TrueTypeFont;
 import mcp.mobius.waila.handlers.HUDHandlerBlocks;
 import mcp.mobius.waila.handlers.HUDHandlerEntities;
 import mcp.mobius.waila.handlers.VanillaTooltipHandler;
+import mcp.mobius.waila.handlers.nei.NEIHandler;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderHealth;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderProgressBar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderStack;
@@ -34,12 +34,7 @@ public class ProxyClient extends ProxyServer {
         LangUtil.loadLangDir("waila");
 
         if (Loader.isModLoaded("NotEnoughItems")) {
-            try {
-                Class.forName("mcp.mobius.waila.handlers.nei.NEIHandler").getDeclaredMethod("register").invoke(null);
-            } catch (Exception e) {
-                Waila.log.error("Failed to hook into NEI properly. Reverting to Vanilla tooltip handler");
-                MinecraftForge.EVENT_BUS.register(new VanillaTooltipHandler());
-            }
+            NEIHandler.register();
         } else {
             MinecraftForge.EVENT_BUS.register(new VanillaTooltipHandler());
         }
