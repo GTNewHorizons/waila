@@ -80,7 +80,7 @@ public class Waila {
             MinecraftForge.EVENT_BUS.register(new DecoratorRenderer());
             FMLCommonHandler.instance().bus().register(new KeyEvent());
             FMLCommonHandler.instance().bus().register(WailaTickHandler.instance());
-
+            MinecraftForge.EVENT_BUS.register(WailaTickHandler.instance());
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
     }
