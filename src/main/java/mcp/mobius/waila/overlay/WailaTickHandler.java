@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.config.Configuration;
 
 import org.lwjgl.input.Keyboard;
@@ -43,13 +44,15 @@ public class WailaTickHandler {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void tickRender(TickEvent.RenderTickEvent event) {
+    public void tickRender(RenderGameOverlayEvent.Text event) {
         OverlayRenderer.renderOverlay();
     }
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void tickClient(TickEvent.ClientTickEvent event) {
+
+        if (event.phase == TickEvent.Phase.START) return;
 
         if (!Keyboard.isKeyDown(KeyEvent.key_show.getKeyCode())
                 && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)
