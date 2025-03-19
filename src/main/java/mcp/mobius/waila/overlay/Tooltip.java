@@ -134,9 +134,20 @@ public class Tooltip {
         // We correct if we only have one column
         if (columnsWidth.size() == 1) columnsWidth.set(0, maxStringW);
 
-        // We compute the position of the columns to be able to align the renderable later on
-        for (int i = 1; i < columnsWidth.size(); i++)
-            columnsPos.set(i, columnsWidth.get(i - 1) + columnsPos.get(i - 1) + TabSpacing);
+        int tmp = 0;
+
+        for (int i = 0; i < columnsWidth.size(); i++) {
+            tmp += columnsWidth.get(i);
+
+            // We compute the position of the columns to be able to align the renderable later on
+            if (i != 0) {
+                columnsPos.set(i, columnsWidth.get(i - 1) + columnsPos.get(i - 1) + TabSpacing);
+            }
+        }
+
+        // We correct for edge cases where the longest string in a column is in a line shorter than the longest line
+        tmp += TabSpacing * (columnsWidth.size() - 1);
+        maxStringW = Math.max(maxStringW, tmp);
 
         this.computeRenderables();
         this.computePositionAndSize(hasIcon);
