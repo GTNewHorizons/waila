@@ -1,6 +1,7 @@
 package mcp.mobius.waila.addons.thaumcraft;
 
 import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
+import static mcp.mobius.waila.api.SpecialChars.AQUA;
 import static mcp.mobius.waila.api.SpecialChars.TAB;
 import static mcp.mobius.waila.api.SpecialChars.WHITE;
 
@@ -19,6 +20,7 @@ import net.minecraft.world.World;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.cbcore.LangUtil;
 
 public class HUDHandlerIAspectContainer implements IWailaDataProvider {
 
@@ -45,15 +47,31 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
 
             List<String> unknownAspects = new ArrayList<>();
 
+            int total = 0;
+
             for (int i = 0; i < taglist.tagCount(); i++) {
                 NBTTagCompound subtag = taglist.getCompoundTagAt(i);
 
                 String aspect = subtag.getString("key");
-                String amount = String.valueOf(subtag.getInteger("value"));
+                int value = subtag.getInteger("value");
+                total += value;
+                String amount = String.valueOf(value);
 
                 if (!aspect.equals("???"))
                     currenttip.add(String.format("%s" + TAB + ALIGNRIGHT + WHITE + "%s", aspect, amount));
                 else unknownAspects.add(String.format("%s" + TAB + ALIGNRIGHT + WHITE + "%s", aspect, amount));
+            }
+
+            String id = tag.getString("WailaID");
+
+            if ((id.equals("TileNode") || id.equals("TileExtendedNode") || id.equals("TileJarNode"))
+                    && (taglist.tagCount() > 10 || total > 300)) {
+                currenttip.add(
+                        0,
+                        String.format(
+                                AQUA + "%s" + TAB + ALIGNRIGHT + WHITE + "%s",
+                                LangUtil.translateG("hud.msg.tcnodetotalsize"),
+                                total));
             }
 
             currenttip.addAll(unknownAspects);
