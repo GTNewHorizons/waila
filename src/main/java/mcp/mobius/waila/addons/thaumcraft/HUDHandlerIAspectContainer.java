@@ -112,7 +112,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
 
