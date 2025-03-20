@@ -21,7 +21,6 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.cbcore.LangUtil;
-import thaumcraft.api.nodes.INode;
 
 public class HUDHandlerIAspectContainer implements IWailaDataProvider {
 
@@ -63,7 +62,10 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
                 else unknownAspects.add(String.format("%s" + TAB + ALIGNRIGHT + WHITE + "%s", aspect, amount));
             }
 
-            if (accessor.getTileEntity() instanceof INode && (taglist.tagCount() > 10 || total > 300)) {
+            String id = tag.getString("WailaID");
+
+            if ((id.equals("TileNode") || id.equals("TileExtendedNode") || id.equals("TileJarNode"))
+                    && (taglist.tagCount() > 10 || total > 300)) {
                 currenttip.add(
                         0,
                         String.format(
