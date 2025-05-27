@@ -44,7 +44,9 @@ public class WailaTickHandler {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void tickRender(TickEvent.RenderTickEvent event) {
-        OverlayRenderer.renderOverlay();
+        if (event.phase == TickEvent.Phase.END) {
+            OverlayRenderer.renderOverlay();
+        }
     }
 
     @SubscribeEvent
