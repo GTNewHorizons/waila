@@ -12,18 +12,13 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-import org.lwjgl.input.Keyboard;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.MetaDataProvider;
 import mcp.mobius.waila.api.impl.TipList;
 import mcp.mobius.waila.cbcore.Layout;
-import mcp.mobius.waila.client.KeyEvent;
 import mcp.mobius.waila.utils.Constants;
 
 public class WailaTickHandler {
@@ -32,7 +27,6 @@ public class WailaTickHandler {
     private final MetaDataProvider handler = new MetaDataProvider();
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void tickRender(TickEvent.RenderTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             OverlayRenderer.renderOverlay(tooltip);
@@ -40,17 +34,9 @@ public class WailaTickHandler {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void tickClient(TickEvent.ClientTickEvent event) {
 
         if (event.phase == TickEvent.Phase.START) return;
-
-        if (!Keyboard.isKeyDown(KeyEvent.key_show.getKeyCode())
-                && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)
-                && ConfigHandler.instance()
-                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false)) {
-            ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false);
-        }
 
         Minecraft mc = Minecraft.getMinecraft();
         World world = mc.theWorld;
