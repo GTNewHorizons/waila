@@ -11,14 +11,9 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class OverlayRenderer {
 
-    protected static boolean hasBlending;
-    protected static boolean hasLight;
-    protected static boolean hasDepthTest;
-    protected static boolean hasLight0;
-    protected static boolean hasLight1;
-    protected static boolean hasRescaleNormal;
-    protected static boolean hasColorMaterial;
-    protected static int boundTexIndex;
+    private static boolean hasBlending;
+    private static boolean hasDepthTest;
+    private static int boundTexIndex;
 
     public static void renderOverlay(Tooltip tooltip) {
         Minecraft mc = Minecraft.getMinecraft();
@@ -82,7 +77,6 @@ public class OverlayRenderer {
 
     private static void saveGLState() {
         hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);
-        hasLight = GL11.glGetBoolean(GL11.GL_LIGHTING);
         hasDepthTest = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
         boundTexIndex = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
         GL11.glPushAttrib(GL11.GL_CURRENT_BIT);
@@ -91,8 +85,6 @@ public class OverlayRenderer {
     private static void loadGLState() {
         if (hasBlending) GL11.glEnable(GL11.GL_BLEND);
         else GL11.glDisable(GL11.GL_BLEND);
-        if (hasLight1) GL11.glEnable(GL11.GL_LIGHT1);
-        else GL11.glDisable(GL11.GL_LIGHT1);
         if (hasDepthTest) GL11.glEnable(GL11.GL_DEPTH_TEST);
         else GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
