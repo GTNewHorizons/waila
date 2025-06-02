@@ -68,7 +68,9 @@ public class ProxyClient extends ProxyServer {
 
         @SubscribeEvent
         public void onWorldUnload(WorldEvent.Unload event) {
-            DataAccessorCommon.instance = new DataAccessorCommon();
+            if (event.world.isRemote) {
+                DataAccessorCommon.instance = new DataAccessorCommon();
+            }
         }
     }
 }
