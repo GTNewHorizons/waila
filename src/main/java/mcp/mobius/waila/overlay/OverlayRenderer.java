@@ -20,7 +20,7 @@ public class OverlayRenderer {
     protected static boolean hasColorMaterial;
     protected static int boundTexIndex;
 
-    public static void renderOverlay() {
+    public static void renderOverlay(Tooltip tooltip) {
         Minecraft mc = Minecraft.getMinecraft();
         if (!(mc.currentScreen == null && mc.theWorld != null
                 && Minecraft.isGuiEnabled()
@@ -31,16 +31,16 @@ public class OverlayRenderer {
 
         if (RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK
                 && RayTracing.instance().getTargetStack() != null) {
-            renderOverlay(WailaTickHandler.instance().tooltip);
+            doRenderOverlay(tooltip);
         }
 
         if (RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY
                 && ConfigHandler.instance().getConfig("general.showents")) {
-            renderOverlay(WailaTickHandler.instance().tooltip);
+            doRenderOverlay(tooltip);
         }
     }
 
-    public static void renderOverlay(Tooltip tooltip) {
+    private static void doRenderOverlay(Tooltip tooltip) {
 
         GL11.glPushMatrix();
         saveGLState();
@@ -80,7 +80,7 @@ public class OverlayRenderer {
 
     }
 
-    public static void saveGLState() {
+    private static void saveGLState() {
         hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);
         hasLight = GL11.glGetBoolean(GL11.GL_LIGHTING);
         hasDepthTest = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
@@ -88,7 +88,7 @@ public class OverlayRenderer {
         GL11.glPushAttrib(GL11.GL_CURRENT_BIT);
     }
 
-    public static void loadGLState() {
+    private static void loadGLState() {
         if (hasBlending) GL11.glEnable(GL11.GL_BLEND);
         else GL11.glDisable(GL11.GL_BLEND);
         if (hasLight1) GL11.glEnable(GL11.GL_LIGHT1);
@@ -99,7 +99,7 @@ public class OverlayRenderer {
         GL11.glPopAttrib();
     }
 
-    public static void drawTooltipBox(int x, int y, int w, int h, int bg, int grad1, int grad2) {
+    private static void drawTooltipBox(int x, int y, int w, int h, int bg, int grad1, int grad2) {
         DisplayUtil.drawGradientRect(x + 1, y, w - 1, 1, bg, bg);
         DisplayUtil.drawGradientRect(x + 1, y + h, w - 1, 1, bg, bg);
         DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, h - 1, bg, bg);// center
@@ -107,7 +107,6 @@ public class OverlayRenderer {
         DisplayUtil.drawGradientRect(x + w, y + 1, 1, h - 1, bg, bg);
         DisplayUtil.drawGradientRect(x + 1, y + 2, 1, h - 3, grad1, grad2);
         DisplayUtil.drawGradientRect(x + w - 1, y + 2, 1, h - 3, grad1, grad2);
-
         DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, 1, grad1, grad1);
         DisplayUtil.drawGradientRect(x + 1, y + h - 1, w - 1, 1, grad2, grad2);
     }

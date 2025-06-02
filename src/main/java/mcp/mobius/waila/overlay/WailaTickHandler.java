@@ -28,24 +28,14 @@ import mcp.mobius.waila.utils.Constants;
 
 public class WailaTickHandler {
 
-    public Tooltip tooltip = null;
-    public MetaDataProvider handler = new MetaDataProvider();
-    private final Minecraft mc = Minecraft.getMinecraft();
-
-    private static WailaTickHandler _instance;
-
-    private WailaTickHandler() {}
-
-    public static WailaTickHandler instance() {
-        if (_instance == null) _instance = new WailaTickHandler();
-        return _instance;
-    }
+    private Tooltip tooltip = null;
+    private final MetaDataProvider handler = new MetaDataProvider();
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void tickRender(TickEvent.RenderTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            OverlayRenderer.renderOverlay();
+            OverlayRenderer.renderOverlay(tooltip);
         }
     }
 
@@ -62,6 +52,7 @@ public class WailaTickHandler {
             ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false);
         }
 
+        Minecraft mc = Minecraft.getMinecraft();
         World world = mc.theWorld;
         EntityPlayer player = mc.thePlayer;
         if (world != null && player != null) {
