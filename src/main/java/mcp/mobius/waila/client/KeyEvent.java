@@ -10,6 +10,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.screens.config.ScreenConfig;
 import mcp.mobius.waila.handlers.nei.NEIHandler;
@@ -68,6 +69,17 @@ public class KeyEvent {
                     NEIHandler.openRecipeGUI(false);
                 }
             }
+    }
+
+    @SubscribeEvent
+    public void tickClient(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) return;
+        if (!KeyEvent.key_show.getIsKeyPressed()
+                && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)
+                && ConfigHandler.instance()
+                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false)) {
+            ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false);
+        }
     }
 
 }
