@@ -55,117 +55,109 @@ public class WailaTickHandler {
         Minecraft mc = Minecraft.getMinecraft();
         World world = mc.theWorld;
         EntityPlayer player = mc.thePlayer;
-        if (world != null && player != null) {
-            RayTracing.instance().fire();
-            MovingObjectPosition target = RayTracing.instance().getTarget();
+        if (world == null || player == null) {
+            this.tooltip = null;
+            RayTracing.instance().clear();
+            return;
+        }
 
-            List<String> currenttip;
-            List<String> currenttipHead;
-            List<String> currenttipBody;
-            List<String> currenttipTail;
-            if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-                DataAccessorCommon accessor = DataAccessorCommon.instance;
-                accessor.set(world, player, target);
-                ItemStack targetStack = RayTracing.instance().getTargetStack(); // Here we get either the proper stack
-                                                                                // or the override
+        RayTracing.instance().fire();
+        MovingObjectPosition target = RayTracing.instance().getTarget();
 
-                if (targetStack != null) {
-                    currenttip = new TipList<String, String>();
-                    currenttipHead = new TipList<String, String>();
-                    currenttipBody = new TipList<String, String>();
-                    currenttipTail = new TipList<String, String>();
+        List<String> currenttip;
+        List<String> currenttipHead;
+        List<String> currenttipBody;
+        List<String> currenttipTail;
+        if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            DataAccessorCommon accessor = DataAccessorCommon.instance;
+            accessor.set(world, player, target);
+            ItemStack targetStack = RayTracing.instance().getTargetStack(); // Here we get either the proper stack
+            // or the override
 
-                    currenttipHead = handler.handleBlockTextData(
-                            targetStack,
-                            world,
-                            player,
-                            target,
-                            accessor,
-                            currenttipHead,
-                            Layout.HEADER);
-                    currenttipBody = handler.handleBlockTextData(
-                            targetStack,
-                            world,
-                            player,
-                            target,
-                            accessor,
-                            currenttipBody,
-                            Layout.BODY);
-                    currenttipTail = handler.handleBlockTextData(
-                            targetStack,
-                            world,
-                            player,
-                            target,
-                            accessor,
-                            currenttipTail,
-                            Layout.FOOTER);
+            if (targetStack != null) {
+                currenttip = new TipList<String, String>();
+                currenttipHead = new TipList<String, String>();
+                currenttipBody = new TipList<String, String>();
+                currenttipTail = new TipList<String, String>();
 
-                    if (ConfigHandler.instance()
-                            .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTBLOCK, false)
-                            && !currenttipBody.isEmpty()
-                            && !accessor.getPlayer().isSneaking()) {
-                        currenttipBody.clear();
-                        currenttipBody.add(ITALIC + "Press shift for more data");
-                    }
+                currenttipHead = handler.handleBlockTextData(
+                        targetStack,
+                        world,
+                        player,
+                        target,
+                        accessor,
+                        currenttipHead,
+                        Layout.HEADER);
+                currenttipBody = handler
+                        .handleBlockTextData(targetStack, world, player, target, accessor, currenttipBody, Layout.BODY);
+                currenttipTail = handler.handleBlockTextData(
+                        targetStack,
+                        world,
+                        player,
+                        target,
+                        accessor,
+                        currenttipTail,
+                        Layout.FOOTER);
 
-                    currenttip.addAll(currenttipHead);
-                    currenttip.addAll(currenttipBody);
-                    currenttip.addAll(currenttipTail);
-
-                    this.tooltip = new Tooltip(currenttip, targetStack);
+                if (ConfigHandler.instance()
+                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTBLOCK, false)
+                        && !currenttipBody.isEmpty()
+                        && !accessor.getPlayer().isSneaking()) {
+                    currenttipBody.clear();
+                    currenttipBody.add(ITALIC + "Press shift for more data");
                 }
-            } else if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
-                DataAccessorCommon accessor = DataAccessorCommon.instance;
-                accessor.set(world, player, target);
 
-                Entity targetEnt = RayTracing.instance().getTargetEntity(); // This need to be replaced by the override
-                                                                            // check.
+                currenttip.addAll(currenttipHead);
+                currenttip.addAll(currenttipBody);
+                currenttip.addAll(currenttipTail);
 
-                if (targetEnt != null) {
-                    currenttip = new TipList<String, String>();
-                    currenttipHead = new TipList<String, String>();
-                    currenttipBody = new TipList<String, String>();
-                    currenttipTail = new TipList<String, String>();
+                this.tooltip = new Tooltip(currenttip, targetStack);
+            }
+        } else if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
+            DataAccessorCommon accessor = DataAccessorCommon.instance;
+            accessor.set(world, player, target);
 
-                    currenttipHead = handler.handleEntityTextData(
-                            targetEnt,
-                            world,
-                            player,
-                            target,
-                            accessor,
-                            currenttipHead,
-                            Layout.HEADER);
-                    currenttipBody = handler.handleEntityTextData(
-                            targetEnt,
-                            world,
-                            player,
-                            target,
-                            accessor,
-                            currenttipBody,
-                            Layout.BODY);
-                    currenttipTail = handler.handleEntityTextData(
-                            targetEnt,
-                            world,
-                            player,
-                            target,
-                            accessor,
-                            currenttipTail,
-                            Layout.FOOTER);
+            Entity targetEnt = RayTracing.instance().getTargetEntity(); // This need to be replaced by the override
+            // check.
 
-                    if (ConfigHandler.instance()
-                            .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTENTS, false)
-                            && !currenttipBody.isEmpty()
-                            && !accessor.getPlayer().isSneaking()) {
-                        currenttipBody.clear();
-                        currenttipBody.add(ITALIC + "Press shift for more data");
-                    }
+            if (targetEnt != null) {
+                currenttip = new TipList<String, String>();
+                currenttipHead = new TipList<String, String>();
+                currenttipBody = new TipList<String, String>();
+                currenttipTail = new TipList<String, String>();
 
-                    currenttip.addAll(currenttipHead);
-                    currenttip.addAll(currenttipBody);
-                    currenttip.addAll(currenttipTail);
+                currenttipHead = handler.handleEntityTextData(
+                        targetEnt,
+                        world,
+                        player,
+                        target,
+                        accessor,
+                        currenttipHead,
+                        Layout.HEADER);
+                currenttipBody = handler
+                        .handleEntityTextData(targetEnt, world, player, target, accessor, currenttipBody, Layout.BODY);
+                currenttipTail = handler.handleEntityTextData(
+                        targetEnt,
+                        world,
+                        player,
+                        target,
+                        accessor,
+                        currenttipTail,
+                        Layout.FOOTER);
 
-                    this.tooltip = new Tooltip(currenttip, false);
+                if (ConfigHandler.instance()
+                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTENTS, false)
+                        && !currenttipBody.isEmpty()
+                        && !accessor.getPlayer().isSneaking()) {
+                    currenttipBody.clear();
+                    currenttipBody.add(ITALIC + "Press shift for more data");
                 }
+
+                currenttip.addAll(currenttipHead);
+                currenttip.addAll(currenttipBody);
+                currenttip.addAll(currenttipTail);
+
+                this.tooltip = new Tooltip(currenttip, false);
             }
         }
 
