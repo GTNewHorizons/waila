@@ -84,6 +84,16 @@ public class ScreenWailaConfig extends ScreenBase {
                         "screen.button.no",
                         "screen.button.yes"),
                 "choice.shifttoggledents");
+        buttonContainer.addButton(
+                new ButtonBooleanConfig(
+                        this.getRoot(),
+                        Configuration.CATEGORY_GENERAL,
+                        Constants.CFG_WAILA_SHOWICON,
+                        true,
+                        false,
+                        "screen.button.no",
+                        "screen.button.yes"),
+                "choice.showicon");
 
         this.getRoot().addWidget("LayoutConfigPos", new LayoutBase(this.getRoot()));
         this.getRoot().getWidget("LayoutConfigPos")
