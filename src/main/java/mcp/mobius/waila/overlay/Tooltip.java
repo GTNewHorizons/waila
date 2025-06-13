@@ -106,6 +106,8 @@ public class Tooltip {
 
     public Tooltip(List<String> textData, boolean hasIcon) {
 
+        if (hasIcon) hasIcon = ConfigHandler.instance().showIcon();
+
         columnsWidth.add(0); // Small init of the arrays to have at least one element
         columnsPos.add(0);
 
