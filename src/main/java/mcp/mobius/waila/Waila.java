@@ -1,6 +1,5 @@
 package mcp.mobius.waila;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -8,11 +7,9 @@ import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLModContainer;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -69,13 +66,6 @@ public class Waila {
 
     @EventHandler
     public void initialize(FMLInitializationEvent event) {
-        try {
-            Field eBus = FMLModContainer.class.getDeclaredField("eventBus");
-            eBus.setAccessible(true);
-            EventBus FMLbus = (EventBus) eBus.get(FMLCommonHandler.instance().findContainerFor(this));
-            FMLbus.register(this);
-        } catch (Throwable ignored) {}
-
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
             MinecraftForge.EVENT_BUS.register(new DecoratorRenderer());
             FMLCommonHandler.instance().bus().register(new KeyEvent());
