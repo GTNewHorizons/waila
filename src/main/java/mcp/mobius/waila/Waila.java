@@ -7,8 +7,6 @@ import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -80,7 +78,7 @@ public class Waila {
         ModIdentification.init();
     }
 
-    @Subscribe
+    @EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
         proxy.registerMods();
         proxy.registerIMCs();
