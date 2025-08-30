@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,9 @@ import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.IWailaBlock;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaEntityProvider;
+import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.cbcore.Layout;
+import mcp.mobius.waila.client.KeyEvent;
 import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.Message0x03EntRequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
@@ -146,10 +149,28 @@ public class MetaDataProvider {
         }
 
         if (layout == Layout.BODY) for (List<IWailaDataProvider> providersList : bodyBlockProviders.values()) {
+            boolean hasAdvancedBodyAvailable = false;
+            final boolean isAdvancedKeyDown = KeyEvent.key_show_advanced.getIsKeyPressed();
+
             for (IWailaDataProvider dataProvider : providersList) try {
                 currenttip = dataProvider.getWailaBody(itemStack, currenttip, accessor, ConfigHandler.instance());
+
+                if (dataProvider.hasAdvancedBody(itemStack, accessor, ConfigHandler.instance())) {
+                    hasAdvancedBodyAvailable = true;
+
+                    if (isAdvancedKeyDown) {
+                        currenttip = dataProvider
+                                .getWailaAdvancedBody(itemStack, currenttip, accessor, ConfigHandler.instance());
+                    }
+                }
+
             } catch (Throwable e) {
                 currenttip = WailaExceptionHandler.handleErr(e, dataProvider.getClass().toString(), currenttip);
+            }
+
+            if (hasAdvancedBodyAvailable && !isAdvancedKeyDown) {
+                String keyName = GameSettings.getKeyDisplayString(KeyEvent.key_show_advanced.getKeyCode());
+                currenttip.add(LangUtil.translateG("hud.msg.holdkeymoreinfo", keyName));
             }
         }
         if (layout == Layout.FOOTER) for (List<IWailaDataProvider> providersList : tailBlockProviders.values()) {
