@@ -114,16 +114,12 @@ public class ProxyServer {
         String[] splitName = method.split("\\.");
         String methodName = splitName[splitName.length - 1];
         String className = method.substring(0, method.length() - methodName.length() - 1);
-
-        Waila.log.info(String.format("Trying to reflect %s %s", className, methodName));
-
+        Waila.log.debug(String.format("Trying to reflect %s %s", className, methodName));
         try {
             Class<?> reflectClass = Class.forName(className);
             Method reflectMethod = reflectClass.getDeclaredMethod(methodName, IWailaRegistrar.class);
             reflectMethod.invoke(null, ModuleRegistrar.instance());
-
             Waila.log.info(String.format("Success in registering %s", modname));
-
         } catch (ClassNotFoundException e) {
             Waila.log.warn(String.format("Could not find class %s", className));
         } catch (NoSuchMethodException e) {
