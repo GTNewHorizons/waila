@@ -30,6 +30,7 @@ enchant.label.enchantability=Incantabilità
 
 waila.keybind.wailaconfig=[Waila] Config menù
 waila.keybind.wailadisplay=[Waila] Mostra/Nascondi
+waila.keybind.showadvanced=[Waila] Espandi tooltip
 waila.keybind.liquid=[Waila] Mostra liquidi
 waila.keybind.recipe=[Waila] Mostra ricetta
 waila.keybind.usage=[Waila] Mostra uso
@@ -37,6 +38,8 @@ waila.keybind.testing=[Waila] Provare
 
 client.msg.norecipe=Nessuna ricetta trovata.
 client.msg.nousage=Nessun uso trovato.
+
+hud.msg.holdkeymoreinfo=Tieni premuto %s per più info
 
 hud.msg.none=<Niente>
 hud.msg.empty=<Vuoto>

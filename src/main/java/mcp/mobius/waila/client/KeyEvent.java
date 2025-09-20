@@ -23,6 +23,7 @@ public class KeyEvent {
     public static KeyBinding key_liquid;
     public static KeyBinding key_recipe;
     public static KeyBinding key_usage;
+    public static KeyBinding key_show_advanced;
 
     public KeyEvent() {
         ClientRegistry
@@ -35,6 +36,8 @@ public class KeyEvent {
                 key_recipe = new KeyBinding(Constants.BIND_WAILA_RECIPE, Keyboard.KEY_NUMPAD3, "Waila"));
         ClientRegistry.registerKeyBinding(
                 key_usage = new KeyBinding(Constants.BIND_WAILA_USAGE, Keyboard.KEY_NUMPAD4, "Waila"));
+        ClientRegistry.registerKeyBinding(
+                key_show_advanced = new KeyBinding(Constants.BIND_WAILA_SHOW_ADVANCED, Keyboard.KEY_LSHIFT, "Waila"));
     }
 
     @SubscribeEvent

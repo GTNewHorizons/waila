@@ -30,6 +30,7 @@ enchant.label.enchantability=Loitsitav
 
 waila.keybind.wailaconfig=[Waila] Konfiguratsiooni ekraan
 waila.keybind.wailadisplay=[Waila] Näita/Peida
+waila.keybind.showadvanced=[Waila] Laienda kohtspikrit
 waila.keybind.liquid=[Waila] Näita vedelikke
 waila.keybind.recipe=[Waila] Näita retsepti
 waila.keybind.usage=[Waila] Näita kasutamist
@@ -37,6 +38,8 @@ waila.keybind.testing=[Waila] Testimine
 
 client.msg.norecipe=Ühtegi retsepti ei leitud.
 client.msg.nousage=Ühtegi kasutust ei leitud.
+
+hud.msg.holdkeymoreinfo=Hoia %s lisainfo saamiseks
 
 hud.msg.none=<Mitte Ükski>
 hud.msg.empty=<Tühi>
