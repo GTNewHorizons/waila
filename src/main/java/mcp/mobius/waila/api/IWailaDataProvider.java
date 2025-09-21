@@ -63,6 +63,35 @@ public interface IWailaDataProvider {
             IWailaConfigHandler config);
 
     /**
+     * Callback used to determine if there is extended information to display for the Body section. If this returns
+     * true, Waila will either display the "Hold <KEY> for more info" prompt or call getWailaAdvancedBody if the key is
+     * being held.
+     *
+     * @param itemStack Current block scanned, in ItemStack form.
+     * @param accessor  Contains most of the relevant information about the current environment.
+     * @param config    Current configuration of Waila.
+     * @return True if advanced body information is available, false otherwise.
+     */
+    default boolean hasAdvancedBody(ItemStack itemStack, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        return false; // Default to false for backward compatibility
+    }
+
+    /**
+     * Callback used to add the extended lines to the Body section of the tooltip. This method is ONLY called if
+     * hasAdvancedBody returns true AND the player is holding the configured key for advanced tooltips.
+     *
+     * @param itemStack  Current block scanned, in ItemStack form.
+     * @param currenttip The current list of tooltip lines, including the normal body.
+     * @param accessor   Contains most of the relevant information about the current environment.
+     * @param config     Current configuration of Waila.
+     * @return Modified input currenttip with advanced information appended.
+     */
+    default List<String> getWailaAdvancedBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
+            IWailaConfigHandler config) {
+        return currenttip; // Default to returning the unmodified list
+    }
+
+    /**
      * Callback used to add lines to one of the three sections of the tooltip (Head, Body, Tail).</br>
      * Will be used if the implementing class is registered via {@link IWailaRegistrar}.{@link registerTailProvider}
      * client side.</br>

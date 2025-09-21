@@ -28,6 +28,7 @@ enchant.label.enchantability=Enchantbaarheid
 
 waila.keybind.wailaconfig=[Waila] Configuratiescherm
 waila.keybind.wailadisplay=[Waila] Toon/Verberg
+waila.keybind.showadvanced=[Waila] Tooltip uitvouwen
 waila.keybind.liquid=[Waila] Toon vloeistoffen
 waila.keybind.recipe=[Waila] Toon recepten
 waila.keybind.usage=[Waila] Toon gebruik
@@ -35,6 +36,8 @@ waila.keybind.testing=[Waila] Testen
 
 client.msg.norecipe=Geen recept gevonden.
 client.msg.nousage=Geen gebruik gevonden.
+
+hud.msg.holdkeymoreinfo=Houd %s ingedrukt voor meer info
 
 hud.msg.none=<Geen>
 hud.msg.empty=<Leeg>

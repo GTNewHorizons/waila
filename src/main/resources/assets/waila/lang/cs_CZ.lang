@@ -30,6 +30,7 @@ enchant.label.enchantability=Oèarovatelnost
 
 waila.keybind.wailaconfig=[Waila] Nastavení obrazu
 waila.keybind.wailadisplay=[Waila] Zobrazit/Skrýt
+waila.keybind.showadvanced=[Waila] Rozšířit popisek
 waila.keybind.liquid=[Waila] Zobrazit tekutiny
 waila.keybind.recipe=[Waila] Zobrazit recept
 waila.keybind.usage=[Waila] Zobrazit použití
@@ -37,6 +38,8 @@ waila.keybind.testing=[Waila] Testování
 
 client.msg.norecipe=Nenalezen žádný recept.
 client.msg.nousage=Nenalezeno žádné využití.
+
+hud.msg.holdkeymoreinfo=Držte %s pro více informací
 
 hud.msg.none=<Nic>
 hud.msg.empty=<Prázdný>
