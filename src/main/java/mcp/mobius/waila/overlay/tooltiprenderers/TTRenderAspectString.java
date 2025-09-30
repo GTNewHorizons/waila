@@ -19,7 +19,20 @@ public class TTRenderAspectString implements IWailaTooltipRenderer {
 
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
-        return new Dimension(DisplayUtil.getDisplayWidth(params[0]) + 10, params[0].isEmpty() ? 0 : 8);
+        int width;
+        if (params[0].equals("???")) {
+            width = DisplayUtil.getDisplayWidth(params[0]);
+        } else {
+            try {
+                Object aspect = ThaumcraftModule.Aspect_getAspect.invoke(null, params[0]);
+                if (aspect == null) {
+                    width = DisplayUtil.getDisplayWidth(params[0]);
+                } else width = DisplayUtil.getDisplayWidth((String) ThaumcraftModule.Aspect_getName.invoke(aspect));
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return new Dimension(width + 10, params[0].isEmpty() ? 0 : 8);
     }
 
     @Override
