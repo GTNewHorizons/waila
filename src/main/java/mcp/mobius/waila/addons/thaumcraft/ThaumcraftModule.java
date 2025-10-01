@@ -2,7 +2,9 @@ package mcp.mobius.waila.addons.thaumcraft;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.function.Function;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import org.apache.logging.log4j.Level;
@@ -33,6 +35,8 @@ public class ThaumcraftModule {
     public static Method CommonProxy_getKnownAspects = null;
 
     public static Class<?> IGoggles = null;
+
+    public static Function<ItemStack, Boolean> isGoggles = stack -> IGoggles.isInstance(stack.getItem());
 
     public static void register() {
         try {
