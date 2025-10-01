@@ -1,11 +1,13 @@
 package mcp.mobius.waila.addons.thaumcraft;
 
+import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.function.Function;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 
 import org.apache.logging.log4j.Level;
 
@@ -30,12 +32,17 @@ public class ThaumcraftModule {
     public static Class<?> Aspect = null;
     public static Field Aspect_tag = null;
     public static Method Aspect_getName = null;
+    public static Method Aspect_getAspect = null;
+    public static Method Aspect_getImage = null;
+    public static Method Aspect_getColor = null;
 
     public static Class<?> CommonProxy = null;
     public static Method CommonProxy_getKnownAspects = null;
 
     public static Class<?> IGoggles = null;
 
+    public static ResourceLocation unknownAspectTexture = null;
+    public static Color unknownAspectColor = null;
     public static Function<ItemStack, Boolean> isGoggles = stack -> IGoggles.isInstance(stack.getItem());
 
     public static void register() {
@@ -57,11 +64,17 @@ public class ThaumcraftModule {
             Aspect_tag = Aspect.getDeclaredField("tag");
             Aspect_tag.setAccessible(true);
             Aspect_getName = Aspect.getDeclaredMethod("getName");
+            Aspect_getAspect = Aspect.getMethod("getAspect", java.lang.String.class);
+            Aspect_getImage = Aspect.getDeclaredMethod("getImage");
+            Aspect_getColor = Aspect.getDeclaredMethod("getColor");
 
             CommonProxy = Class.forName("thaumcraft.common.CommonProxy");
             CommonProxy_getKnownAspects = CommonProxy.getDeclaredMethod("getKnownAspects");
 
             IGoggles = Class.forName("thaumcraft.api.IGoggles");
+
+            unknownAspectTexture = new ResourceLocation("thaumcraft", "textures/aspects/_unknown.png");
+            unknownAspectColor = new Color(0x654242);
 
             ModuleRegistrar.instance().addConfigRemote("Thaumcraft", "thaumcraft.aspects");
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerIAspectContainer(), IAspectContainer);
