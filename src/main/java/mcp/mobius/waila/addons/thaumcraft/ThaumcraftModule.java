@@ -3,7 +3,9 @@ package mcp.mobius.waila.addons.thaumcraft;
 import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.function.Function;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
@@ -41,6 +43,7 @@ public class ThaumcraftModule {
 
     public static ResourceLocation unknownAspectTexture = null;
     public static Color unknownAspectColor = null;
+    public static Function<ItemStack, Boolean> isGoggles = stack -> IGoggles.isInstance(stack.getItem());
 
     public static void register() {
         try {

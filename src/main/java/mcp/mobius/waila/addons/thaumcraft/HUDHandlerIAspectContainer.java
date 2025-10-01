@@ -99,7 +99,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
 
             ItemStack headSlot = player.inventory.armorInventory[3];
             if (headSlot == null) return tag;
-            boolean hasReveal = ThaumcraftModule.IGoggles.isInstance(headSlot.getItem());
+            boolean hasReveal = ThaumcraftModule.isGoggles.apply(headSlot);
             if (!hasReveal) return tag;
 
             Map<String, ?> knownAspects = (Map<String, ?>) ThaumcraftModule.CommonProxy_getKnownAspects
