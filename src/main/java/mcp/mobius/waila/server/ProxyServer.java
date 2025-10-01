@@ -20,6 +20,7 @@ import mcp.mobius.waila.addons.railcraft.RailcraftModule;
 import mcp.mobius.waila.addons.statues.StatuesModule;
 import mcp.mobius.waila.addons.stevescarts.StevesCartsModule;
 import mcp.mobius.waila.addons.thaumcraft.ThaumcraftModule;
+import mcp.mobius.waila.addons.thaumcraftGadomancy.GadomancyModule;
 import mcp.mobius.waila.addons.thermaldynamics.ThermalDynamicsModule;
 import mcp.mobius.waila.addons.thermalexpansion.ThermalExpansionModule;
 import mcp.mobius.waila.addons.twilightforest.TwilightForestModule;
@@ -49,6 +50,9 @@ public class ProxyServer {
 
         /* Thaumcraft */
         ThaumcraftModule.register();
+
+        /* Gadomancy */
+        GadomancyModule.register();
 
         /* EnderStorage */
         EnderStorageModule.register();
