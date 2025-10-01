@@ -39,7 +39,7 @@ public class TTRenderAspectString implements IWailaTooltipRenderer {
     public void draw(String[] params, IWailaCommonAccessor accessor) {
         try {
             if (params[0].equals("???")) {
-                drawTag(0, 0, ThaumcraftModule.unknownAspectTexture, ThaumcraftModule.unknownAspectColor, 200, 771, 1F);
+                drawTag(0, 0, ThaumcraftModule.unknownAspectTexture, ThaumcraftModule.unknownAspectColor, 200);
                 DisplayUtil.drawString(params[0], 10, 0, OverlayConfig.fontcolor, true);
                 return;
             }
@@ -50,9 +50,7 @@ public class TTRenderAspectString implements IWailaTooltipRenderer {
                     0,
                     (ResourceLocation) ThaumcraftModule.Aspect_getImage.invoke(aspect),
                     new Color((int) ThaumcraftModule.Aspect_getColor.invoke(aspect)),
-                    200,
-                    771,
-                    1F);
+                    200);
             DisplayUtil.drawString(
                     (String) ThaumcraftModule.Aspect_getName.invoke(aspect),
                     10,
@@ -65,20 +63,14 @@ public class TTRenderAspectString implements IWailaTooltipRenderer {
         }
     }
 
-    public static void drawTag(double x, double y, ResourceLocation image, Color color, double z, int blend,
-            float alpha) {
+    public static void drawTag(double x, double y, ResourceLocation image, Color color, double z) {
         Minecraft mc = Minecraft.getMinecraft();
-        GL11.glPushMatrix();
-        GL11.glDisable(2896);
-        GL11.glAlphaFunc(516, 0.003921569F);
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, blend);
         mc.renderEngine.bindTexture(image);
         GL11.glColor4f(
                 (float) color.getRed() / 255.0F,
                 (float) color.getGreen() / 255.0F,
                 (float) color.getBlue() / 255.0F,
-                alpha);
+                1);
 
         Tessellator var9 = Tessellator.instance;
         var9.startDrawingQuads();
@@ -86,14 +78,13 @@ public class TTRenderAspectString implements IWailaTooltipRenderer {
                 (float) color.getRed() / 255.0F,
                 (float) color.getGreen() / 255.0F,
                 (float) color.getBlue() / 255.0F,
-                alpha);
+                1);
 
         var9.addVertexWithUV(x + 0.0D, y + 8.0D, z, 0.0D, 1.0D);
         var9.addVertexWithUV(x + 8.0D, y + 8.0D, z, 1.0D, 1.0D);
         var9.addVertexWithUV(x + 8.0D, y + 0.0D, z, 1.0D, 0.0D);
         var9.addVertexWithUV(x + 0.0D, y + 0.0D, z, 0.0D, 0.0D);
         var9.draw();
-        GL11.glPopMatrix();
     }
 
 }
