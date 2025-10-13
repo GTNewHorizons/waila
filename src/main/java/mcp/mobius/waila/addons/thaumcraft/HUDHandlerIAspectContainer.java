@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.cbcore.LangUtil;
 
 public class HUDHandlerIAspectContainer implements IWailaDataProvider {
@@ -57,9 +58,10 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
                 total += value;
                 String amount = String.valueOf(value);
 
-                if (!aspect.equals("???"))
-                    currenttip.add(String.format("%s" + TAB + ALIGNRIGHT + WHITE + "%s", aspect, amount));
-                else unknownAspects.add(String.format("%s" + TAB + ALIGNRIGHT + WHITE + "%s", aspect, amount));
+                if (!aspect.equals("???")) currenttip.add(
+                        SpecialChars.getRenderString("waila.tcaspect", aspect) + TAB + ALIGNRIGHT + WHITE + amount);
+                else unknownAspects.add(
+                        SpecialChars.getRenderString("waila.tcaspect", aspect) + TAB + ALIGNRIGHT + WHITE + amount);
             }
 
             String id = tag.getString("WailaID");
@@ -118,7 +120,7 @@ public class HUDHandlerIAspectContainer implements IWailaDataProvider {
                 if (tileAspects.get(o) > 0) {
                     if (playerAspects.containsKey(o)) {
                         NBTTagCompound cmptag = new NBTTagCompound();
-                        cmptag.setString("key", (String) ThaumcraftModule.Aspect_getName.invoke(o));
+                        cmptag.setString("key", (String) ThaumcraftModule.Aspect_tag.get(o));
                         cmptag.setInteger("value", tileAspects.get(o));
                         aspects.appendTag(cmptag);
                     } else {
