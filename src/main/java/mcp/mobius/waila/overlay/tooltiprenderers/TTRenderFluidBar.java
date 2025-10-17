@@ -7,9 +7,14 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
+import gregtech.api.util.GTUtil;
+import gregtech.common.fluid.GTFluid;
+import gtPlusPlus.api.objects.minecraft.FluidGT6;
+import gtPlusPlus.core.util.minecraft.FluidUtils;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.overlay.DisplayUtil;
@@ -32,7 +37,14 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
         Minecraft mc = Minecraft.getMinecraft();
         mc.getTextureManager().bindTexture(net.minecraft.client.renderer.texture.TextureMap.locationBlocksTexture);
-        GL11.glColor4f(1F, 1F, 1F, 1F);
+
+        FluidStack aCheck = FluidUtils.getWildcardFluidStack(params[0], 1000);
+        if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
+            short[] RGBa = GTUtil.getRGBaArray(aCheck.getFluid().getColor());
+            GL11.glColor4f(RGBa[0] / 255F, RGBa[1] / 255F, RGBa[2] / 255F, 1F);
+        } else {
+            GL11.glColor4f(1F, 1F, 1F, 1F);
+        }
 
         int i = (int) ((maxStringW - 2) * Double.parseDouble(params[2]));
         int j = 0;
