@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.Loader;
 import gregtech.api.util.GTUtil;
 import gregtech.common.fluid.GTFluid;
 import gtPlusPlus.api.objects.minecraft.FluidGT6;
@@ -38,10 +39,14 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         Minecraft mc = Minecraft.getMinecraft();
         mc.getTextureManager().bindTexture(net.minecraft.client.renderer.texture.TextureMap.locationBlocksTexture);
 
-        FluidStack aCheck = FluidUtils.getWildcardFluidStack(params[0], 1000);
-        if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
-            short[] RGBa = GTUtil.getRGBaArray(aCheck.getFluid().getColor());
-            GL11.glColor4f(RGBa[0] / 255F, RGBa[1] / 255F, RGBa[2] / 255F, 1F);
+        if (Loader.isModLoaded("gregtech")) {
+            FluidStack aCheck = FluidUtils.getWildcardFluidStack(params[0], 1000);
+            if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
+                short[] RGBa = GTUtil.getRGBaArray(aCheck.getFluid().getColor());
+                GL11.glColor4f(RGBa[0] / 255F, RGBa[1] / 255F, RGBa[2] / 255F, 1F);
+            } else {
+                GL11.glColor4f(1F, 1F, 1F, 1F);
+            }
         } else {
             GL11.glColor4f(1F, 1F, 1F, 1F);
         }
