@@ -1,10 +1,12 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
 import java.awt.Dimension;
+import java.util.function.Consumer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -25,6 +27,22 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     int maxStringW;
 
+    private Consumer<String> bindColor = (fluidName) -> GL11.glColor4f(1F, 1F, 1F, 1F);
+
+    public TTRenderFluidBar() {
+        if (Loader.isModLoaded("gregtech")) {
+            bindColor = (fluidName) -> {
+                FluidStack aCheck = FluidUtils.getWildcardFluidStack(fluidName, 1000);
+                if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
+                    short[] RGBa = GTUtil.getRGBaArray(aCheck.getFluid().getColor());
+                    GL11.glColor4f(RGBa[0] / 255F, RGBa[1] / 255F, RGBa[2] / 255F, 1F);
+                } else {
+                    GL11.glColor4f(1F, 1F, 1F, 1F);
+                }
+            };
+        }
+    }
+
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
         return new Dimension(DisplayUtil.getDisplayWidth(params[1] + 2), 12);
@@ -37,19 +55,9 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         IIcon icon = FluidRegistry.getFluid(params[0]).getIcon();
 
         Minecraft mc = Minecraft.getMinecraft();
-        mc.getTextureManager().bindTexture(net.minecraft.client.renderer.texture.TextureMap.locationBlocksTexture);
+        mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 
-        if (Loader.isModLoaded("gregtech")) {
-            FluidStack aCheck = FluidUtils.getWildcardFluidStack(params[0], 1000);
-            if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
-                short[] RGBa = GTUtil.getRGBaArray(aCheck.getFluid().getColor());
-                GL11.glColor4f(RGBa[0] / 255F, RGBa[1] / 255F, RGBa[2] / 255F, 1F);
-            } else {
-                GL11.glColor4f(1F, 1F, 1F, 1F);
-            }
-        } else {
-            GL11.glColor4f(1F, 1F, 1F, 1F);
-        }
+        bindColor.accept(params[0]);
 
         int i = (int) ((maxStringW - 2) * Double.parseDouble(params[2]));
         int j = 0;
