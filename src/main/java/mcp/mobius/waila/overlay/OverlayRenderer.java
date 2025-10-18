@@ -63,6 +63,8 @@ public class OverlayRenderer {
 
         tooltip.draw2nd();
 
+        tooltip.draw3rd();
+
         if (tooltip.hasIcon) RenderHelper.enableGUIStandardItemLighting();
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

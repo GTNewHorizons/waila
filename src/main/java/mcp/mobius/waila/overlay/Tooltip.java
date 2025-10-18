@@ -183,8 +183,8 @@ public class Tooltip {
                                     renderer,
                                     new Point(offsetX, offsetY),
                                     renderMatcher.group("args").split(","));
-                            if (renderer instanceof IWailaVariableWidthTooltipRenderer) {
-                                ((IWailaVariableWidthTooltipRenderer) renderable.renderer).setMaxStringW(maxStringW);
+                            if (renderer instanceof IWailaVariableWidthTooltipRenderer variableWidthRenderer) {
+                                variableWidthRenderer.setMaxStringW(maxStringW);
                                 this.elements3rd.add(renderable);
                             } else this.elements2nd.add(renderable);
                         }
@@ -249,6 +249,10 @@ public class Tooltip {
 
     public void draw2nd() {
         for (Renderable r : this.elements2nd) r.draw(accessor, x + offsetX, y + ty);
+        for (Renderable r : this.elements3rd) r.draw(accessor, x + offsetX, y + ty);
+    }
+
+    public void draw3rd() {
         for (Renderable r : this.elements3rd) r.draw(accessor, x + offsetX, y + ty);
     }
 }
