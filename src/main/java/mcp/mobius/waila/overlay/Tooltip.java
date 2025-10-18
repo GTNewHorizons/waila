@@ -249,7 +249,6 @@ public class Tooltip {
 
     public void draw2nd() {
         for (Renderable r : this.elements2nd) r.draw(accessor, x + offsetX, y + ty);
-        for (Renderable r : this.elements3rd) r.draw(accessor, x + offsetX, y + ty);
     }
 
     public void draw3rd() {
