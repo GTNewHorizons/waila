@@ -21,6 +21,8 @@ import org.lwjgl.opengl.GL11;
 
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
+import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
+import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
@@ -40,6 +42,7 @@ public class Tooltip {
 
     ArrayList<Renderable> elements = new ArrayList<>();
     ArrayList<Renderable> elements2nd = new ArrayList<>();
+    ArrayList<Renderable> elements3rd = new ArrayList<>();
 
     int w, h, x, y, ty;
     int offsetX;
@@ -180,8 +183,11 @@ public class Tooltip {
                             renderable = new Renderable(
                                     renderer,
                                     new Point(offsetX, offsetY),
-                                    renderMatcher.group("args").split(","));
-                            this.elements2nd.add(renderable);
+                                    renderMatcher.group("args").split(SpecialChars.WailaRendererComma));
+                            if (renderer instanceof IWailaVariableWidthTooltipRenderer variableWidthRenderer) {
+                                variableWidthRenderer.setMaxStringW(maxStringW);
+                                this.elements3rd.add(renderable);
+                            } else this.elements2nd.add(renderable);
                         }
                     } else if (iconMatcher.find()) {
                         renderable = new Renderable(
@@ -244,5 +250,9 @@ public class Tooltip {
 
     public void draw2nd() {
         for (Renderable r : this.elements2nd) r.draw(accessor, x + offsetX, y + ty);
+    }
+
+    public void draw3rd() {
+        for (Renderable r : this.elements3rd) r.draw(accessor, x + offsetX, y + ty);
     }
 }

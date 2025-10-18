@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
+import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
@@ -41,8 +42,9 @@ public class DisplayUtil {
         Matcher renderMatcher = patternRender.matcher(s);
         while (renderMatcher.find()) {
             IWailaTooltipRenderer renderer = ModuleRegistrar.instance().getTooltipRenderer(renderMatcher.group("name"));
-            if (renderer != null)
-                width += renderer.getSize(renderMatcher.group("args").split(","), DataAccessorCommon.instance).width;
+            if (renderer != null) width += renderer.getSize(
+                    renderMatcher.group("args").split(SpecialChars.WailaRendererComma),
+                    DataAccessorCommon.instance).width;
         }
 
         Matcher iconMatcher = patternIcon.matcher(s);

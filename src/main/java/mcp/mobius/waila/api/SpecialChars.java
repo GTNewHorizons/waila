@@ -33,6 +33,9 @@ public class SpecialChars {
     public static String WailaStyle = "\u00A4";
     public static String WailaIcon = "\u00A5";
     public static String WailaRenderer = "\u00A6";
+    public static String WailaRendererBracketLeft = "\u0080";
+    public static String WailaRendererBracketRight = "\u0081";
+    public static String WailaRendererComma = "\u0082";
     public static String TAB = WailaStyle + WailaStyle + "a";
     public static String ALIGNRIGHT = WailaStyle + WailaStyle + "b";
     public static String ALIGNCENTER = WailaStyle + WailaStyle + "c";
@@ -43,12 +46,26 @@ public class SpecialChars {
 
     public static final Pattern patternMinecraft = Pattern.compile("(?i)" + MCStyle + "[0-9A-FK-OR]");
     public static final Pattern patternWaila = Pattern.compile("(?i)(" + WailaStyle + "(?<type>..))");
-    public static final Pattern patternRender = Pattern
-            .compile("(?i)(" + RENDER + "\\{(?<name>[^,}]*),?(?<args>[^}]*)\\})");
+    // (?i)(¤¦a\U+0080(?<name>[^U+0082U+0081]*)U+0082?(?<args>[^U+0081]*)\U+0081)
+    public static final Pattern patternRender = Pattern.compile(
+            "(?i)(" + RENDER
+                    + "\\"
+                    + WailaRendererBracketLeft
+                    + "(?<name>[^"
+                    + WailaRendererComma
+                    + WailaRendererBracketRight
+                    + "]*)"
+                    + WailaRendererComma
+                    + "?(?<args>[^"
+                    + WailaRendererBracketRight
+                    + "]*)\\"
+                    + WailaRendererBracketRight
+                    + ")");
     public static final Pattern patternTab = Pattern.compile("(?i)" + TAB);
     public static final Pattern patternRight = Pattern.compile("(?i)" + ALIGNRIGHT);
     public static final Pattern patternCenter = Pattern.compile("(?i)" + ALIGNCENTER);
     public static final Pattern patternIcon = Pattern.compile("(?i)(" + WailaStyle + WailaIcon + "(?<type>[0-9a-z]))");
+    // (?i)(¤¤[^¤]+|¤¥[0-9A-Z]|¤¦a\U+0080(?<name>[^U+0082U+0081]*)U+0082?(?<args>[^U+0081]*)\U+0081|[^¤]+)
     public static final Pattern patternLineSplit = Pattern.compile(
             "(?i)(" + WailaStyle
                     + WailaStyle
@@ -60,7 +77,18 @@ public class SpecialChars {
                     + "[0-9A-Z]|"
                     + WailaStyle
                     + WailaRenderer
-                    + "a\\{([^,}]*),?([^}]*)\\}|[^"
+                    + "a\\"
+                    + WailaRendererBracketLeft
+                    + "(?<name>[^"
+                    + WailaRendererComma
+                    + WailaRendererBracketRight
+                    + "]*)"
+                    + WailaRendererComma
+                    + "?(?<args>[^"
+                    + WailaRendererBracketRight
+                    + "]*)\\"
+                    + WailaRendererBracketRight
+                    + "|[^"
                     + WailaStyle
                     + "]+)");
 
@@ -69,11 +97,11 @@ public class SpecialChars {
      * give back a directly usable String for the tooltip.
      */
     public static String getRenderString(String name, String... params) {
-        StringBuilder result = new StringBuilder(RENDER + "{" + name);
+        StringBuilder result = new StringBuilder(RENDER + WailaRendererBracketLeft + name);
         for (String s : params) {
-            result.append(",").append(s);
+            result.append(WailaRendererComma).append(s);
         }
-        result.append("}");
+        result.append(WailaRendererBracketRight);
         return result.toString();
     }
 }
