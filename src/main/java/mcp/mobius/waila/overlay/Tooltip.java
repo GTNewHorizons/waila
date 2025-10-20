@@ -21,6 +21,7 @@ import org.lwjgl.opengl.GL11;
 
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
+import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
@@ -181,6 +182,9 @@ public class Tooltip {
                                     renderer,
                                     new Point(offsetX, offsetY),
                                     renderMatcher.group("args").split(","));
+                            if (renderer instanceof IWailaVariableWidthTooltipRenderer variableWidthRenderer) {
+                                variableWidthRenderer.setMaxStringW(maxStringW);
+                            }
                             this.elements2nd.add(renderable);
                         }
                     } else if (iconMatcher.find()) {
