@@ -34,6 +34,8 @@ public class ConfigHandler implements IWailaConfigHandler {
     public HashMap<String, Boolean> forcedConfigs = new HashMap<>();
     public Configuration config = null;
 
+    public String fluidUnit;
+
     public void addModule(String modName, HashMap<String, String> options) {
         this.addModule(modName, new ConfigModule(modName, options));
     }
@@ -150,6 +152,7 @@ public class ConfigHandler implements IWailaConfigHandler {
         config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_KEYBIND, true);
         config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_NEWFILTERS, true);
         config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOWICON, true);
+        fluidUnit = config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FLUIDUNIT, "mB").getString();
 
         OverlayConfig.posX = config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSX, 5000).getInt();
         OverlayConfig.posY = config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSY, 100).getInt();
