@@ -30,8 +30,8 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     int maxStringW;
 
-    private Consumer<String> bindColor = (fluidName) -> GL11.glColor4f(1F, 1F, 1F, 1F);
-    private Function<Integer, String> formatNumber = (number) -> String.format("%,d", number);
+    private final Consumer<String> bindColor;
+    private final Function<Integer, String> formatNumber;
 
     public TTRenderFluidBar() {
         if (Loader.isModLoaded("gregtech")) {
@@ -46,6 +46,9 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             };
 
             formatNumber = GTUtility::formatNumbers;
+        } else {
+            bindColor = (fluidName) -> GL11.glColor4f(1F, 1F, 1F, 1F);
+            formatNumber = (number) -> String.format("%,d", number);
         }
     }
 
