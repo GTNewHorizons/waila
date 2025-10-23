@@ -62,14 +62,19 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         }
         return new Dimension(
                 DisplayUtil.getDisplayWidth(
-                        params[2] + " /   " + params[3] + ConfigHandler.instance().fluidUnit + params[1] + sb) + 4,
+                        params[2] + " /   "
+                                + params[3]
+                                + ConfigHandler.instance().fluidUnit
+                                + params[1].replace('\u0080', ',')
+                                + sb)
+                        + 4,
                 12);
     }
 
     @Override
     public void draw(String[] params, IWailaCommonAccessor accessor) {
         String fluidName = params[0];
-        String localizedName = params[1];
+        String localizedName = params[1].replace('\u0080', ',');
         double amount = Double.parseDouble(params[2]);
         double capacity = Double.parseDouble(params[3]);
 
