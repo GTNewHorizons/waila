@@ -155,7 +155,7 @@ public class MetaDataProvider {
             for (IWailaDataProvider dataProvider : providersList) try {
                 currenttip = dataProvider.getWailaBody(itemStack, currenttip, accessor, ConfigHandler.instance());
 
-                if (dataProvider.hasAdvancedBody(itemStack, accessor, ConfigHandler.instance())) {
+                if (dataProvider.hasWailaAdvancedBody(itemStack, accessor, ConfigHandler.instance())) {
                     hasAdvancedBodyAvailable = true;
 
                     if (isAdvancedKeyDown) {
