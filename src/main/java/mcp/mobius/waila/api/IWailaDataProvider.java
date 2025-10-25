@@ -72,7 +72,7 @@ public interface IWailaDataProvider {
      * @param config    Current configuration of Waila.
      * @return True if advanced body information is available, false otherwise.
      */
-    default boolean hasAdvancedBody(ItemStack itemStack, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    default boolean hasWailaAdvancedBody(ItemStack itemStack, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return false; // Default to false for backward compatibility
     }
 
