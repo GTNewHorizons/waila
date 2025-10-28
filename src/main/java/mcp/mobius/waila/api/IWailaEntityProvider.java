@@ -77,6 +77,11 @@ public interface IWailaEntityProvider {
     List<String> getWailaTail(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor,
             IWailaConfigHandler config);
 
+    default List<IWailaInfoIcon> getWailaInfoIcon(Entity entity, List<IWailaInfoIcon> currentIcons,
+            IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        return currentIcons;
+    }
+
     /**
      * Callback used server side to return a custom synchronization NBTTagCompound.</br>
      * Will be used if the implementing class is registered via {@link IWailaRegistrar}.{@link registerNBTProvider}

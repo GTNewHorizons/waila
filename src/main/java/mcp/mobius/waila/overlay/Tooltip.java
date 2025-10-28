@@ -20,6 +20,7 @@ import net.minecraftforge.common.config.Configuration;
 import org.lwjgl.opengl.GL11;
 
 import mcp.mobius.waila.api.IWailaCommonAccessor;
+import mcp.mobius.waila.api.IWailaInfoIcon;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.api.SpecialChars;
@@ -42,6 +43,7 @@ public class Tooltip {
 
     ArrayList<Renderable> elements = new ArrayList<>();
     ArrayList<Renderable> elements2nd = new ArrayList<>();
+    ArrayList<TooltipInfoIconRenderable> infoIcons = new ArrayList<>();
 
     int w, h, x, y, ty;
     int offsetX;
@@ -102,11 +104,19 @@ public class Tooltip {
     ////////////////////////////////////////////////////////////////////////////
 
     public Tooltip(List<String> textData, ItemStack stack) {
-        this(textData, true);
+        this(textData, stack, null);
+    }
+
+    public Tooltip(List<String> textData, ItemStack stack, List<IWailaInfoIcon> infoIcons) {
+        this(textData, infoIcons, true);
         this.stack = stack;
     }
 
     public Tooltip(List<String> textData, boolean hasIcon) {
+        this(textData, null, hasIcon);
+    }
+
+    public Tooltip(List<String> textData, List<IWailaInfoIcon> infoIcons, boolean hasIcon) {
 
         if (hasIcon) hasIcon = ConfigHandler.instance().showIcon();
 
@@ -153,8 +163,33 @@ public class Tooltip {
         tmp += TabSpacing * (columnsWidth.size() - 1);
         maxStringW = Math.max(maxStringW, tmp);
 
+        if (infoIcons != null) {
+            tmp = 0;
+            for (IWailaInfoIcon icon : infoIcons) {
+                tmp += icon.getWidth(accessor);
+            }
+            maxStringW = Math.max(
+                    maxStringW,
+                    DisplayUtil.getDisplayWidth(textData.get(textData.size() - 1)) + tmp + infoIcons.size());
+        }
+
         this.computeRenderables();
         this.computePositionAndSize(hasIcon);
+        this.computeInfoIconRenderables(infoIcons);
+    }
+
+    private void computeInfoIconRenderables(List<IWailaInfoIcon> infoIcons) {
+        if (infoIcons == null) return;
+
+        int xOffset = -(hasIcon ? 26 : 8);
+        int yOffset = -(ConfigHandler.infoIconHeight + 8);
+        for (IWailaInfoIcon icon : infoIcons) {
+            int width = icon.getWidth(accessor);
+            if (width > 0) {
+                xOffset -= width + 1;
+                this.infoIcons.add(new TooltipInfoIconRenderable(icon, new Point(w + xOffset, h + yOffset)));
+            }
+        }
     }
 
     private void computeRenderables() {
@@ -249,5 +284,9 @@ public class Tooltip {
 
     public void draw2nd() {
         for (Renderable r : this.elements2nd) r.draw(accessor, x + offsetX, y + ty);
+    }
+
+    public void drawInfoIcons() {
+        for (TooltipInfoIconRenderable r : this.infoIcons) r.draw(accessor, x + offsetX, y + ty);
     }
 }
