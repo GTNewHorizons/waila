@@ -1,9 +1,5 @@
 package mcp.mobius.waila.overlay.infoicons;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.glEnable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +28,8 @@ public class BlockInfoIcon implements IWailaInfoIcon {
     private final double maxV;
 
     protected List<SideOverlay> sideOverlays = new ArrayList<>();
+
+    float size = (float) (3.3 * ConfigHandler.infoIconHeight) / 8;
 
     public BlockInfoIcon(Block block) {
         this(block, 0, 0);
@@ -90,7 +88,7 @@ public class BlockInfoIcon implements IWailaInfoIcon {
 
         protected void drawFront() {
             Minecraft.getMinecraft().renderEngine.bindTexture(overlayTexture);
-            glColor4f(1F, 1F, 1F, 1F);
+            GL11.glColor4f(1F, 1F, 1F, 1F);
             tessellator.startDrawingQuads();
             overlayDrawerFront.draw(size, overlayMinU, overlayMaxU, overlayMinV, overlayMaxV);
             tessellator.draw();
@@ -98,7 +96,7 @@ public class BlockInfoIcon implements IWailaInfoIcon {
 
         protected void drawBack() {
             Minecraft.getMinecraft().renderEngine.bindTexture(overlayTexture);
-            glColor4f(1F, 1F, 1F, 0.25F);
+            GL11.glColor4f(1F, 1F, 1F, 0.25F);
             tessellator.startDrawingQuads();
             overlayDrawerBack.draw(size, overlayMinU, overlayMaxU, overlayMinV, overlayMaxV);
             tessellator.draw();
@@ -158,17 +156,19 @@ public class BlockInfoIcon implements IWailaInfoIcon {
 
     @Override
     public int getWidth(IWailaCommonAccessor accessor) {
-        return (int) (ConfigHandler.infoIconHeight * 1.5);
+        return (int) Math.ceil(ConfigHandler.infoIconHeight * 1.33);
     }
 
     @Override
     public void draw(IWailaCommonAccessor accessor) {
-        // DisplayUtil.drawString(text, 0, 0, OverlayConfig.fontcolor, true);
         Minecraft mc = Minecraft.getMinecraft();
-        glEnable(GL_BLEND);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
         OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+        GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
 
-        glTranslatef((float) getWidth(accessor) / 2, (float) ConfigHandler.infoIconHeight / 3, 0);
+        GL11.glTranslatef((float) getWidth(accessor) / 2, (float) ConfigHandler.infoIconHeight / 2, 0);
 
         // Calculate the rotation
         float x1 = (float) mc.thePlayer.posX;
@@ -202,24 +202,23 @@ public class BlockInfoIcon implements IWailaInfoIcon {
         float scale = (float) Math.sqrt(1.0 - w * w);
         // DisplayUtil.drawString(mc.thePlayer.rotationYaw + "", 0, 100, 1, true);
         if (scale < 0.001f) {
-            glRotatef(angle * 57.2958f, 1.0F, 0.0F, 0.0F);
+            GL11.glRotatef(angle * 57.2958f, 1.0F, 0.0F, 0.0F);
         } else {
-            glRotatef(angle * 57.2958f, x / scale, y / scale, z / scale);
+            GL11.glRotatef(angle * 57.2958f, x / scale, y / scale, z / scale);
         }
 
+        GL11.glColor4f(1F, 1F, 1F, 1F);
         mc.renderEngine.bindTexture(texture);
-        glColor4f(1F, 1F, 1F, 0.85F);
         tessellator.startDrawingQuads();
+        tessellator.setColorRGBA(255, 255, 255, (int) (255 * 0.85));
         drawTopFaceFront(size, minU, maxU, minV, maxV);
         drawNorthFaceFront(size, minU, maxU, minV, maxV);
         drawBottomFaceFront(size, minU, maxU, minV, maxV);
         drawSouthFaceFront(size, minU, maxU, minV, maxV);
         drawEastFaceFront(size, minU, maxU, minV, maxV);
         drawWestFaceFront(size, minU, maxU, minV, maxV);
-        tessellator.draw();
 
-        tessellator.startDrawingQuads();
-        glColor4f(1F, 1F, 1F, 0.25F);
+        tessellator.setColorRGBA(255, 255, 255, (int) (255 * 0.25));
         drawTopFaceBack(size, minU, maxU, minV, maxV);
         drawBottomFaceBack(size, minU, maxU, minV, maxV);
         drawNorthFaceBack(size, minU, maxU, minV, maxV);
@@ -236,10 +235,10 @@ public class BlockInfoIcon implements IWailaInfoIcon {
             sideOverlay.drawFront();
         }
 
-    }
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_POLYGON_SMOOTH);
 
-    float size = (float) (5 * ConfigHandler.infoIconHeight) / 8;
-    // float size = 22;
+    }
 
     Tessellator tessellator = Tessellator.instance;
 
