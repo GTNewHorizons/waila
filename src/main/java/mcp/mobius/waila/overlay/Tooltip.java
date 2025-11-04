@@ -22,6 +22,7 @@ import org.lwjgl.opengl.GL11;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
+import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
@@ -181,7 +182,7 @@ public class Tooltip {
                             renderable = new Renderable(
                                     renderer,
                                     new Point(offsetX, offsetY),
-                                    renderMatcher.group("args").split(","));
+                                    renderMatcher.group("args").split(SpecialChars.WailaRendererComma));
                             if (renderer instanceof IWailaVariableWidthTooltipRenderer variableWidthRenderer) {
                                 variableWidthRenderer.setMaxLineWidth(maxStringW);
                             }
