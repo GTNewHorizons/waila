@@ -18,6 +18,28 @@ import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaInfoIcon;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 
+/**
+ * Draws a fake semi-transparent block that is facing the exact same direction as the block that the player is looking
+ * at.</br>
+ * Texture and UV can be specified in the constructor(s).</br>
+ * Overlays can be added with the withSideOverlay method.</br>
+ * </br>
+ *
+ * Example usage:</br>
+ * currentIcons.add(new BlockInfoIcon(new ResourceLocation("textures/blocks/stone_slab_top.png"), 0d, 1d, 0d, 1d)
+ * .withSideOverlay(ForgeDirection.EAST, new ResourceLocation("waila", "textures/o.png"))
+ * .withSideOverlay(ForgeDirection.NORTH, new ResourceLocation("waila", "textures/x.png")));</br>
+ * </br>
+ *
+ * Intended to be as simple visually as possible so it can be read while making it very small. Only supports using the
+ * same texture for all the faces of the block.</br>
+ * </br>
+ *
+ * Made specifically for GregTech to show where machines are facing.
+ *
+ * @author SuperSouper
+ *
+ */
 public class BlockInfoIcon implements IWailaInfoIcon {
 
     private final ResourceLocation texture;

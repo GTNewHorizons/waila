@@ -8,7 +8,9 @@ import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaInfoIcon;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
-public class TooltipInfoIconRenderable {
+// This is the icon equivalent to the private ToolTip.Renderable class.
+// Holds the icon's position and renders it with translation.
+class TooltipInfoIconRenderable {
 
     final IWailaInfoIcon icon;
     final Point pos;

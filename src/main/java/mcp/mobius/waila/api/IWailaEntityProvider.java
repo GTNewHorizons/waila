@@ -77,6 +77,20 @@ public interface IWailaEntityProvider {
     List<String> getWailaTail(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor,
             IWailaConfigHandler config);
 
+    /**
+     * Callback used to add icons to the bottom right of the tooltip.</br>
+     * Works exactly like the Head/Body/Tail callbacks but with {@link IWailaInfoIcon} objects instead of strings. Will
+     * be used if the implementing class is registered via {@link IWailaRegistrar}.{@link registerInfoIconProvider}
+     * client side.</br>
+     * You are supposed to always return the modified input currentIcons.</br>
+     *
+     * @param itemStack    Current block scanned, in ItemStack form.
+     * @param currentIcons Current list of tooltip icons (might have been processed by other providers and might be
+     *                     processed by other providers).
+     * @param accessor     Contains most of the relevant information about the current environment.
+     * @param config       Current configuration of Waila.
+     * @return Modified input currentIcons
+     */
     default List<IWailaInfoIcon> getWailaInfoIcon(Entity entity, List<IWailaInfoIcon> currentIcons,
             IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return currentIcons;
