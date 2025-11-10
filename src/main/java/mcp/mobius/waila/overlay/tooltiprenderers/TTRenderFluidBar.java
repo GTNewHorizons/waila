@@ -34,7 +34,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
     private final Function<Integer, String> formatNumber;
 
     public TTRenderFluidBar() {
-        if (Loader.isModLoaded("gregtech") && (!Loader.isModLoaded("gregapi") || Loader.isModLoaded("miscutils"))) {
+        if (Loader.isModLoaded("gregtech_nh")) {
             bindColor = (fluidName) -> {
                 FluidStack aCheck = FluidUtils.getWildcardFluidStack(fluidName, 1000);
                 if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
