@@ -32,7 +32,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     private final Consumer<String> bindColor;
     private final Function<Integer, String> formatNumber;
-    final int height = 12;
+    private static final int height = 12;
 
     public TTRenderFluidBar() {
         if (Loader.isModLoaded("gregtech")) {
