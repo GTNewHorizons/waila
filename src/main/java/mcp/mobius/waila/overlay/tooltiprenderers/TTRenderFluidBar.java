@@ -67,7 +67,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                 height);
     }
 
-    public static ResourceLocation gradient = new ResourceLocation("waila", "textures/gradient.png");
+    public static final ResourceLocation gradient = new ResourceLocation("waila", "textures/gradient.png");
 
     @Override
     public void draw(String[] params, IWailaCommonAccessor accessor) {
