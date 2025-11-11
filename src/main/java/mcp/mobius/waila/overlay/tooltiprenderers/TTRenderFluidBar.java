@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -24,7 +25,6 @@ import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.overlay.DisplayUtil;
-import mcp.mobius.waila.overlay.OverlayConfig;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
@@ -32,6 +32,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     private final Consumer<String> bindColor;
     private final Function<Integer, String> formatNumber;
+    private static final int height = 12;
 
     public TTRenderFluidBar() {
         if (Loader.isModLoaded("gregtech")) {
@@ -63,8 +64,10 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         return new Dimension(
                 DisplayUtil.getDisplayWidth(
                         params[2] + " /   " + params[3] + ConfigHandler.instance().fluidUnit + params[1] + sb) + 4,
-                12);
+                height);
     }
+
+    public static final ResourceLocation gradient = new ResourceLocation("waila", "textures/gradient.png");
 
     @Override
     public void draw(String[] params, IWailaCommonAccessor accessor) {
@@ -72,8 +75,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         String localizedName = params[1];
         double amount = Double.parseDouble(params[2]);
         double capacity = Double.parseDouble(params[3]);
-
-        drawThickBeveledBox(0, 0, maxStringW, 12, 1, 0xFF505050, 0xFF505050, -1);
+        Tessellator tessellator = Tessellator.instance;
 
         IIcon icon = FluidRegistry.getFluid(fluidName).getIcon();
 
@@ -82,21 +84,35 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
         bindColor.accept(fluidName);
 
+        tessellator.startDrawingQuads();
+        // Intentionally draw 2 pixels taller than needed than cover with the border to make the texture more visible
         int i = (int) ((double) (maxStringW - 2) * amount / capacity);
         int j = 0;
-        for (; i > 10; i = i - 10) {
-            drawTexturedModelRectFromIcon(1 + (j * 10), 1, icon, 10, 10, 100);
+        for (; i > height; i = i - height) {
+            drawRectFromIcon(tessellator, 1 + (j * height), 0, 0, icon, height, height);
             j++;
         }
-        if (i > 0) drawTexturedModelRectFromIcon(
-                1 + (j * 10),
-                1,
-                icon,
+        if (i > 0) drawRect(
+                tessellator,
+                1 + (j * height),
+                0,
+                0,
                 i,
-                10,
-                100,
-                icon.getMinU() + ((icon.getMaxU() - icon.getMinU()) * ((double) i / 10D)),
+                height,
+                icon.getMinU(),
+                icon.getMinV(),
+                icon.getMinU() + ((icon.getMaxU() - icon.getMinU()) * ((double) i / height)),
                 icon.getMaxV());
+        tessellator.draw();
+
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glColor4f(1F, 1F, 1F, 0.70F);
+        mc.getTextureManager().bindTexture(gradient);
+        tessellator.startDrawingQuads();
+        drawRect(tessellator, 1, 0, 0, maxStringW - 2, height - 1, 0, 0, 1, 1);
+        tessellator.draw();
+
+        drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
 
         DisplayUtil.drawString(
                 formatNumber.apply((int) amount) + " / "
@@ -107,24 +123,22 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                         + localizedName,
                 2,
                 2,
-                OverlayConfig.fontcolor,
+                0xFFFFFFFF,
                 true);
 
     }
 
-    public static void drawTexturedModelRectFromIcon(int x, int y, IIcon icon, int width, int height, double z) {
-        drawTexturedModelRectFromIcon(x, y, icon, width, height, z, icon.getMaxU(), icon.getMaxV());
+    public static void drawRectFromIcon(Tessellator tessellator, int x, int y, double z, IIcon icon, int width,
+            int height) {
+        drawRect(tessellator, x, y, z, width, height, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV());
     }
 
-    public static void drawTexturedModelRectFromIcon(int x, int y, IIcon icon, int width, int height, double z,
-            double maxU, double maxV) {
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(x, y + height, z, icon.getMinU(), maxV);
+    public static void drawRect(Tessellator tessellator, int x, int y, double z, int width, int height, double minU,
+            double minV, double maxU, double maxV) {
+        tessellator.addVertexWithUV(x, y + height, z, minU, maxV);
         tessellator.addVertexWithUV(x + width, y + height, z, maxU, maxV);
-        tessellator.addVertexWithUV(x + width, y, z, maxU, icon.getMinV());
-        tessellator.addVertexWithUV(x, y, z, icon.getMinU(), icon.getMinV());
-        tessellator.draw();
+        tessellator.addVertexWithUV(x + width, y, z, maxU, minV);
+        tessellator.addVertexWithUV(x, y, z, minU, minV);
     }
 
     public static void drawThickBeveledBox(int x1, int y1, int x2, int y2, int thickness, int topleftcolor,
