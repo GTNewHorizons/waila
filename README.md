@@ -2,6 +2,6 @@
 
 ## Contribution
 
-When forking this repo it's important to uncheck the box from the `Copy the master branch only` option.
-This way all the tags from this repo will be transferred to your fork and the builder would know latest mod version.
-If you don't do this you wouldn't enter the world, because waila will think you're using a too old version of the mod.
+When forking this repository, make sure to uncheck the "Copy the default branch only" option.
+This will copy all tags to your fork, so the build system can detect the latest mod version.
+If you leave it checked, you won't be able to enter the world in a local client run because Waila [will think the mod is outdated](https://github.com/GTNewHorizons/waila/blob/master/src/main/java/mcp/mobius/waila/Waila.java#L133).
