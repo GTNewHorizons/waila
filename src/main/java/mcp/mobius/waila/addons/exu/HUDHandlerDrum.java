@@ -14,6 +14,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class HUDHandlerDrum implements IWailaDataProvider {
 
@@ -32,7 +33,7 @@ public class HUDHandlerDrum implements IWailaDataProvider {
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
 
-        if (!config.getConfig("extrautilities.fluidamount")) return currenttip;
+        if (!config.getConfig("extrautilities.fluidamount") || LoadedMods.WAILA_PLUGINS) return currenttip;
 
         int amount = 0;
 

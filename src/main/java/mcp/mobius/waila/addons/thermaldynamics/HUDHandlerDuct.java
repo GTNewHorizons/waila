@@ -13,6 +13,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.LoadedMods;
 
 /**
  * Created by Lordmau5 on 28.02.2015.
@@ -27,26 +28,23 @@ public class HUDHandlerDuct implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("thermaldynamics.fluiductsFluid")) return currenttip;
+        if (!config.getConfig("thermaldynamics.fluiductsFluid") || LoadedMods.WAILA_PLUGINS) return currenttip;
 
         FluidStack fluid = FluidStack.loadFluidStackFromNBT(accessor.getNBTData());
 
-        String name = "";
-
-        try {
-            name += String.format(" < %s >", fluid.getFluid().getLocalizedName(fluid));
-        } catch (NullPointerException f) {
-            name += " " + LangUtil.translateG("hud.msg.empty");
+        if (fluid.getFluid() == null) {
+            currenttip.add(LangUtil.translateG("hud.msg.empty"));
+        } else {
+            currenttip.add(String.format("< %s >", fluid.getFluid().getLocalizedName(fluid)));
         }
 
-        currenttip.add(name);
         return currenttip;
     }
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("thermaldynamics.fluiductsAmount")) return currenttip;
+        if (!config.getConfig("thermaldynamics.fluiductsAmount") || LoadedMods.WAILA_PLUGINS) return currenttip;
 
         int amount = 0;
 

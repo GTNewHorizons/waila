@@ -14,6 +14,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.LoadedMods;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class HUDHandlerTank implements IWailaDataProvider {
@@ -26,23 +27,21 @@ public class HUDHandlerTank implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("railcraft.fluidamount")) return currenttip;
+        if (!config.getConfig("railcraft.fluidamount") || LoadedMods.WAILA_PLUGINS) return currenttip;
+
         try {
             IFluidTank tank = (IFluidTank) RailcraftModule.ITankTile_getTank
                     .invoke(RailcraftModule.ITankTile.cast(accessor.getTileEntity()));
             if (tank == null) return currenttip;
 
             FluidStack fluid = tank.getFluid();
-
             String name = currenttip.get(0);
 
-            try {
-                name += String.format(" < %s >", fluid.getFluid().getLocalizedName(fluid));
-            } catch (NullPointerException f) {
-                name += " " + LangUtil.translateG("hud.msg.empty");
+            if (fluid == null) {
+                currenttip.set(0, name + " " + LangUtil.translateG("hud.msg.empty"));
+            } else {
+                currenttip.set(0, name + String.format(" < %s >", fluid.getFluid().getLocalizedName(fluid)));
             }
-
-            currenttip.set(0, name);
 
         } catch (Exception e) {
             currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
@@ -54,7 +53,7 @@ public class HUDHandlerTank implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("railcraft.fluidamount")) return currenttip;
+        if (!config.getConfig("railcraft.fluidamount") || LoadedMods.WAILA_PLUGINS) return currenttip;
 
         try {
             IFluidTank tank = (IFluidTank) RailcraftModule.ITankTile_getTank
