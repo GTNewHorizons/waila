@@ -56,16 +56,31 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
-        int commaCount = (int) (Math.floor((params[2].length() - 1) / 3D) + Math.floor((params[3].length() - 1) / 3D));
-        // ",".repeat(commaCount) doesn't exist in java 8 so do this instead.
-        StringBuilder sb = new StringBuilder(commaCount);
-        for (int i = 0; i < commaCount; i++) {
-            sb.append(",");
+        String barText;
+        if (!(params[0].equals("EMPTYFLUID") && params[1].equals("EMPTYFLUID"))) {
+            int commaCount = (int) (Math.floor((params[2].length() - 1) / 3D)
+                    + Math.floor((params[3].length() - 1) / 3D));
+            // ",".repeat(commaCount) doesn't exist in java 8 so do this instead.
+            StringBuilder sb = new StringBuilder(commaCount);
+            for (int i = 0; i < commaCount; i++) {
+                sb.append(",");
+            }
+            barText = params[2] + " /   " + params[3] + ConfigHandler.instance().fluidUnit + params[1] + sb;
+
+        } else {
+            int commaCount = (int) (Math.floor((params[3].length() - 1) / 3D));
+            // ",".repeat(commaCount) doesn't exist in java 8 so do this instead.
+            StringBuilder sb = new StringBuilder(commaCount);
+            for (int i = 0; i < commaCount; i++) {
+                sb.append(",");
+            }
+            barText = LangUtil.translateG("hud.msg.empty").replace("<", "").replace(">", "") + " /   "
+                    + params[2]
+                    + ConfigHandler.instance().fluidUnit
+                    + sb;
         }
-        return new Dimension(
-                DisplayUtil.getDisplayWidth(
-                        params[2] + " /   " + params[3] + ConfigHandler.instance().fluidUnit + params[1] + sb) + 4,
-                height);
+
+        return new Dimension(DisplayUtil.getDisplayWidth(barText) + 4, height);
     }
 
     public static final ResourceLocation gradient = new ResourceLocation("waila", "textures/gradient.png");
@@ -119,7 +134,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             Gui.drawRect(1, 0, maxStringW - 1, height - 1, 0x1A575656);
         }
 
-        drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF787878, 0xFF787878, -1);
+        drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
 
         if (!isEmpty) {
             DisplayUtil.drawString(
