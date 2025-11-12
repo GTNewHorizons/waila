@@ -12,7 +12,7 @@ public class ThermalDynamicsModule {
     public static void register() {
         // XXX : We register the Fluiduct
         try {
-            TileFluidDuct = Class.forName("cofh.thermaldynamics.ducts.fluid.TileFluidDuct");
+            TileFluidDuct = Class.forName("cofh.thermaldynamics.duct.fluid.TileFluidDuct");
 
             ModuleRegistrar.instance().addConfigRemote("Thermal Dynamics", "thermaldynamics.fluidDuctsFluid");
             ModuleRegistrar.instance().addConfigRemote("Thermal Dynamics", "thermaldynamics.fluidDuctsAmount");

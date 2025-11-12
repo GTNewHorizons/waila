@@ -13,6 +13,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.LoadedMods;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class HUDHandlerTank implements IWailaDataProvider {
@@ -25,7 +26,7 @@ public class HUDHandlerTank implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("thermalexpansion.fluidtype")) return currenttip;
+        if (!config.getConfig("thermalexpansion.fluidtype") || LoadedMods.WAILA_PLUGINS) return currenttip;
 
         try {
             FluidStack fluid = (FluidStack) ThermalExpansionModule.TileTank_getTankFluid
@@ -50,7 +51,7 @@ public class HUDHandlerTank implements IWailaDataProvider {
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
         try {
-            if (config.getConfig("thermalexpansion.fluidamount")) {
+            if (config.getConfig("thermalexpansion.fluidamount") && !LoadedMods.WAILA_PLUGINS) {
                 int amount = 0;
                 if (accessor.getNBTData().hasKey("Amount"))
                     amount = accessor.getNBTInteger(accessor.getNBTData(), "Amount");

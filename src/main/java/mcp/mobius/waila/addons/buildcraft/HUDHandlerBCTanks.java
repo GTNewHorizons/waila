@@ -19,6 +19,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class HUDHandlerBCTanks implements IWailaDataProvider {
 
@@ -30,27 +31,38 @@ public class HUDHandlerBCTanks implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
+
+        if (!ConfigHandler.instance().getConfig("bc.tanktype") || LoadedMods.WAILA_PLUGINS) {
+            return currenttip;
+        }
+
         FluidTankInfo tank = this.getTank(accessor);
         FluidStack stack = tank != null ? tank.fluid : null;
-
         String name = currenttip.get(0);
-        if (stack != null && ConfigHandler.instance().getConfig("bc.tanktype"))
-            name = name + " (" + stack.getFluid().getName() + ")";
-        else if (stack == null && ConfigHandler.instance().getConfig("bc.tanktype"))
-            name = name + " " + LangUtil.translateG("hud.msg.empty");
-        currenttip.set(0, name);
+
+        if (stack != null) {
+            currenttip.set(0, name + " (" + stack.getFluid().getName() + ")");
+        } else {
+            currenttip.set(0, name + " " + LangUtil.translateG("hud.msg.empty"));
+        }
+
         return currenttip;
     }
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
+
+        if (!ConfigHandler.instance().getConfig("bc.tankamount") || LoadedMods.WAILA_PLUGINS) {
+            return currenttip;
+        }
+
         FluidTankInfo tank = this.getTank(accessor);
         FluidStack stack = tank != null ? tank.fluid : null;
         int liquidAmount = stack != null ? stack.amount : 0;
         int capacity = tank != null ? tank.capacity : 0;
 
-        if (ConfigHandler.instance().getConfig("bc.tankamount")) currenttip.add(liquidAmount + "/" + capacity + " mB");
+        currenttip.add(liquidAmount + "/" + capacity + " mB");
 
         return currenttip;
     }
