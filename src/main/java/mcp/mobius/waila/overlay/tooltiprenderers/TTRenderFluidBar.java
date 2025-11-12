@@ -15,7 +15,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.Loader;
 import gregtech.api.util.GTUtil;
 import gregtech.api.util.GTUtility;
 import gregtech.common.fluid.GTFluid;
@@ -25,6 +24,7 @@ import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.overlay.DisplayUtil;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
@@ -35,7 +35,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
     private static final int height = 12;
 
     public TTRenderFluidBar() {
-        if (Loader.isModLoaded("gregtech_nh")) {
+        if (LoadedMods.GT5U) {
             bindColor = (fluidName) -> {
                 FluidStack aCheck = FluidUtils.getWildcardFluidStack(fluidName, 1000);
                 if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
