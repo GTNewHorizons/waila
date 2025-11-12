@@ -41,6 +41,7 @@ hud.msg.holdkeymoreinfo=Maintenez %s pour plus d'infos
 
 hud.msg.none=<Aucun>
 hud.msg.empty=<Vide>
+hud.msg.empty2=Vide
 hud.msg.output=Sortie
 hud.msg.input=Entrée
 hud.msg.out=Sortie

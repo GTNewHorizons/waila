@@ -74,7 +74,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             for (int i = 0; i < commaCount; i++) {
                 sb.append(",");
             }
-            barText = LangUtil.translateG("hud.msg.empty").replace("<", "").replace(">", "") + " /   "
+            barText = LangUtil.translateG("hud.msg.empty2") + " /   "
                     + params[2]
                     + ConfigHandler.instance().fluidUnit
                     + sb;
@@ -150,7 +150,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                     true);
         } else {
             DisplayUtil.drawString(
-                    LangUtil.translateG("hud.msg.empty").replace("<", "").replace(">", "") + " / "
+                    LangUtil.translateG("hud.msg.empty2") + " / "
                             + formatNumber.apply((int) capacity)
                             + " "
                             + ConfigHandler.instance().fluidUnit,
