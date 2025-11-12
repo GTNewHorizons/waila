@@ -7,7 +7,6 @@ import net.minecraftforge.common.config.Configuration;
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -15,6 +14,7 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.screens.config.ScreenConfig;
 import mcp.mobius.waila.handlers.nei.NEIHandler;
 import mcp.mobius.waila.utils.Constants;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class KeyEvent {
 
@@ -63,14 +63,10 @@ public class KeyEvent {
                 boolean status = ConfigHandler.instance()
                         .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true);
                 ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, !status);
-            } else if (key_recipe.isPressed()) {
-                if (Loader.isModLoaded("NotEnoughItems")) {
-                    NEIHandler.openRecipeGUI(true);
-                }
-            } else if (key_usage.isPressed()) {
-                if (Loader.isModLoaded("NotEnoughItems")) {
-                    NEIHandler.openRecipeGUI(false);
-                }
+            } else if (LoadedMods.NEI && key_recipe.isPressed()) {
+                NEIHandler.openRecipeGUI(true);
+            } else if (LoadedMods.NEI && key_usage.isPressed()) {
+                NEIHandler.openRecipeGUI(false);
             }
     }
 
