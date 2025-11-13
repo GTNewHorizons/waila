@@ -19,9 +19,8 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
-import mcp.mobius.waila.utils.LoadedMods;
 
-public class HUDHandlerBCTanks implements IWailaDataProvider {
+public class TankFluidHandler implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -32,7 +31,7 @@ public class HUDHandlerBCTanks implements IWailaDataProvider {
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
 
-        if (!ConfigHandler.instance().getConfig("bc.tanktype") || LoadedMods.WAILA_PLUGINS) {
+        if (!ConfigHandler.instance().getConfig("bc.tanktype")) {
             return currenttip;
         }
 
@@ -53,7 +52,7 @@ public class HUDHandlerBCTanks implements IWailaDataProvider {
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
 
-        if (!ConfigHandler.instance().getConfig("bc.tankamount") || LoadedMods.WAILA_PLUGINS) {
+        if (!ConfigHandler.instance().getConfig("bc.tankamount")) {
             return currenttip;
         }
 

@@ -1,4 +1,4 @@
-package mcp.mobius.waila.addons.thermaldynamics;
+package mcp.mobius.waila.addons.exu;
 
 import java.util.List;
 
@@ -7,18 +7,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.cbcore.LangUtil;
-import mcp.mobius.waila.utils.LoadedMods;
 
-/**
- * Created by Lordmau5 on 28.02.2015.
- */
-public class HUDHandlerDuct implements IWailaDataProvider {
+public class DrumFluidHandler implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -28,30 +25,23 @@ public class HUDHandlerDuct implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("thermaldynamics.fluiductsFluid") || LoadedMods.WAILA_PLUGINS) return currenttip;
-
-        FluidStack fluid = FluidStack.loadFluidStackFromNBT(accessor.getNBTData());
-
-        if (fluid.getFluid() == null) {
-            currenttip.add(LangUtil.translateG("hud.msg.empty"));
-        } else {
-            currenttip.add(String.format("< %s >", fluid.getFluid().getLocalizedName(fluid)));
-        }
-
         return currenttip;
     }
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("thermaldynamics.fluiductsAmount") || LoadedMods.WAILA_PLUGINS) return currenttip;
 
-        int amount = 0;
+        if (!config.getConfig("extrautilities.fluidamount")) return currenttip;
 
-        NBTTagCompound tag = accessor.getNBTData();
-        if (tag.hasKey("Amount")) amount = accessor.getNBTInteger(tag, "Amount");
+        IFluidHandler handler = (IFluidHandler) accessor.getTileEntity();
+        if (handler == null) return currenttip;
 
-        currenttip.add(String.format(" %d / 1000 mB", amount));
+        FluidTankInfo[] tanks = handler.getTankInfo(ForgeDirection.UNKNOWN);
+        if (tanks.length != 1) return currenttip;
+
+        int amount = tanks[0].fluid == null ? 0 : tanks[0].fluid.amount;
+        currenttip.add(String.format("%d / %d mB", amount, tanks[0].capacity));
 
         return currenttip;
     }
@@ -65,7 +55,6 @@ public class HUDHandlerDuct implements IWailaDataProvider {
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
-        if (te != null) te.writeToNBT(tag);
         return tag;
     }
 
