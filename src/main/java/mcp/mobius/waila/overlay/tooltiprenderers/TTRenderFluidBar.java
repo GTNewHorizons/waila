@@ -1,6 +1,7 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
 import java.awt.Dimension;
+import java.text.NumberFormat;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -34,6 +35,11 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
     private final Consumer<String> bindColor;
     private final Function<Integer, String> formatNumber;
     private static final int height = 12;
+    private static final NumberFormat numberFormat = NumberFormat.getInstance();
+
+    static {
+        numberFormat.setGroupingUsed(true);
+    }
 
     public TTRenderFluidBar() {
         if (Loader.isModLoaded("gregtech_nh")) {
@@ -50,7 +56,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             formatNumber = GTUtility::formatNumbers;
         } else {
             bindColor = (fluidName) -> GL11.glColor4f(1F, 1F, 1F, 1F);
-            formatNumber = (number) -> String.format("%,d", number);
+            formatNumber = numberFormat::format;
         }
     }
 
@@ -65,8 +71,8 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             for (int i = 0; i < commaCount; i++) {
                 sb.append(",");
             }
-            barText = params[2] + " /   " + params[3] + ConfigHandler.instance().fluidUnit + params[1] + sb;
-
+            barText = String
+                    .format("%s / %s %s %s%s", params[2], params[3], ConfigHandler.instance().fluidUnit, params[1], sb);
         } else {
             int commaCount = (int) (Math.floor((params[3].length() - 1) / 3D));
             // ",".repeat(commaCount) doesn't exist in java 8 so do this instead.
@@ -74,10 +80,12 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             for (int i = 0; i < commaCount; i++) {
                 sb.append(",");
             }
-            barText = LangUtil.translateG("hud.msg.empty2") + " /   "
-                    + params[3]
-                    + ConfigHandler.instance().fluidUnit
-                    + sb;
+            barText = String.format(
+                    "%s / %s %s%s",
+                    LangUtil.translateG("hud.msg.empty2"),
+                    params[3],
+                    ConfigHandler.instance().fluidUnit,
+                    sb);
         }
 
         return new Dimension(DisplayUtil.getDisplayWidth(barText) + 4, height);
@@ -138,22 +146,23 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
         if (!isEmpty) {
             DisplayUtil.drawString(
-                    formatNumber.apply((int) amount) + " / "
-                            + formatNumber.apply((int) capacity)
-                            + " "
-                            + ConfigHandler.instance().fluidUnit
-                            + " "
-                            + localizedName,
+                    String.format(
+                            "%s / %s %s %s",
+                            formatNumber.apply((int) capacity),
+                            formatNumber.apply((int) capacity),
+                            ConfigHandler.instance().fluidUnit,
+                            localizedName),
                     2,
                     2,
                     0xFFFFFFFF,
                     true);
         } else {
             DisplayUtil.drawString(
-                    LangUtil.translateG("hud.msg.empty2") + " / "
-                            + formatNumber.apply((int) capacity)
-                            + " "
-                            + ConfigHandler.instance().fluidUnit,
+                    String.format(
+                            "%s / %s %s",
+                            LangUtil.translateG("hud.msg.empty2"),
+                            formatNumber.apply((int) capacity),
+                            ConfigHandler.instance().fluidUnit),
                     2,
                     2,
                     0xFFDDDDDD,
