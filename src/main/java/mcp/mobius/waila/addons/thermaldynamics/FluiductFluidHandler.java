@@ -2,6 +2,7 @@ package mcp.mobius.waila.addons.thermaldynamics;
 
 import java.util.List;
 
+import mcp.mobius.waila.api.impl.ConfigHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -71,7 +72,7 @@ public class FluiductFluidHandler implements IWailaDataProvider {
             return currenttip;
         }
 
-        currenttip.add(String.format("%d / %d mB", amount, capacity));
+        currenttip.add(String.format("%d / %d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }

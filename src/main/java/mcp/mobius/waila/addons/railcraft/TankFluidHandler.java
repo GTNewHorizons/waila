@@ -2,6 +2,7 @@ package mcp.mobius.waila.addons.railcraft;
 
 import java.util.List;
 
+import mcp.mobius.waila.api.impl.ConfigHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -56,7 +57,7 @@ public class TankFluidHandler implements IWailaDataProvider {
         FluidStack fluid = tank.getFluid();
         int amount = fluid == null ? 0 : fluid.amount;
 
-        currenttip.add(String.format("%d / %d mB", amount, tank.getCapacity()));
+        currenttip.add(String.format("%d / %d %s", amount, tank.getCapacity(), ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }

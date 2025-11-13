@@ -2,6 +2,7 @@ package mcp.mobius.waila.addons.exu;
 
 import java.util.List;
 
+import mcp.mobius.waila.api.impl.ConfigHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +42,7 @@ public class DrumFluidHandler implements IWailaDataProvider {
         if (tanks.length != 1) return currenttip;
 
         int amount = tanks[0].fluid == null ? 0 : tanks[0].fluid.amount;
-        currenttip.add(String.format("%d / %d mB", amount, tanks[0].capacity));
+        currenttip.add(String.format("%d / %d %s", amount, tanks[0].capacity, ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }

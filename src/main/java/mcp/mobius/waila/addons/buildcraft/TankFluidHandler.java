@@ -40,7 +40,7 @@ public class TankFluidHandler implements IWailaDataProvider {
         String name = currenttip.get(0);
 
         if (stack != null) {
-            currenttip.set(0, name + " (" + stack.getFluid().getName() + ")");
+            currenttip.set(0, name + " < " + stack.getFluid().getLocalizedName(stack) + " >");
         } else {
             currenttip.set(0, name + " " + LangUtil.translateG("hud.msg.empty"));
         }
@@ -61,7 +61,7 @@ public class TankFluidHandler implements IWailaDataProvider {
         int liquidAmount = stack != null ? stack.amount : 0;
         int capacity = tank != null ? tank.capacity : 0;
 
-        currenttip.add(liquidAmount + "/" + capacity + " mB");
+        currenttip.add(String.format("%d / %d %s", liquidAmount, capacity, ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }

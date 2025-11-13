@@ -2,6 +2,7 @@ package mcp.mobius.waila.addons.thermalexpansion;
 
 import java.util.List;
 
+import mcp.mobius.waila.api.impl.ConfigHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -60,7 +61,7 @@ public class TankFluidHandler implements IWailaDataProvider {
             int amount = (Integer) ThermalExpansionModule.TileTank_getTankAmount.invoke(accessor.getTileEntity());
             int capacity = (Integer) ThermalExpansionModule.TileTank_getTankCapacity.invoke(accessor.getTileEntity());
 
-            currenttip.add(String.format("%d / %d mB", amount, capacity));
+            currenttip.add(String.format("%d / %d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
 
         } catch (Exception e) {
             WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
