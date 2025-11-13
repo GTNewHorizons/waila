@@ -42,7 +42,7 @@ client.msg.nousage=Nessun uso trovato.
 hud.msg.holdkeymoreinfo=Tieni premuto %s per più info
 
 hud.msg.none=<Niente>
-hud.msg.empty=Vuoto
+hud.msg.empty=<Vuoto>
 hud.msg.empty2=Vuoto
 hud.msg.output=Uscita
 hud.msg.input=Entrata

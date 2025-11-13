@@ -75,7 +75,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                 sb.append(",");
             }
             barText = LangUtil.translateG("hud.msg.empty2") + " /   "
-                    + params[2]
+                    + params[3]
                     + ConfigHandler.instance().fluidUnit
                     + sb;
         }
@@ -125,7 +125,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
         if (!isEmpty) {
             GL11.glEnable(GL11.GL_BLEND);
-            GL11.glColor4f(1F, 1F, 1F, 0.55F);
+            GL11.glColor4f(1F, 1F, 1F, 0.70F);
             mc.getTextureManager().bindTexture(gradient);
             tessellator.startDrawingQuads();
             drawRect(tessellator, 1, 0, 0, maxStringW - 2, height - 1, 0, 0, 1, 1);
