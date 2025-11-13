@@ -1,4 +1,4 @@
-package mcp.mobius.waila.addons.railcraft;
+package mcp.mobius.waila.addons.thermalexpansion;
 
 import java.util.List;
 
@@ -8,16 +8,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.cbcore.LangUtil;
-import mcp.mobius.waila.utils.LoadedMods;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
-public class HUDHandlerTank implements IWailaDataProvider {
+public class TankFluidHandler implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -27,14 +25,14 @@ public class HUDHandlerTank implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("railcraft.fluidamount") || LoadedMods.WAILA_PLUGINS) return currenttip;
+
+        if (!config.getConfig("thermalexpansion.fluidtype")) {
+            return currenttip;
+        }
 
         try {
-            IFluidTank tank = (IFluidTank) RailcraftModule.ITankTile_getTank
-                    .invoke(RailcraftModule.ITankTile.cast(accessor.getTileEntity()));
-            if (tank == null) return currenttip;
-
-            FluidStack fluid = tank.getFluid();
+            FluidStack fluid = (FluidStack) ThermalExpansionModule.TileTank_getTankFluid
+                    .invoke(accessor.getTileEntity());
             String name = currenttip.get(0);
 
             if (fluid == null) {
@@ -44,7 +42,7 @@ public class HUDHandlerTank implements IWailaDataProvider {
             }
 
         } catch (Exception e) {
-            currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
+            WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
         }
 
         return currenttip;
@@ -53,19 +51,19 @@ public class HUDHandlerTank implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("railcraft.fluidamount") || LoadedMods.WAILA_PLUGINS) return currenttip;
+
+        if (!config.getConfig("thermalexpansion.fluidamount")) {
+            return currenttip;
+        }
 
         try {
-            IFluidTank tank = (IFluidTank) RailcraftModule.ITankTile_getTank
-                    .invoke(RailcraftModule.ITankTile.cast(accessor.getTileEntity()));
-            if (tank == null) return currenttip;
+            int amount = (Integer) ThermalExpansionModule.TileTank_getTankAmount.invoke(accessor.getTileEntity());
+            int capacity = (Integer) ThermalExpansionModule.TileTank_getTankCapacity.invoke(accessor.getTileEntity());
 
-            FluidStack fluid = tank.getFluid();
-            if (fluid != null) currenttip.add(String.format("%d / %d mB", fluid.amount, tank.getInfo().capacity));
-            else currenttip.add(String.format("0 / %d mB", tank.getInfo().capacity));
+            currenttip.add(String.format("%d / %d mB", amount, capacity));
 
         } catch (Exception e) {
-            currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
+            WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
         }
 
         return currenttip;
@@ -80,7 +78,6 @@ public class HUDHandlerTank implements IWailaDataProvider {
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
-        if (te != null) te.writeToNBT(tag);
         return tag;
     }
 
