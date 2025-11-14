@@ -13,7 +13,7 @@ import mcp.mobius.waila.api.ITaggedList;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.utils.WailaExceptionHandler;
+import mcp.mobius.waila.api.SpecialChars;
 
 public class HUDHandlerIEnergyHandler implements IWailaDataProvider {
 
@@ -34,15 +34,17 @@ public class HUDHandlerIEnergyHandler implements IWailaDataProvider {
 
         if (!config.getConfig("thermalexpansion.energyhandler")) return currenttip;
         if (!accessor.getNBTData().hasKey("Energy")) return currenttip;
+        if (!accessor.getNBTData().hasKey("MaxStorage")) return currenttip;
 
-        int energy = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
-        int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
-        try {
-            if ((maxEnergy != 0) && (((ITaggedList) currenttip).getEntries("RFEnergyStorage").size() == 0)) {
-                ((ITaggedList) currenttip).add(String.format("%d / %d RF", energy, maxEnergy), "RFEnergyStorage");
+        if (currenttip instanceof ITaggedList taggedTips) {
+            int energy = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
+            int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
+
+            if (maxEnergy > 0 && taggedTips.getEntries("RFEnergyStorage").isEmpty()) {
+                taggedTips.add(
+                        SpecialChars.getRenderString("waila.rfenergy", energy + "", maxEnergy + ""),
+                        "RFEnergyStorage");
             }
-        } catch (Exception e) {
-            currenttip = WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
         }
 
         return currenttip;
