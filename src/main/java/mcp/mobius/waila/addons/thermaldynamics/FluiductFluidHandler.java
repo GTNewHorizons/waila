@@ -17,6 +17,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 /**
  * Created by Lordmau5 on 28.02.2015.
@@ -72,7 +73,12 @@ public class FluiductFluidHandler implements IWailaDataProvider {
             return currenttip;
         }
 
-        currenttip.add(String.format("%,d / %,d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
+        currenttip.add(
+                String.format(
+                        "%s / %s %s",
+                        NumberFormatter.format(amount),
+                        NumberFormatter.format(capacity),
+                        ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }

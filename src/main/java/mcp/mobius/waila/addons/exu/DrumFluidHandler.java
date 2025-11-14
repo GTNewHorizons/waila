@@ -15,6 +15,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class DrumFluidHandler implements IWailaDataProvider {
 
@@ -42,7 +43,12 @@ public class DrumFluidHandler implements IWailaDataProvider {
         if (tanks.length != 1) return currenttip;
 
         int amount = tanks[0].fluid == null ? 0 : tanks[0].fluid.amount;
-        currenttip.add(String.format("%,d / %,d %s", amount, tanks[0].capacity, ConfigHandler.instance().fluidUnit));
+        currenttip.add(
+                String.format(
+                        "%s / %s %s",
+                        NumberFormatter.format(amount),
+                        NumberFormatter.format(tanks[0].capacity),
+                        ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }
