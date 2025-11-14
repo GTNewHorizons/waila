@@ -25,7 +25,6 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.LoadedMods;
-import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
