@@ -41,7 +41,7 @@ client.msg.nousage=Применений не найдено.
 
 hud.msg.holdkeymoreinfo=Удерживайте %s для подробностей
 
-hud.msg.empty=< Пусто >
+hud.msg.empty=Пусто
 hud.msg.output=Вывод
 hud.msg.input=Ввод
 hud.msg.out=Из
