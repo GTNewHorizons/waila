@@ -11,10 +11,6 @@ public class NumberFormatter {
 
     private static NumberFormat numberFormat = NumberFormat.getInstance(getCurrentLocale());
 
-    static {
-        numberFormat.setGroupingUsed(true);
-    }
-
     public static String format(long number) {
         if (LoadedMods.GT5U) {
             return GTUtility.formatNumbers(number);
@@ -34,6 +30,5 @@ public class NumberFormatter {
 
     public static void onResourcesReload() {
         numberFormat = NumberFormat.getInstance(getCurrentLocale());
-        numberFormat.setGroupingUsed(true);
     }
 }
