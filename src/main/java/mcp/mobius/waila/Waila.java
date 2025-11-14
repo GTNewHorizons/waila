@@ -2,8 +2,6 @@ package mcp.mobius.waila;
 
 import java.util.Map;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +34,6 @@ import mcp.mobius.waila.overlay.OverlayConfig;
 import mcp.mobius.waila.overlay.WailaTickHandler;
 import mcp.mobius.waila.server.ProxyServer;
 import mcp.mobius.waila.utils.ModIdentification;
-import mcp.mobius.waila.utils.NumberFormatter;
 
 @Mod(
         modid = "Waila",
@@ -71,9 +68,6 @@ public class Waila {
             MinecraftForge.EVENT_BUS.register(new DecoratorRenderer());
             FMLCommonHandler.instance().bus().register(new KeyEvent());
             FMLCommonHandler.instance().bus().register(new WailaTickHandler());
-
-            ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager())
-                    .registerReloadListener(new NumberFormatter());
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
     }
