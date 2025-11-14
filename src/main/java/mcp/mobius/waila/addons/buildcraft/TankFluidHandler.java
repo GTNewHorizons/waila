@@ -39,12 +39,10 @@ public class TankFluidHandler implements IWailaDataProvider {
         FluidTankInfo tank = this.getTank(accessor);
         FluidStack stack = tank != null ? tank.fluid : null;
         String name = currenttip.get(0);
+        String fluidName = stack == null ? LangUtil.translateG("hud.msg.empty")
+                : stack.getFluid().getLocalizedName(stack);
 
-        if (stack != null) {
-            currenttip.set(0, name + " < " + stack.getFluid().getLocalizedName(stack) + " >");
-        } else {
-            currenttip.set(0, name + " " + LangUtil.translateG("hud.msg.empty"));
-        }
+        currenttip.set(0, name + " < " + fluidName + " >");
 
         return currenttip;
     }
