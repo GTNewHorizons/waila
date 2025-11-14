@@ -61,7 +61,7 @@ public class TankFluidHandler implements IWailaDataProvider {
         int liquidAmount = stack != null ? stack.amount : 0;
         int capacity = tank != null ? tank.capacity : 0;
 
-        currenttip.add(String.format("%d / %d %s", liquidAmount, capacity, ConfigHandler.instance().fluidUnit));
+        currenttip.add(String.format("%,d / %,d %s", liquidAmount, capacity, ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }
