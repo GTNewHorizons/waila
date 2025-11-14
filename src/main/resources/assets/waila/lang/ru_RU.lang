@@ -43,6 +43,7 @@ hud.msg.holdkeymoreinfo=Удерживайте %s для подробносте�
 
 hud.msg.none=<Ничего>
 hud.msg.empty=<Пусто>
+hud.msg.empty2=Пусто
 hud.msg.output=Вывод
 hud.msg.input=Ввод
 hud.msg.out=Из

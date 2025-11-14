@@ -41,6 +41,7 @@ hud.msg.holdkeymoreinfo=Houd %s ingedrukt voor meer info
 
 hud.msg.none=<Geen>
 hud.msg.empty=<Leeg>
+hud.msg.empty2=Leeg
 hud.msg.output=Uitvoer
 hud.msg.input=Invoer
 hud.msg.out=Uit
