@@ -44,7 +44,6 @@ hud.msg.holdkeymoreinfo=Hold %s for more info
 
 hud.msg.none=<None>
 hud.msg.empty=<Empty>
-hud.msg.empty2=Empty
 hud.msg.output=Output
 hud.msg.input=Input
 hud.msg.out=Out

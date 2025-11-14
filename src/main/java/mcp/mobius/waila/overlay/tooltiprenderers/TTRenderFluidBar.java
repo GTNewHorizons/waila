@@ -82,7 +82,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             }
             barText = String.format(
                     "%s / %s %s%s",
-                    LangUtil.translateG("hud.msg.empty2"),
+                    LangUtil.translateG("hud.msg.empty"),
                     params[3],
                     ConfigHandler.instance().fluidUnit,
                     sb);
@@ -148,7 +148,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             DisplayUtil.drawString(
                     String.format(
                             "%s / %s %s %s",
-                            formatNumber.apply((int) capacity),
+                            formatNumber.apply((int) amount),
                             formatNumber.apply((int) capacity),
                             ConfigHandler.instance().fluidUnit,
                             localizedName),
@@ -160,7 +160,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             DisplayUtil.drawString(
                     String.format(
                             "%s / %s %s",
-                            LangUtil.translateG("hud.msg.empty2"),
+                            LangUtil.translateG("hud.msg.empty"),
                             formatNumber.apply((int) capacity),
                             ConfigHandler.instance().fluidUnit),
                     2,
