@@ -4,12 +4,10 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
 
 import gregtech.api.util.GTUtility;
 
-public class NumberFormatter implements IResourceManagerReloadListener {
+public class NumberFormatter {
 
     private static NumberFormat numberFormat = NumberFormat.getInstance(getCurrentLocale());
 
@@ -34,8 +32,7 @@ public class NumberFormatter implements IResourceManagerReloadListener {
         return new Locale(language, country);
     }
 
-    @Override
-    public void onResourceManagerReload(IResourceManager p_110549_1_) {
+    public static void onResourcesReload() {
         numberFormat = NumberFormat.getInstance(getCurrentLocale());
         numberFormat.setGroupingUsed(true);
     }
