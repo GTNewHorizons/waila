@@ -72,7 +72,7 @@ public class FluiductFluidHandler implements IWailaDataProvider {
             return currenttip;
         }
 
-        currenttip.add(String.format("%d / %d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
+        currenttip.add(String.format("%,d / %,d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }

@@ -61,7 +61,7 @@ public class TankFluidHandler implements IWailaDataProvider {
             int amount = (Integer) ThermalExpansionModule.TileTank_getTankAmount.invoke(accessor.getTileEntity());
             int capacity = (Integer) ThermalExpansionModule.TileTank_getTankCapacity.invoke(accessor.getTileEntity());
 
-            currenttip.add(String.format("%d / %d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
+            currenttip.add(String.format("%,d / %,d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
 
         } catch (Exception e) {
             WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
