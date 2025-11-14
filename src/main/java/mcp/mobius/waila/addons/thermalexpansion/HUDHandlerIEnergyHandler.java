@@ -41,9 +41,16 @@ public class HUDHandlerIEnergyHandler implements IWailaDataProvider {
             int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
 
             if (maxEnergy > 0 && taggedTips.getEntries("RFEnergyStorage").isEmpty()) {
-                taggedTips.add(
-                        SpecialChars.getRenderString("waila.rfenergy", energy + "", maxEnergy + ""),
-                        "RFEnergyStorage");
+                if (config.getConfig("thermalexpansion.rfenergybar")) {
+                    taggedTips.add(
+                            SpecialChars.getRenderString("waila.rfenergy", energy + "", maxEnergy + ""),
+                            "RFEnergyStorage");
+                } else {
+                    taggedTips.add(
+                            String.format("%s / %s RF", energy, maxEnergy),
+                            "RFEnergyStorage"
+                    );
+                }
             }
         }
 
