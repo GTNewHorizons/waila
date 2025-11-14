@@ -14,6 +14,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.NumberFormatter;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class TankFluidHandler implements IWailaDataProvider {
@@ -61,7 +62,12 @@ public class TankFluidHandler implements IWailaDataProvider {
             int amount = (Integer) ThermalExpansionModule.TileTank_getTankAmount.invoke(accessor.getTileEntity());
             int capacity = (Integer) ThermalExpansionModule.TileTank_getTankCapacity.invoke(accessor.getTileEntity());
 
-            currenttip.add(String.format("%,d / %,d %s", amount, capacity, ConfigHandler.instance().fluidUnit));
+            currenttip.add(
+                    String.format(
+                            "%s / %s %s",
+                            NumberFormatter.format(amount),
+                            NumberFormatter.format(capacity),
+                            ConfigHandler.instance().fluidUnit));
 
         } catch (Exception e) {
             WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
