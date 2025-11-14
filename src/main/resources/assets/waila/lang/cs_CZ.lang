@@ -41,9 +41,7 @@ client.msg.nousage=Nenalezeno žádné využití.
 
 hud.msg.holdkeymoreinfo=Držte %s pro více informací
 
-hud.msg.none=<Nic>
-hud.msg.empty=<Prázdný>
-hud.msg.empty2=Prázdný
+hud.msg.empty=Prázdný
 hud.msg.output=Výstup
 hud.msg.input=Vstup
 hud.msg.out=Ven

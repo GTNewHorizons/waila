@@ -41,9 +41,7 @@ client.msg.nousage=Ühtegi kasutust ei leitud.
 
 hud.msg.holdkeymoreinfo=Hoia %s lisainfo saamiseks
 
-hud.msg.none=<Mitte Ükski>
-hud.msg.empty=<Tühi>
-hud.msg.empty2=Tühi
+hud.msg.empty=Tühi
 hud.msg.output=Väljund
 hud.msg.input=Sisend
 hud.msg.out=Välja
