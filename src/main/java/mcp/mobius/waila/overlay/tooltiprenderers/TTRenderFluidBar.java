@@ -1,7 +1,6 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
 import java.awt.Dimension;
-import java.text.NumberFormat;
 import java.util.function.Consumer;
 
 import net.minecraft.client.Minecraft;
@@ -25,6 +24,7 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.LoadedMods;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
