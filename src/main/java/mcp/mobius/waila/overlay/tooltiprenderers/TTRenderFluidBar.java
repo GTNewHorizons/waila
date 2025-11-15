@@ -1,7 +1,6 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
 import java.awt.Dimension;
-import java.text.NumberFormat;
 import java.util.function.Consumer;
 
 import net.minecraft.client.Minecraft;
