@@ -1,12 +1,15 @@
 package mcp.mobius.waila.client;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
@@ -24,6 +27,8 @@ import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderProgressBar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderRFBar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderStack;
 import mcp.mobius.waila.server.ProxyServer;
+import mcp.mobius.waila.utils.LoadedMods;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class ProxyClient extends ProxyServer {
 
@@ -36,7 +41,7 @@ public class ProxyClient extends ProxyServer {
 
         LangUtil.loadLangDir("waila");
 
-        if (Loader.isModLoaded("NotEnoughItems")) {
+        if (LoadedMods.NEI) {
             NEIHandler.register();
         } else {
             MinecraftForge.EVENT_BUS.register(new VanillaTooltipHandler());
@@ -62,6 +67,9 @@ public class ProxyClient extends ProxyServer {
         ModuleRegistrar.instance().registerTooltipRenderer("waila.tcaspect", new TTRenderAspectString());
 
         MinecraftForge.EVENT_BUS.register(new WorldUnloadEventHandler());
+
+        ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager())
+                .registerReloadListener(new NumberFormatterReloadListener());
     }
 
     @Override
@@ -78,6 +86,14 @@ public class ProxyClient extends ProxyServer {
             if (event.world.isRemote) {
                 DataAccessorCommon.instance = new DataAccessorCommon();
             }
+        }
+    }
+
+    private static class NumberFormatterReloadListener implements IResourceManagerReloadListener {
+
+        @Override
+        public void onResourceManagerReload(IResourceManager resourceManager) {
+            NumberFormatter.onResourcesReload();
         }
     }
 }

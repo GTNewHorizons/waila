@@ -4,30 +4,26 @@ import org.apache.logging.log4j.Level;
 
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class ExtraUtilitiesModule {
 
     public static Class<?> TileEntityDrum = null;
 
     public static void register() {
+        if (LoadedMods.WAILA_PLUGINS) {
+            return;
+        }
 
         try {
-            Class.forName("com.rwtema.extrautils.ExtraUtils");
+            TileEntityDrum = Class.forName("com.rwtema.extrautils.tileentity.TileEntityDrum");
             Waila.log.log(Level.INFO, "ExtraUtilities mod found.");
         } catch (ClassNotFoundException e) {
             Waila.log.log(Level.INFO, "[ExtraUtilities] ExtraUtilities mod not found.");
             return;
         }
 
-        try {
-            TileEntityDrum = Class.forName("com.rwtema.extrautils.tileentity.TileEntityDrum");
-        } catch (ClassNotFoundException e) {
-            Waila.log.log(Level.WARN, "[ExtraUtilities] Class not found. " + e);
-            return;
-        }
-
         ModuleRegistrar.instance().addConfigRemote("ExtraUtilities", "extrautilities.fluidamount");
-        ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerDrum(), TileEntityDrum);
-        ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerDrum(), TileEntityDrum);
+        ModuleRegistrar.instance().registerBodyProvider(new DrumFluidHandler(), TileEntityDrum);
     }
 }

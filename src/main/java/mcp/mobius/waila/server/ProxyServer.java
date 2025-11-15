@@ -2,7 +2,6 @@ package mcp.mobius.waila.server;
 
 import java.lang.reflect.Method;
 
-import cpw.mods.fml.common.Loader;
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.addons.agriculture.AgricultureModule;
 import mcp.mobius.waila.addons.buildcraft.BCModule;
@@ -30,6 +29,7 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.handlers.DecoratorFMP;
 import mcp.mobius.waila.handlers.HUDHandlerFMP;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class ProxyServer {
 
@@ -102,7 +102,7 @@ public class ProxyServer {
         /* Agriculture */
         AgricultureModule.register();
 
-        if (Loader.isModLoaded("ForgeMultipart")) {
+        if (LoadedMods.FORGE_MULTIPART) {
             HUDHandlerFMP.register();
             DecoratorFMP.register();
         }

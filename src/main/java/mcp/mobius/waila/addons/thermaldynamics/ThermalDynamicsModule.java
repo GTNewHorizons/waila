@@ -4,31 +4,35 @@ import org.apache.logging.log4j.Level;
 
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class ThermalDynamicsModule {
 
     public static Class<?> TileFluidDuct = null;
 
     public static void register() {
-        // XXX : We register the Fluiduct
-        try {
-            TileFluidDuct = Class.forName("cofh.thermaldynamics.ducts.fluid.TileFluidDuct");
-
-            ModuleRegistrar.instance().addConfigRemote("Thermal Dynamics", "thermaldynamics.fluidDuctsFluid");
-            ModuleRegistrar.instance().addConfigRemote("Thermal Dynamics", "thermaldynamics.fluidDuctsAmount");
-            ModuleRegistrar.instance().registerHeadProvider(new HUDHandlerDuct(), TileFluidDuct);
-            ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerDuct(), TileFluidDuct);
-            ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerDuct(), TileFluidDuct);
-
-        } catch (Exception e) {
-            if (e instanceof ClassNotFoundException) {
-                Waila.log.log(Level.INFO, "[Thermal Dynamics] Thermal Dynamics mod not found.");
-            } else {
-                Waila.log.log(Level.WARN, "[Thermal Dynamics] Error while loading FluidDuct hooks. {}", e);
-            }
+        if (LoadedMods.WAILA_PLUGINS) {
             return;
         }
-        Waila.log.log(Level.INFO, "Thermal Dynamics mod found.");
+
+        try {
+            TileFluidDuct = Class.forName("cofh.thermaldynamics.duct.fluid.TileFluidDuct");
+            Waila.log.log(Level.INFO, "Thermal Dynamics mod found.");
+        } catch (ClassNotFoundException e) {
+            Waila.log.log(Level.INFO, "[Thermal Dynamics] Thermal Dynamics mod not found.");
+            return;
+        } catch (Exception e) {
+            Waila.log.log(Level.WARN, "[Thermal Dynamics] Error while loading FluidDuct hooks. {}", e);
+            return;
+        }
+
+        ModuleRegistrar.instance().addConfigRemote("Thermal Dynamics", "thermaldynamics.fluidDuctsFluid");
+        ModuleRegistrar.instance().addConfigRemote("Thermal Dynamics", "thermaldynamics.fluidDuctsAmount");
+
+        FluiductFluidHandler fluiductFluidHandler = new FluiductFluidHandler();
+        ModuleRegistrar.instance().registerHeadProvider(fluiductFluidHandler, TileFluidDuct);
+        ModuleRegistrar.instance().registerBodyProvider(fluiductFluidHandler, TileFluidDuct);
+        ModuleRegistrar.instance().registerNBTProvider(fluiductFluidHandler, TileFluidDuct);
     }
 
 }
