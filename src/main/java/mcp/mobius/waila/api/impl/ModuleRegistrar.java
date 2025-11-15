@@ -32,6 +32,7 @@ public class ModuleRegistrar implements IWailaRegistrar {
     public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> headBlockProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> bodyBlockProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> tailBlockProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> infoIconBlockProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> stackBlockProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaDataProvider>> NBTDataProviders = new LinkedHashMap<>();
 
@@ -40,6 +41,7 @@ public class ModuleRegistrar implements IWailaRegistrar {
     public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> headEntityProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> bodyEntityProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> tailEntityProviders = new LinkedHashMap<>();
+    public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> infoIconEntityProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> overrideEntityProviders = new LinkedHashMap<>();
     public LinkedHashMap<Class, ArrayList<IWailaEntityProvider>> NBTEntityProviders = new LinkedHashMap<>();
 
@@ -130,6 +132,11 @@ public class ModuleRegistrar implements IWailaRegistrar {
     }
 
     @Override
+    public void registerInfoIconProvider(IWailaDataProvider dataProvider, Class block) {
+        this.registerProvider(dataProvider, block, this.infoIconBlockProviders);
+    }
+
+    @Override
     public void registerStackProvider(IWailaDataProvider dataProvider, Class block) {
         this.registerProvider(dataProvider, block, this.stackBlockProviders);
     }
@@ -152,6 +159,11 @@ public class ModuleRegistrar implements IWailaRegistrar {
     @Override
     public void registerTailProvider(IWailaEntityProvider dataProvider, Class entity) {
         this.registerProvider(dataProvider, entity, this.tailEntityProviders);
+    }
+
+    @Override
+    public void registerInfoIconProvider(IWailaEntityProvider dataProvider, Class entity) {
+        this.registerProvider(dataProvider, entity, this.infoIconEntityProviders);
     }
 
     @Override
@@ -241,6 +253,10 @@ public class ModuleRegistrar implements IWailaRegistrar {
         return getProviders(block, this.tailBlockProviders);
     }
 
+    public Map<Integer, List<IWailaDataProvider>> getInfoIconProviders(Object block) {
+        return getProviders(block, this.infoIconBlockProviders);
+    }
+
     public Map<Integer, List<IWailaDataProvider>> getStackProviders(Object block) {
         return getProviders(block, this.stackBlockProviders);
     }
@@ -259,6 +275,10 @@ public class ModuleRegistrar implements IWailaRegistrar {
 
     public Map<Integer, List<IWailaEntityProvider>> getTailEntityProviders(Object entity) {
         return getProviders(entity, this.tailEntityProviders);
+    }
+
+    public Map<Integer, List<IWailaEntityProvider>> getInfoIconEntityProviders(Object entity) {
+        return getProviders(entity, this.infoIconEntityProviders);
     }
 
     public Map<Integer, List<IWailaEntityProvider>> getOverrideEntityProviders(Object entity) {
@@ -343,6 +363,10 @@ public class ModuleRegistrar implements IWailaRegistrar {
         return hasProviders(block, this.tailBlockProviders);
     }
 
+    public boolean hasInfoIconProviders(Object block) {
+        return hasProviders(block, this.infoIconBlockProviders);
+    }
+
     public boolean hasNBTProviders(Object block) {
         return hasProviders(block, this.NBTDataProviders);
     }
@@ -357,6 +381,10 @@ public class ModuleRegistrar implements IWailaRegistrar {
 
     public boolean hasTailEntityProviders(Object entity) {
         return hasProviders(entity, this.tailEntityProviders);
+    }
+
+    public boolean hasInfoIconEntityProviders(Object entity) {
+        return hasProviders(entity, this.infoIconEntityProviders);
     }
 
     public boolean hasOverrideEntityProviders(Object entity) {

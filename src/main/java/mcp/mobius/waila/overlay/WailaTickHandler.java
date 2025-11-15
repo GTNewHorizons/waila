@@ -2,6 +2,7 @@ package mcp.mobius.waila.overlay;
 
 import static mcp.mobius.waila.api.SpecialChars.ITALIC;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
@@ -14,6 +15,7 @@ import net.minecraftforge.common.config.Configuration;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import mcp.mobius.waila.api.IWailaInfoIcon;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.MetaDataProvider;
@@ -54,6 +56,7 @@ public class WailaTickHandler {
         List<String> currenttipHead;
         List<String> currenttipBody;
         List<String> currenttipTail;
+        List<IWailaInfoIcon> currentTipInfoIcons;
         if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
             DataAccessorCommon accessor = DataAccessorCommon.instance;
             accessor.set(world, player, target);
@@ -97,7 +100,11 @@ public class WailaTickHandler {
                 currenttip.addAll(currenttipBody);
                 currenttip.addAll(currenttipTail);
 
-                this.tooltip = new Tooltip(currenttip, targetStack);
+                currentTipInfoIcons = new ArrayList<IWailaInfoIcon>();
+                currentTipInfoIcons = handler
+                        .handleBlockInfoIconData(targetStack, world, player, target, accessor, currentTipInfoIcons);
+
+                this.tooltip = new Tooltip(currenttip, targetStack, currentTipInfoIcons);
             }
         } else if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
             DataAccessorCommon accessor = DataAccessorCommon.instance;

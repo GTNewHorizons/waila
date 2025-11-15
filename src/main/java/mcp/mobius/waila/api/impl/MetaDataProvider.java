@@ -18,12 +18,14 @@ import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.IWailaBlock;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaEntityProvider;
+import mcp.mobius.waila.api.IWailaInfoIcon;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.cbcore.Layout;
 import mcp.mobius.waila.client.KeyEvent;
 import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.Message0x03EntRequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
+import mcp.mobius.waila.overlay.infoicons.StringInfoIcon;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class MetaDataProvider {
@@ -31,10 +33,12 @@ public class MetaDataProvider {
     private final Map<Integer, List<IWailaDataProvider>> headBlockProviders = new TreeMap<>();
     private final Map<Integer, List<IWailaDataProvider>> bodyBlockProviders = new TreeMap<>();
     private Map<Integer, List<IWailaDataProvider>> tailBlockProviders = new TreeMap<>();
+    private final Map<Integer, List<IWailaDataProvider>> infoIconBlockProviders = new TreeMap<>();
 
     private final Map<Integer, List<IWailaEntityProvider>> headEntityProviders = new TreeMap<>();
     private final Map<Integer, List<IWailaEntityProvider>> bodyEntityProviders = new TreeMap<>();
     private final Map<Integer, List<IWailaEntityProvider>> tailEntityProviders = new TreeMap<>();
+    private final Map<Integer, List<IWailaEntityProvider>> infoIconEntityProviders = new TreeMap<>();
 
     public ItemStack identifyBlockHighlight(World world, EntityPlayer player, MovingObjectPosition mop,
             DataAccessorCommon accessor) {
@@ -247,5 +251,53 @@ public class MetaDataProvider {
         }
 
         return currenttip;
+    }
+
+    public List<IWailaInfoIcon> handleBlockInfoIconData(ItemStack itemStack, World world, EntityPlayer player,
+            MovingObjectPosition mop, DataAccessorCommon accessor, List<IWailaInfoIcon> currentIcons) {
+        // NBT networking stuff already handled in handleBlockTextData
+
+        Block block = accessor.getBlock();
+        infoIconBlockProviders.clear();
+
+        if (ModuleRegistrar.instance().hasInfoIconProviders(block))
+            infoIconBlockProviders.putAll(ModuleRegistrar.instance().getInfoIconProviders(block));
+
+        if (ModuleRegistrar.instance().hasInfoIconProviders(accessor.getTileEntity()))
+            infoIconBlockProviders.putAll(ModuleRegistrar.instance().getInfoIconProviders(accessor.getTileEntity()));
+
+        for (List<IWailaDataProvider> providersList : infoIconBlockProviders.values()) {
+            for (IWailaDataProvider dataProvider : providersList) try {
+                currentIcons = dataProvider
+                        .getWailaInfoIcon(itemStack, currentIcons, accessor, ConfigHandler.instance());
+            } catch (Throwable e) {
+                WailaExceptionHandler.handleErr(e, dataProvider.getClass().toString(), null);
+                currentIcons.add(new StringInfoIcon("<ERROR>"));
+            }
+        }
+        return currentIcons;
+    }
+
+    public List<IWailaInfoIcon> handleEntityInfoIconData(Entity entity, World world, EntityPlayer player,
+            MovingObjectPosition mop, DataAccessorCommon accessor, List<IWailaInfoIcon> currentIcons) {
+        // NBT networking stuff already handled in handleBlockTextData
+
+        infoIconEntityProviders.clear();
+
+        if (ModuleRegistrar.instance().hasInfoIconProviders(entity))
+            infoIconEntityProviders.putAll(ModuleRegistrar.instance().getInfoIconEntityProviders(entity));
+
+        if (ModuleRegistrar.instance().hasInfoIconProviders(accessor.getTileEntity())) infoIconEntityProviders
+                .putAll(ModuleRegistrar.instance().getInfoIconEntityProviders(accessor.getTileEntity()));
+
+        for (List<IWailaEntityProvider> providersList : infoIconEntityProviders.values()) {
+            for (IWailaEntityProvider dataProvider : providersList) try {
+                currentIcons = dataProvider.getWailaInfoIcon(entity, currentIcons, accessor, ConfigHandler.instance());
+            } catch (Throwable e) {
+                WailaExceptionHandler.handleErr(e, dataProvider.getClass().toString(), null);
+                currentIcons.add(new StringInfoIcon("<ERROR>"));
+            }
+        }
+        return currentIcons;
     }
 }
