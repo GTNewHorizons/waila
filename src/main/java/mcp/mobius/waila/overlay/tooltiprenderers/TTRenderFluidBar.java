@@ -24,6 +24,7 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.LoadedMods;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
@@ -136,8 +137,8 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             DisplayUtil.drawString(
                     String.format(
                             "%s / %s %s %s",
-                            formatNumber.apply((int) amount),
-                            formatNumber.apply((int) capacity),
+                            NumberFormatter.format((int) amount),
+                            NumberFormatter.format((int) capacity),
                             ConfigHandler.instance().fluidUnit,
                             localizedName),
                     2,
@@ -149,7 +150,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                     String.format(
                             "%s / %s %s",
                             LangUtil.translateG("hud.msg.empty"),
-                            formatNumber.apply((int) capacity),
+                            NumberFormatter.format((int) capacity),
                             ConfigHandler.instance().fluidUnit),
                     2,
                     2,
