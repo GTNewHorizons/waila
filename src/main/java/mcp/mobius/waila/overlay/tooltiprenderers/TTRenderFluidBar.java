@@ -3,7 +3,6 @@ package mcp.mobius.waila.overlay.tooltiprenderers;
 import java.awt.Dimension;
 import java.text.NumberFormat;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -16,9 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.Loader;
 import gregtech.api.util.GTUtil;
-import gregtech.api.util.GTUtility;
 import gregtech.common.fluid.GTFluid;
 import gtPlusPlus.api.objects.minecraft.FluidGT6;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
@@ -27,22 +24,18 @@ import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.overlay.DisplayUtil;
+import mcp.mobius.waila.utils.LoadedMods;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     int maxStringW;
 
     private final Consumer<String> bindColor;
-    private final Function<Integer, String> formatNumber;
     private static final int height = 12;
-    private static final NumberFormat numberFormat = NumberFormat.getInstance();
-
-    static {
-        numberFormat.setGroupingUsed(true);
-    }
 
     public TTRenderFluidBar() {
-        if (Loader.isModLoaded("gregtech_nh")) {
+        if (LoadedMods.GT5U) {
             bindColor = (fluidName) -> {
                 FluidStack aCheck = FluidUtils.getWildcardFluidStack(fluidName, 1000);
                 if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
@@ -52,11 +45,8 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                     GL11.glColor4f(1F, 1F, 1F, 1F);
                 }
             };
-
-            formatNumber = GTUtility::formatNumbers;
         } else {
             bindColor = (fluidName) -> GL11.glColor4f(1F, 1F, 1F, 1F);
-            formatNumber = numberFormat::format;
         }
     }
 
