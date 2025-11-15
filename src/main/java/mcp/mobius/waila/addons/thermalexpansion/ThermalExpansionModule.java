@@ -68,6 +68,7 @@ public class ThermalExpansionModule {
             IEnergyInfo_getCurStorage = IEnergyInfo.getMethod("getInfoEnergyStored");
 
             ModuleRegistrar.instance().addConfigRemote("Thermal Expansion", "thermalexpansion.energyhandler");
+            ModuleRegistrar.instance().addConfigRemote("Thermal Expansion", "thermalexpansion.rfenergybar");
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerIEnergyHandler(), IEnergyProvider);
             ModuleRegistrar.instance().registerNBTProvider(new HUDHandlerIEnergyHandler(), IEnergyProvider);
             ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerIEnergyHandler(), IEnergyReceiver);
