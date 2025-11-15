@@ -14,8 +14,10 @@ import net.minecraftforge.fluids.IFluidHandler;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.utils.NumberFormatter;
 
-public class HUDHandlerDrum implements IWailaDataProvider {
+public class DrumFluidHandler implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -34,18 +36,19 @@ public class HUDHandlerDrum implements IWailaDataProvider {
 
         if (!config.getConfig("extrautilities.fluidamount")) return currenttip;
 
-        int amount = 0;
-
-        NBTTagCompound subtag = accessor.getNBTData().getCompoundTag("tank");
-        if (subtag.hasKey("Amount")) amount = accessor.getNBTInteger(subtag, "Amount");
-
         IFluidHandler handler = (IFluidHandler) accessor.getTileEntity();
         if (handler == null) return currenttip;
 
         FluidTankInfo[] tanks = handler.getTankInfo(ForgeDirection.UNKNOWN);
         if (tanks.length != 1) return currenttip;
 
-        currenttip.add(String.format("%d / %d mB", amount, tanks[0].capacity));
+        int amount = tanks[0].fluid == null ? 0 : tanks[0].fluid.amount;
+        currenttip.add(
+                String.format(
+                        "%s / %s %s",
+                        NumberFormatter.format(amount),
+                        NumberFormatter.format(tanks[0].capacity),
+                        ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }
@@ -59,7 +62,6 @@ public class HUDHandlerDrum implements IWailaDataProvider {
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
-        if (te != null) te.writeToNBT(tag);
         return tag;
     }
 

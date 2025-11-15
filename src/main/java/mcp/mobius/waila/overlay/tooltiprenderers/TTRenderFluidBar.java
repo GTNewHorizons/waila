@@ -2,7 +2,6 @@ package mcp.mobius.waila.overlay.tooltiprenderers;
 
 import java.awt.Dimension;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -15,9 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.Loader;
 import gregtech.api.util.GTUtil;
-import gregtech.api.util.GTUtility;
 import gregtech.common.fluid.GTFluid;
 import gtPlusPlus.api.objects.minecraft.FluidGT6;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
@@ -25,17 +22,18 @@ import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.overlay.DisplayUtil;
+import mcp.mobius.waila.utils.LoadedMods;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     int maxStringW;
 
     private final Consumer<String> bindColor;
-    private final Function<Integer, String> formatNumber;
     private static final int height = 12;
 
     public TTRenderFluidBar() {
-        if (Loader.isModLoaded("gregtech_nh")) {
+        if (LoadedMods.GT5U) {
             bindColor = (fluidName) -> {
                 FluidStack aCheck = FluidUtils.getWildcardFluidStack(fluidName, 1000);
                 if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
@@ -45,11 +43,8 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                     GL11.glColor4f(1F, 1F, 1F, 1F);
                 }
             };
-
-            formatNumber = GTUtility::formatNumbers;
         } else {
             bindColor = (fluidName) -> GL11.glColor4f(1F, 1F, 1F, 1F);
-            formatNumber = (number) -> String.format("%,d", number);
         }
     }
 
@@ -115,8 +110,8 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
 
         DisplayUtil.drawString(
-                formatNumber.apply((int) amount) + " / "
-                        + formatNumber.apply((int) capacity)
+                NumberFormatter.format((int) amount) + " / "
+                        + NumberFormatter.format((int) capacity)
                         + " "
                         + ConfigHandler.instance().fluidUnit
                         + " "
