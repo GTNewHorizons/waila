@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
@@ -36,17 +37,15 @@ public class TankModeHandler implements IWailaDataProvider {
                 if (mode == 0) {
                     currenttip.add(
                             String.format(
-                                    "%s : \u00a7a%s",
+                                    "%s : %s",
                                     LangUtil.translateG("hud.msg.mode"),
-                                    LangUtil.translateG("hud.msg.input")));
+                                    SpecialChars.GREEN + LangUtil.translateG("hud.msg.input")));
                 } else if (mode == 1) {
                     currenttip.add(
                             String.format(
-                                    "%s : \u00a7c%s",
+                                    "%s : %s",
                                     LangUtil.translateG("hud.msg.mode"),
-                                    LangUtil.translateG("hud.msg.output")));
-                } else {
-                    currenttip.add(String.format("Mode : Unknown (%d)", mode));
+                                    SpecialChars.RED + LangUtil.translateG("hud.msg.output")));
                 }
             }
 

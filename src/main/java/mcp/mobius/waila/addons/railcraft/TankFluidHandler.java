@@ -79,6 +79,10 @@ public class TankFluidHandler implements IWailaDataProvider {
     }
 
     private FluidTank getTank(TileEntity tileEntity) {
+        if (tileEntity == null) {
+            return null;
+        }
+
         try {
             Object tank = RailcraftModule.TileTankBase_getTank.invoke(tileEntity);
 

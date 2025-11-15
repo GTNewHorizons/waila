@@ -32,9 +32,11 @@ public class TankFluidHandler implements IWailaDataProvider {
             return currenttip;
         }
 
+        TileEntity tileEntity = accessor.getTileEntity();
+        if (tileEntity == null) return currenttip;
+
         try {
-            FluidStack fluid = (FluidStack) ThermalExpansionModule.TileTank_getTankFluid
-                    .invoke(accessor.getTileEntity());
+            FluidStack fluid = (FluidStack) ThermalExpansionModule.TileTank_getTankFluid.invoke(tileEntity);
             String name = currenttip.get(0);
             String fluidName = fluid == null ? LangUtil.translateG("hud.msg.empty")
                     : fluid.getFluid().getLocalizedName(fluid);
@@ -42,7 +44,7 @@ public class TankFluidHandler implements IWailaDataProvider {
             currenttip.set(0, name + " < " + fluidName + " >");
 
         } catch (Exception e) {
-            WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
+            WailaExceptionHandler.handleErr(e, tileEntity.getClass().getName(), currenttip);
         }
 
         return currenttip;
@@ -56,9 +58,12 @@ public class TankFluidHandler implements IWailaDataProvider {
             return currenttip;
         }
 
+        TileEntity tileEntity = accessor.getTileEntity();
+        if (tileEntity == null) return currenttip;
+
         try {
-            int amount = (Integer) ThermalExpansionModule.TileTank_getTankAmount.invoke(accessor.getTileEntity());
-            int capacity = (Integer) ThermalExpansionModule.TileTank_getTankCapacity.invoke(accessor.getTileEntity());
+            int amount = (Integer) ThermalExpansionModule.TileTank_getTankAmount.invoke(tileEntity);
+            int capacity = (Integer) ThermalExpansionModule.TileTank_getTankCapacity.invoke(tileEntity);
 
             currenttip.add(
                     String.format(
@@ -68,7 +73,7 @@ public class TankFluidHandler implements IWailaDataProvider {
                             ConfigHandler.instance().fluidUnit));
 
         } catch (Exception e) {
-            WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
+            WailaExceptionHandler.handleErr(e, tileEntity.getClass().getName(), currenttip);
         }
 
         return currenttip;
