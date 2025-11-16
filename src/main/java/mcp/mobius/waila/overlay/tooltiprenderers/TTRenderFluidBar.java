@@ -21,6 +21,7 @@ import gtPlusPlus.core.util.minecraft.FluidUtils;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.LoadedMods;
 import mcp.mobius.waila.utils.NumberFormatter;
@@ -50,16 +51,15 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
-        int commaCount = (int) (Math.floor((params[2].length() - 1) / 3D) + Math.floor((params[3].length() - 1) / 3D));
-        // ",".repeat(commaCount) doesn't exist in java 8 so do this instead.
-        StringBuilder sb = new StringBuilder(commaCount);
-        for (int i = 0; i < commaCount; i++) {
-            sb.append(",");
-        }
-        return new Dimension(
-                DisplayUtil.getDisplayWidth(
-                        params[2] + " /   " + params[3] + ConfigHandler.instance().fluidUnit + params[1] + sb) + 4,
-                height);
+        boolean isEmpty = (params[0].equals("EMPTYFLUID") && params[1].equals("EMPTYFLUID"));
+        int displayWidth = DisplayUtil.getDisplayWidth(
+                buildDisplayText(
+                        isEmpty ? 0 : Double.parseDouble(params[2]),
+                        Double.parseDouble(params[3]),
+                        params[1],
+                        isEmpty));
+
+        return new Dimension(displayWidth + 4, height);
     }
 
     public static final ResourceLocation gradient = new ResourceLocation("waila", "textures/gradient.png");
@@ -71,56 +71,71 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         double amount = Double.parseDouble(params[2]);
         double capacity = Double.parseDouble(params[3]);
         Tessellator tessellator = Tessellator.instance;
-
-        IIcon icon = FluidRegistry.getFluid(fluidName).getIcon();
+        boolean isEmpty = fluidName.equals("EMPTYFLUID") && localizedName.equals("EMPTYFLUID");
 
         Minecraft mc = Minecraft.getMinecraft();
-        mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+        if (!isEmpty) {
+            IIcon icon = FluidRegistry.getFluid(fluidName).getIcon();
+            mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+            bindColor.accept(fluidName);
 
-        bindColor.accept(fluidName);
-
-        tessellator.startDrawingQuads();
-        // Intentionally draw 2 pixels taller than needed than cover with the border to make the texture more visible
-        int i = (int) ((double) (maxStringW - 2) * amount / capacity);
-        int j = 0;
-        for (; i > height; i = i - height) {
-            drawRectFromIcon(tessellator, 1 + (j * height), 0, 0, icon, height, height);
-            j++;
+            tessellator.startDrawingQuads();
+            // Intentionally draw 2 pixels taller than needed than cover with the border to make the texture more
+            // visible
+            int i = (int) ((double) (maxStringW - 2) * amount / capacity);
+            int j = 0;
+            for (; i > height; i = i - height) {
+                drawRectFromIcon(tessellator, 1 + (j * height), 0, 0, icon, height, height);
+                j++;
+            }
+            if (i > 0) drawRect(
+                    tessellator,
+                    1 + (j * height),
+                    0,
+                    0,
+                    i,
+                    height,
+                    icon.getMinU(),
+                    icon.getMinV(),
+                    icon.getMinU() + ((icon.getMaxU() - icon.getMinU()) * ((double) i / height)),
+                    icon.getMaxV());
+            tessellator.draw();
         }
-        if (i > 0) drawRect(
-                tessellator,
-                1 + (j * height),
-                0,
-                0,
-                i,
-                height,
-                icon.getMinU(),
-                icon.getMinV(),
-                icon.getMinU() + ((icon.getMaxU() - icon.getMinU()) * ((double) i / height)),
-                icon.getMaxV());
-        tessellator.draw();
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glColor4f(1F, 1F, 1F, 0.70F);
-        mc.getTextureManager().bindTexture(gradient);
-        tessellator.startDrawingQuads();
-        drawRect(tessellator, 1, 0, 0, maxStringW - 2, height - 1, 0, 0, 1, 1);
-        tessellator.draw();
+        if (!isEmpty) {
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glColor4f(1F, 1F, 1F, 0.70F);
+            mc.getTextureManager().bindTexture(gradient);
+            tessellator.startDrawingQuads();
+            drawRect(tessellator, 1, 0, 0, maxStringW - 2, height - 1, 0, 0, 1, 1);
+            tessellator.draw();
+        } else {
+            Gui.drawRect(1, 0, maxStringW - 1, height - 1, 0x1A575656);
+        }
 
         drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
 
         DisplayUtil.drawString(
-                NumberFormatter.format((int) amount) + " / "
-                        + NumberFormatter.format((int) capacity)
-                        + " "
-                        + ConfigHandler.instance().fluidUnit
-                        + " "
-                        + localizedName,
+                buildDisplayText(amount, capacity, localizedName, isEmpty),
                 2,
                 2,
-                0xFFFFFFFF,
+                isEmpty ? 0xFFDDDDDD : 0xFFFFFFFF,
                 true);
+    }
 
+    public String buildDisplayText(double amount, double capacity, String fluidName, boolean isEmpty) {
+        return isEmpty
+                ? String.format(
+                        "%s / %s %s",
+                        LangUtil.translateG("hud.msg.empty"),
+                        NumberFormatter.format((int) capacity),
+                        ConfigHandler.instance().fluidUnit)
+                : String.format(
+                        "%s / %s %s %s",
+                        NumberFormatter.format((int) amount),
+                        NumberFormatter.format((int) capacity),
+                        ConfigHandler.instance().fluidUnit,
+                        fluidName);
     }
 
     public static void drawRectFromIcon(Tessellator tessellator, int x, int y, double z, IIcon icon, int width,
