@@ -52,11 +52,12 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
         boolean isEmpty = (params[0].equals("EMPTYFLUID") && params[1].equals("EMPTYFLUID"));
-        int displayWidth = DisplayUtil.getDisplayWidth(buildDisplayText(
-                isEmpty ? 0 : Double.parseDouble(params[2]),
-                Double.parseDouble(params[3]),
-                params[1],
-                isEmpty));
+        int displayWidth = DisplayUtil.getDisplayWidth(
+                buildDisplayText(
+                        isEmpty ? 0 : Double.parseDouble(params[2]),
+                        Double.parseDouble(params[3]),
+                        params[1],
+                        isEmpty));
 
         return new Dimension(displayWidth + 4, height);
     }
@@ -118,22 +119,23 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                 buildDisplayText(amount, capacity, localizedName, isEmpty),
                 2,
                 2,
-                 isEmpty ? 0xFFDDDDDD : 0xFFFFFFFF,
+                isEmpty ? 0xFFDDDDDD : 0xFFFFFFFF,
                 true);
     }
 
     public String buildDisplayText(double amount, double capacity, String fluidName, boolean isEmpty) {
-            return isEmpty ? String.format(
-                    "%s / %s %s",
-                    LangUtil.translateG("hud.msg.empty"),
-                    NumberFormatter.format((int) capacity),
-                    ConfigHandler.instance().fluidUnit)
-            : String.format(
-                    "%s / %s %s %s",
-                    NumberFormatter.format((int) amount),
-                    NumberFormatter.format((int) capacity),
-                    ConfigHandler.instance().fluidUnit,
-                    fluidName);
+        return isEmpty
+                ? String.format(
+                        "%s / %s %s",
+                        LangUtil.translateG("hud.msg.empty"),
+                        NumberFormatter.format((int) capacity),
+                        ConfigHandler.instance().fluidUnit)
+                : String.format(
+                        "%s / %s %s %s",
+                        NumberFormatter.format((int) amount),
+                        NumberFormatter.format((int) capacity),
+                        ConfigHandler.instance().fluidUnit,
+                        fluidName);
     }
 
     public static void drawRectFromIcon(Tessellator tessellator, int x, int y, double z, IIcon icon, int width,
