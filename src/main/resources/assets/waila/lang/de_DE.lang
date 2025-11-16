@@ -41,8 +41,7 @@ client.msg.nousage=Keine Nutzung gefunden.
 
 hud.msg.holdkeymoreinfo=Halte %s für mehr Infos
 
-hud.msg.none=<Nichts>
-hud.msg.empty=<Leer>
+hud.msg.empty=Leer
 hud.msg.output=Output
 hud.msg.input=Input
 hud.msg.out=Out
