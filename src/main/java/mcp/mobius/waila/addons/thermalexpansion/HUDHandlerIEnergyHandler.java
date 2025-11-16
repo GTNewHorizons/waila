@@ -1,6 +1,5 @@
 package mcp.mobius.waila.addons.thermalexpansion;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,6 +14,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.SpecialChars;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class HUDHandlerIEnergyHandler implements IWailaDataProvider {
 
@@ -50,8 +50,8 @@ public class HUDHandlerIEnergyHandler implements IWailaDataProvider {
                     taggedTips.add(
                             String.format(
                                     "%s / %s RF",
-                                    NumberFormat.getInstance().format(energy),
-                                    NumberFormat.getInstance().format(maxEnergy)),
+                                    NumberFormatter.format(energy),
+                                    NumberFormatter.format(maxEnergy)),
                             "RFEnergyStorage");
                 }
             }
