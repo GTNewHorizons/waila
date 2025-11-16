@@ -48,7 +48,6 @@ public class HUDHandlerIEnergyHandler implements IWailaDataProvider {
                             "RFEnergyStorage");
                 } else {
                     taggedTips.add(
-                            // TODO: Use NumberFormatter from #54
                             String.format(
                                     "%s / %s RF",
                                     NumberFormat.getInstance().format(energy),

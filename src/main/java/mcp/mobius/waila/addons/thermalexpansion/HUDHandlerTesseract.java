@@ -34,9 +34,9 @@ public class HUDHandlerTesseract implements IWailaDataProvider {
         if (config.getConfig("thermalexpansion.tesssendrecv")) {
             String send = String.format("%s : ", LangUtil.translateG("hud.msg.send"));
             String recv = String.format("%s : ", LangUtil.translateG("hud.msg.recv"));
-            String item = String.format("%s%s ", SpecialChars.GREEN, LangUtil.translateG("hud.msg.item"));
-            String fluid = String.format("%s%s ", SpecialChars.BLUE, LangUtil.translateG("hud.msg.fluid"));
-            String energ = String.format("%s%s ", SpecialChars.RED, LangUtil.translateG("hud.msg.energ"));
+            String item = String.format("%s ", SpecialChars.GREEN + LangUtil.translateG("hud.msg.item"));
+            String fluid = String.format("%s ", SpecialChars.BLUE + LangUtil.translateG("hud.msg.fluid"));
+            String energ = String.format("%s ", SpecialChars.RED + LangUtil.translateG("hud.msg.energ"));
 
             switch (accessor.getNBTInteger(accessor.getNBTData(), "Item.Mode")) {
                 case 0:
