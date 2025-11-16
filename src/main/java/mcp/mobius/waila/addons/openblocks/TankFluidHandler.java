@@ -15,9 +15,11 @@ import net.minecraftforge.fluids.IFluidHandler;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.NumberFormatter;
 
-public class HUDHandlerTank implements IWailaDataProvider {
+public class TankFluidHandler implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -37,14 +39,10 @@ public class HUDHandlerTank implements IWailaDataProvider {
 
         FluidStack fluid = tanks[0].fluid;
         String name = currenttip.get(0);
+        String fluidName = fluid == null ? LangUtil.translateG("hud.msg.empty")
+                : fluid.getFluid().getLocalizedName(fluid);
 
-        try {
-            name += String.format(" < %s >", fluid.getFluid().getLocalizedName(fluid));
-        } catch (NullPointerException f) {
-            name += " " + LangUtil.translateG("hud.msg.empty");
-        }
-
-        currenttip.set(0, name);
+        currenttip.set(0, name + " < " + fluidName + " >");
 
         return currenttip;
     }
@@ -60,9 +58,13 @@ public class HUDHandlerTank implements IWailaDataProvider {
         FluidTankInfo[] tanks = handler.getTankInfo(ForgeDirection.UNKNOWN);
         if (tanks.length != 1) return currenttip;
 
-        if (tanks[0].fluid != null)
-            currenttip.add(String.format("%d / %d mB", tanks[0].fluid.amount, tanks[0].capacity));
-        else currenttip.add(String.format("0 / %d mB", tanks[0].capacity));
+        int amount = tanks[0].fluid == null ? 0 : tanks[0].fluid.amount;
+        currenttip.add(
+                String.format(
+                        "%s / %s %s",
+                        NumberFormatter.format(amount),
+                        NumberFormatter.format(tanks[0].capacity),
+                        ConfigHandler.instance().fluidUnit));
 
         return currenttip;
     }
@@ -76,7 +78,6 @@ public class HUDHandlerTank implements IWailaDataProvider {
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
-        if (te != null) te.writeToNBT(tag);
         return tag;
     }
 

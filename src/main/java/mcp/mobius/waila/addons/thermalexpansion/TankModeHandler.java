@@ -1,4 +1,4 @@
-package mcp.mobius.waila.addons.thermaldynamics;
+package mcp.mobius.waila.addons.thermalexpansion;
 
 import java.util.List;
 
@@ -7,17 +7,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.WailaExceptionHandler;
 
-/**
- * Created by Lordmau5 on 28.02.2015.
- */
-public class HUDHandlerDuct implements IWailaDataProvider {
+public class TankModeHandler implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -27,33 +25,33 @@ public class HUDHandlerDuct implements IWailaDataProvider {
     @Override
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("thermaldynamics.fluiductsFluid")) return currenttip;
-
-        FluidStack fluid = FluidStack.loadFluidStackFromNBT(accessor.getNBTData());
-
-        String name = "";
-
-        try {
-            name += String.format(" < %s >", fluid.getFluid().getLocalizedName(fluid));
-        } catch (NullPointerException f) {
-            name += " " + LangUtil.translateG("hud.msg.empty");
-        }
-
-        currenttip.add(name);
         return currenttip;
     }
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("thermaldynamics.fluiductsAmount")) return currenttip;
+        try {
+            if (config.getConfig("thermalexpansion.tankmode")) {
+                Byte mode = (Byte) ThermalExpansionModule.TileTank_mode.get(accessor.getTileEntity());
+                if (mode == 0) {
+                    currenttip.add(
+                            String.format(
+                                    "%s : %s",
+                                    LangUtil.translateG("hud.msg.mode"),
+                                    SpecialChars.GREEN + LangUtil.translateG("hud.msg.input")));
+                } else if (mode == 1) {
+                    currenttip.add(
+                            String.format(
+                                    "%s : %s",
+                                    LangUtil.translateG("hud.msg.mode"),
+                                    SpecialChars.RED + LangUtil.translateG("hud.msg.output")));
+                }
+            }
 
-        int amount = 0;
-
-        NBTTagCompound tag = accessor.getNBTData();
-        if (tag.hasKey("Amount")) amount = accessor.getNBTInteger(tag, "Amount");
-
-        currenttip.add(String.format(" %d / 1000 mB", amount));
+        } catch (Exception e) {
+            WailaExceptionHandler.handleErr(e, accessor.getTileEntity().getClass().getName(), currenttip);
+        }
 
         return currenttip;
     }
@@ -67,7 +65,6 @@ public class HUDHandlerDuct implements IWailaDataProvider {
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
-        if (te != null) te.writeToNBT(tag);
         return tag;
     }
 
