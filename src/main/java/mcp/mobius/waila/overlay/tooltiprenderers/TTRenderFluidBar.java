@@ -2,7 +2,6 @@ package mcp.mobius.waila.overlay.tooltiprenderers;
 
 import java.awt.Dimension;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -15,9 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.Loader;
 import gregtech.api.util.GTUtil;
-import gregtech.api.util.GTUtility;
 import gregtech.common.fluid.GTFluid;
 import gtPlusPlus.api.objects.minecraft.FluidGT6;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
@@ -54,33 +51,14 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
-        String barText;
-        if (!(params[0].equals("EMPTYFLUID") && params[1].equals("EMPTYFLUID"))) {
-            int commaCount = (int) (Math.floor((params[2].length() - 1) / 3D)
-                    + Math.floor((params[3].length() - 1) / 3D));
-            // ",".repeat(commaCount) doesn't exist in java 8 so do this instead.
-            StringBuilder sb = new StringBuilder(commaCount);
-            for (int i = 0; i < commaCount; i++) {
-                sb.append(",");
-            }
-            barText = String
-                    .format("%s / %s %s %s%s", params[2], params[3], ConfigHandler.instance().fluidUnit, params[1], sb);
-        } else {
-            int commaCount = (int) (Math.floor((params[3].length() - 1) / 3D));
-            // ",".repeat(commaCount) doesn't exist in java 8 so do this instead.
-            StringBuilder sb = new StringBuilder(commaCount);
-            for (int i = 0; i < commaCount; i++) {
-                sb.append(",");
-            }
-            barText = String.format(
-                    "%s / %s %s%s",
-                    LangUtil.translateG("hud.msg.empty"),
-                    params[3],
-                    ConfigHandler.instance().fluidUnit,
-                    sb);
-        }
+        boolean isEmpty = (params[0].equals("EMPTYFLUID") && params[1].equals("EMPTYFLUID"));
+        int displayWidth = DisplayUtil.getDisplayWidth(buildDisplayText(
+                isEmpty ? 0 : Double.parseDouble(params[2]),
+                Double.parseDouble(params[3]),
+                params[1],
+                isEmpty));
 
-        return new Dimension(DisplayUtil.getDisplayWidth(barText) + 4, height);
+        return new Dimension(displayWidth + 4, height);
     }
 
     public static final ResourceLocation gradient = new ResourceLocation("waila", "textures/gradient.png");
@@ -136,30 +114,26 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
         drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
 
-        if (!isEmpty) {
-            DisplayUtil.drawString(
-                    String.format(
-                            "%s / %s %s %s",
-                            formatNumber.apply((int) amount),
-                            formatNumber.apply((int) capacity),
-                            ConfigHandler.instance().fluidUnit,
-                            localizedName),
-                    2,
-                    2,
-                    0xFFFFFFFF,
-                    true);
-        } else {
-            DisplayUtil.drawString(
-                    String.format(
-                            "%s / %s %s",
-                            LangUtil.translateG("hud.msg.empty"),
-                            formatNumber.apply((int) capacity),
-                            ConfigHandler.instance().fluidUnit),
-                    2,
-                    2,
-                    0xFFDDDDDD,
-                    true);
-        }
+        DisplayUtil.drawString(
+                buildDisplayText(amount, capacity, localizedName, isEmpty),
+                2,
+                2,
+                 isEmpty ? 0xFFDDDDDD : 0xFFFFFFFF,
+                true);
+    }
+
+    public String buildDisplayText(double amount, double capacity, String fluidName, boolean isEmpty) {
+            return isEmpty ? String.format(
+                    "%s / %s %s",
+                    LangUtil.translateG("hud.msg.empty"),
+                    NumberFormatter.format((int) capacity),
+                    ConfigHandler.instance().fluidUnit)
+            : String.format(
+                    "%s / %s %s %s",
+                    NumberFormatter.format((int) amount),
+                    NumberFormatter.format((int) capacity),
+                    ConfigHandler.instance().fluidUnit,
+                    fluidName);
     }
 
     public static void drawRectFromIcon(Tessellator tessellator, int x, int y, double z, IIcon icon, int width,
