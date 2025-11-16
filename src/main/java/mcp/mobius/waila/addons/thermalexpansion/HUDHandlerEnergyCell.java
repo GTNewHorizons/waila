@@ -12,6 +12,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.cbcore.LangUtil;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class HUDHandlerEnergyCell implements IWailaDataProvider {
 
@@ -36,11 +37,11 @@ public class HUDHandlerEnergyCell implements IWailaDataProvider {
 
         currenttip.add(
                 String.format(
-                        "%s/%s : %d / %d RF/t",
+                        "%s/%s : %s / %s RF/t",
                         LangUtil.translateG("hud.msg.in"),
                         LangUtil.translateG("hud.msg.out"),
-                        energyReceive,
-                        energySend));
+                        NumberFormatter.format(energyReceive),
+                        NumberFormatter.format(energySend)));
 
         return currenttip;
     }

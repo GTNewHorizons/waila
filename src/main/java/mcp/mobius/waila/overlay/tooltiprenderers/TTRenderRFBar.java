@@ -1,8 +1,6 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
 import java.awt.Dimension;
-import java.text.NumberFormat;
-import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -14,33 +12,20 @@ import org.lwjgl.opengl.GL11;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.overlay.DisplayUtil;
+import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
 
     int maxStringW;
 
-    private final Function<Integer, String> formatNumber;
-    private static final NumberFormat energyFormat = NumberFormat.getInstance();
     private static final int height = 12;
     private static final int width = 2;
 
-    static {
-        energyFormat.setGroupingUsed(true);
-    }
-
-    public TTRenderRFBar() {
-        formatNumber = energyFormat::format;
-    }
-
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
-        int commaCount = (int) (Math.floor((params[0].length() - 1) / 3D) + Math.floor((params[1].length() - 1) / 3D));
-        StringBuilder sb = new StringBuilder(commaCount);
-        for (int i = 0; i < commaCount; i++) {
-            sb.append(",");
-        }
         return new Dimension(
-                DisplayUtil.getDisplayWidth(String.format("%s / %s RF%s", params[0], params[1], sb)) + 4,
+                DisplayUtil.getDisplayWidth(buildDisplayText(Integer.parseInt(params[0]), Integer.parseInt(params[1])))
+                        + 4,
                 height);
     }
 
@@ -85,13 +70,11 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
         drawRect(tessellator, 1, 1, 0, maxStringW - 2, height - 2, 0, 0, 1, 1);
         tessellator.draw();
 
-        DisplayUtil.drawString(
-                String.format("%s / %s RF", formatNumber.apply(amount), formatNumber.apply(capacity)),
-                2,
-                2,
-                0xFFFFFFFF,
-                true);
+        DisplayUtil.drawString(buildDisplayText(amount, capacity), 2, 2, 0xFFFFFFFF, true);
+    }
 
+    public String buildDisplayText(int amount, int capacity) {
+        return String.format("%s / %s RF", NumberFormatter.format(amount), NumberFormatter.format(capacity));
     }
 
     public static void drawRect(Tessellator tessellator, int x, int y, double z, int width, int height, double minU,
