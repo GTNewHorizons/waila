@@ -6,4 +6,18 @@ dependencies {
     shadowImplementation('au.com.bytecode:opencsv:2.4')
 
     compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.09.52.69:dev") { transitive = false }
+
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:WAILAPlugins:0.7.0:dev") {
+        exclude group: 'com.github.GTNewHorizons', module: 'waila'
+    }
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:EnderCore:0.5.0:dev")
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:BuildCraft:7.1.31:dev")
+    runtimeOnlyNonPublishable("curse.maven:cofh-lib-220333:2388748")
+    runtimeOnlyNonPublishable("curse.maven:extrautils-225561:2264383")
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:OpenBlocks:1.12.3-GTNH:dev")
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:Railcraft:9.17.6:dev")
+    runtimeOnlyNonPublishable('curse.maven:thermal-foundation-222880:2388753')
+    runtimeOnlyNonPublishable('curse.maven:thermal-expansion-69163:2388759')
+    runtimeOnlyNonPublishable('curse.maven:thermal-dynamics-227443:2388756')
+    implementation('curse.maven:cofh-core-69162:2388751')
 }
