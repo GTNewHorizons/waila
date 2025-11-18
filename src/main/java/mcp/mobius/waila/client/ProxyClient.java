@@ -49,10 +49,12 @@ public class ProxyClient extends ProxyServer {
 
         ModuleRegistrar.instance().registerHeadProvider(new HUDHandlerBlocks(), Block.class);
         ModuleRegistrar.instance().registerTailProvider(new HUDHandlerBlocks(), Block.class);
+        ModuleRegistrar.instance().registerInfoIconProvider(new HUDHandlerBlocks(), Block.class);
 
         ModuleRegistrar.instance().registerHeadProvider(new HUDHandlerEntities(), Entity.class);
         ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerEntities(), Entity.class);
         ModuleRegistrar.instance().registerTailProvider(new HUDHandlerEntities(), Entity.class);
+        ModuleRegistrar.instance().registerInfoIconProvider(new HUDHandlerEntities(), Entity.class);
 
         ModuleRegistrar.instance().addConfig("General", "general.showents");
         ModuleRegistrar.instance().addConfig("General", "general.showhp");

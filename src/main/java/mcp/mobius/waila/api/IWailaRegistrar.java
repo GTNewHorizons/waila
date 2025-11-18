@@ -39,6 +39,8 @@ public interface IWailaRegistrar {
 
     void addConfigRemote(String modname, String keyname, boolean defvalue);
 
+    void registerInfoIconProvider(IWailaDataProvider dataProvider, Class block);
+
     /* Register a stack overrider for the given blockID */
     void registerStackProvider(IWailaDataProvider dataProvider, Class block);
 
@@ -60,6 +62,8 @@ public interface IWailaRegistrar {
     void registerTailProvider(IWailaEntityProvider dataProvider, Class entity);
 
     void registerOverrideEntityProvider(IWailaEntityProvider dataProvider, Class entity);
+
+    void registerInfoIconProvider(IWailaEntityProvider dataProvider, Class entity);
 
     /* Registering an NBT Provider provides a way to override the default "writeToNBT" way of doing things. */
     void registerNBTProvider(IWailaEntityProvider dataProvider, Class entity);

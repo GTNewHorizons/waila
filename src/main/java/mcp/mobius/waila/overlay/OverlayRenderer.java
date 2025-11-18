@@ -63,6 +63,8 @@ public class OverlayRenderer {
 
         tooltip.draw2nd();
 
+        tooltip.drawInfoIcons();
+
         if (tooltip.hasIcon) RenderHelper.enableGUIStandardItemLighting();
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -92,11 +94,11 @@ public class OverlayRenderer {
     }
 
     private static void drawTooltipBox(int x, int y, int w, int h, int bg, int grad1, int grad2) {
-        DisplayUtil.drawGradientRect(x + 1, y, w - 1, 1, bg, bg);
-        DisplayUtil.drawGradientRect(x + 1, y + h, w - 1, 1, bg, bg);
-        DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, h - 1, bg, bg);// center
-        DisplayUtil.drawGradientRect(x, y + 1, 1, h - 1, bg, bg);
-        DisplayUtil.drawGradientRect(x + w, y + 1, 1, h - 1, bg, bg);
+        DisplayUtil.drawGradientRect(x + 1, y, w - 1, 1, bg, bg); // top outer line
+        DisplayUtil.drawGradientRect(x + 1, y + h, w - 1, 1, bg, bg); // bottom outer line
+        DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, h - 1, bg, bg); // fill
+        DisplayUtil.drawGradientRect(x, y + 1, 1, h - 1, bg, bg); // left outer line
+        DisplayUtil.drawGradientRect(x + w, y + 1, 1, h - 1, bg, bg); // right outer line
         DisplayUtil.drawGradientRect(x + 1, y + 2, 1, h - 3, grad1, grad2);
         DisplayUtil.drawGradientRect(x + w - 1, y + 2, 1, h - 3, grad1, grad2);
         DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, 1, grad1, grad1);

@@ -36,6 +36,8 @@ public class ConfigHandler implements IWailaConfigHandler {
 
     public String fluidUnit;
 
+    public static int infoIconHeight = 8;
+
     public void addModule(String modName, HashMap<String, String> options) {
         this.addModule(modName, new ConfigModule(modName, options));
     }
