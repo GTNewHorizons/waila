@@ -5,15 +5,15 @@ import java.util.Locale;
 
 import net.minecraft.client.Minecraft;
 
-import gregtech.api.util.GTUtility;
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
 
 public class NumberFormatter {
 
     private static NumberFormat numberFormat = NumberFormat.getInstance(getCurrentLocale());
 
     public static String format(long number) {
-        if (LoadedMods.GT5U) {
-            return GTUtility.formatNumbers(number);
+        if (LoadedMods.GTNH_LIB) {
+            return formatNumber(number);
         }
 
         return numberFormat.format(number);
