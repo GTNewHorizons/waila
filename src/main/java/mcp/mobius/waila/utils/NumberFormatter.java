@@ -1,11 +1,11 @@
 package mcp.mobius.waila.utils;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import net.minecraft.client.Minecraft;
-
-import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
 
 public class NumberFormatter {
 
