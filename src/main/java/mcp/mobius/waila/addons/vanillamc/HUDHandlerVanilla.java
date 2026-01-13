@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -22,7 +21,6 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.cbcore.LangUtil;
-import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderStackWithText;
 
 public class HUDHandlerVanilla implements IWailaDataProvider {
 
@@ -176,23 +174,6 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         }
 
         if (block == netherwart && config.getConfig("general.showcrop")) {
-
-            currenttip.add(TTRenderStackWithText.create(new ItemStack(Items.coal), EnumChatFormatting.RED + "Coal", 5));
-            currenttip.add(
-                    TTRenderStackWithText.create(
-                            new ItemStack(Blocks.diamond_block),
-                            EnumChatFormatting.BLUE + "Diamond block",
-                            10));
-            currenttip.add(
-                    TTRenderStackWithText.create(new ItemStack(Items.carrot), EnumChatFormatting.GOLD + "Carrot", 15));
-            currenttip
-                    .add(TTRenderStackWithText.create(new ItemStack(Items.fish), EnumChatFormatting.GRAY + "<><", 20));
-            currenttip.add(
-                    TTRenderStackWithText
-                            .create(new ItemStack(Items.string), EnumChatFormatting.WHITE + "String", 150));
-            currenttip.add(
-                    TTRenderStackWithText.create(new ItemStack(Items.repeater), EnumChatFormatting.AQUA + "Repeater"));
-
             float growthValue = (accessor.getMetadata() / 3.0F) * 100.0F;
             if (growthValue < 100.0)
                 currenttip.add(String.format("%s : %.0f %%", LangUtil.translateG("hud.msg.growth"), growthValue));
