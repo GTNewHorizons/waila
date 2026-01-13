@@ -1,6 +1,6 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
-import java.awt.*;
+import java.awt.Dimension;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
