@@ -26,7 +26,6 @@ import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderHealth;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderProgressBar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderRFBar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderStack;
-import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderStackWithText;
 import mcp.mobius.waila.server.ProxyServer;
 import mcp.mobius.waila.utils.LoadedMods;
 import mcp.mobius.waila.utils.NumberFormatter;
@@ -64,7 +63,6 @@ public class ProxyClient extends ProxyServer {
         ModuleRegistrar.instance().registerTooltipRenderer("waila.progress", new TTRenderProgressBar());
         ModuleRegistrar.instance().registerTooltipRenderer("waila.fluid", new TTRenderFluidBar());
         ModuleRegistrar.instance().registerTooltipRenderer("waila.rfenergy", new TTRenderRFBar());
-        ModuleRegistrar.instance().registerTooltipRenderer("waila.stack.text", new TTRenderStackWithText());
 
         ModuleRegistrar.instance().registerTooltipRenderer("waila.tcaspect", new TTRenderAspectString());
 
