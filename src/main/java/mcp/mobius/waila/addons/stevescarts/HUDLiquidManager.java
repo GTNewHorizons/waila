@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class HUDLiquidManager implements IWailaDataProvider {
 
@@ -77,13 +78,15 @@ public class HUDLiquidManager implements IWailaDataProvider {
                 fluidAmount = tag.getCompoundTag("Fluid" + i).getInteger("Amount");
             }
 
-            String fluidString = fluidAmount == 0 ? "<Empty>" : String.format("%s mB of %s", fluidAmount, fluidName);
+            String fluidString = fluidAmount == 0 ? "<Empty>"
+                    : String.format("%s " + ConfigHandler.instance().fluidUnit + " of %s", fluidAmount, fluidName);
 
             if (color == 5) continue;
 
             String direction = (toCart & (1 << i)) != 0 ? "Load" : "Unload";
             String shouldReturn = (doReturn & (1 << i)) != 0 ? "Ret." : "Cont.";
-            String sAmount = amount == 0 ? "All" : this.getMaxAmountBuckets(amount) + " mB";
+            String sAmount = amount == 0 ? "All"
+                    : this.getMaxAmountBuckets(amount) + " " + ConfigHandler.instance().fluidUnit;
 
             currenttip.add(
                     String.format(

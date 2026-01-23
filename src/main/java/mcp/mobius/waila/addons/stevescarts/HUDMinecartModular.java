@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaEntityAccessor;
 import mcp.mobius.waila.api.IWailaEntityProvider;
+import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.utils.NumberFormatter;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class HUDMinecartModular implements IWailaEntityProvider {
@@ -47,7 +49,7 @@ public class HUDMinecartModular implements IWailaEntityProvider {
             return currenttip;
         }
 
-        Item ItemCartModule = null;
+        Item ItemCartModule;
         try {
             ItemCartModule = (Item) StevesCartsModule.ItemCartModule.get(null);
         } catch (Exception e) {
@@ -78,9 +80,11 @@ public class HUDMinecartModular implements IWailaEntityProvider {
                                         + ALIGNRIGHT
                                         + " [ "
                                         + WHITE
-                                        + amount
+                                        + NumberFormatter.format(amount)
                                         + GRAY
-                                        + " mB of "
+                                        + " "
+                                        + ConfigHandler.instance().fluidUnit
+                                        + " of "
                                         + WHITE
                                         + fluid
                                         + GRAY
