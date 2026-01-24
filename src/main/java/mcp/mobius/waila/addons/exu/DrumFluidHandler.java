@@ -1,5 +1,8 @@
 package mcp.mobius.waila.addons.exu;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatFluid;
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
+
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,8 +17,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.utils.NumberFormatter;
 
 public class DrumFluidHandler implements IWailaDataProvider {
 
@@ -43,12 +44,7 @@ public class DrumFluidHandler implements IWailaDataProvider {
         if (tanks.length != 1) return currenttip;
 
         int amount = tanks[0].fluid == null ? 0 : tanks[0].fluid.amount;
-        currenttip.add(
-                String.format(
-                        "%s / %s %s",
-                        NumberFormatter.format(amount),
-                        NumberFormatter.format(tanks[0].capacity),
-                        ConfigHandler.instance().fluidUnit));
+        currenttip.add(String.format("%s / %s", formatNumber(amount), formatFluid(tanks[0].capacity)));
 
         return currenttip;
     }

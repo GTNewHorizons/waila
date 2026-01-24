@@ -1,5 +1,8 @@
 package mcp.mobius.waila.addons.thermalexpansion;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatFluid;
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
+
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,9 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
-import mcp.mobius.waila.utils.NumberFormatter;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class TankFluidHandler implements IWailaDataProvider {
@@ -65,12 +66,7 @@ public class TankFluidHandler implements IWailaDataProvider {
             int amount = (Integer) ThermalExpansionModule.TileTank_getTankAmount.invoke(tileEntity);
             int capacity = (Integer) ThermalExpansionModule.TileTank_getTankCapacity.invoke(tileEntity);
 
-            currenttip.add(
-                    String.format(
-                            "%s / %s %s",
-                            NumberFormatter.format(amount),
-                            NumberFormatter.format(capacity),
-                            ConfigHandler.instance().fluidUnit));
+            currenttip.add(String.format("%s / %s", formatNumber(amount), formatFluid(capacity)));
 
         } catch (Exception e) {
             WailaExceptionHandler.handleErr(e, tileEntity.getClass().getName(), currenttip);

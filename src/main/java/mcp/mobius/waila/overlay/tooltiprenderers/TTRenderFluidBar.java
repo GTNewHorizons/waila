@@ -1,5 +1,8 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatFluid;
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
+
 import java.awt.Dimension;
 import java.util.function.Consumer;
 
@@ -20,11 +23,9 @@ import gtPlusPlus.api.objects.minecraft.FluidGT6;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.LoadedMods;
-import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
@@ -124,18 +125,8 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
     }
 
     public String buildDisplayText(double amount, double capacity, String fluidName, boolean isEmpty) {
-        return isEmpty
-                ? String.format(
-                        "%s / %s %s",
-                        LangUtil.translateG("hud.msg.empty"),
-                        NumberFormatter.format((int) capacity),
-                        ConfigHandler.instance().fluidUnit)
-                : String.format(
-                        "%s / %s %s %s",
-                        NumberFormatter.format((int) amount),
-                        NumberFormatter.format((int) capacity),
-                        ConfigHandler.instance().fluidUnit,
-                        fluidName);
+        return isEmpty ? String.format("%s / %s", LangUtil.translateG("hud.msg.empty"), formatFluid(capacity))
+                : String.format("%s / %s %s", formatNumber(amount), formatFluid(capacity), fluidName);
     }
 
     public static void drawRectFromIcon(Tessellator tessellator, int x, int y, double z, IIcon icon, int width,

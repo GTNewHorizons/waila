@@ -8,8 +8,6 @@ import java.util.Set;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-import com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil;
-
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -35,8 +33,6 @@ public class ConfigHandler implements IWailaConfigHandler {
     private ArrayList<String> serverconfigs = new ArrayList<>();
     public HashMap<String, Boolean> forcedConfigs = new HashMap<>();
     public Configuration config = null;
-
-    public String fluidUnit;
 
     public void addModule(String modName, HashMap<String, String> options) {
         this.addModule(modName, new ConfigModule(modName, options));
@@ -154,9 +150,6 @@ public class ConfigHandler implements IWailaConfigHandler {
         config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_KEYBIND, true);
         config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_NEWFILTERS, true);
         config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOWICON, true);
-        fluidUnit = config
-                .get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FLUIDUNIT, NumberFormatUtil.getFluidUnit())
-                .getString();
 
         OverlayConfig.posX = config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSX, 5000).getInt();
         OverlayConfig.posY = config.get(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSY, 100).getInt();

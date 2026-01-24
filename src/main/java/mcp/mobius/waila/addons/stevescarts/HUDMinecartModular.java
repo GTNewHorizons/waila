@@ -1,5 +1,6 @@
 package mcp.mobius.waila.addons.stevescarts;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
 import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
 import static mcp.mobius.waila.api.SpecialChars.GRAY;
 import static mcp.mobius.waila.api.SpecialChars.ITALIC;
@@ -18,8 +19,6 @@ import net.minecraft.world.World;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaEntityAccessor;
 import mcp.mobius.waila.api.IWailaEntityProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.utils.NumberFormatter;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
 
 public class HUDMinecartModular implements IWailaEntityProvider {
@@ -78,14 +77,11 @@ public class HUDMinecartModular implements IWailaEntityProvider {
                         currenttip.add(
                                 new ItemStack(ItemCartModule, 1, metas[i]).getDisplayName() + TAB
                                         + ALIGNRIGHT
+                                        + GRAY
                                         + " [ "
                                         + WHITE
-                                        + NumberFormatter.format(amount)
-                                        + GRAY
-                                        + " "
-                                        + ConfigHandler.instance().fluidUnit
+                                        + formatNumber(amount)
                                         + " of "
-                                        + WHITE
                                         + fluid
                                         + GRAY
                                         + " ]");

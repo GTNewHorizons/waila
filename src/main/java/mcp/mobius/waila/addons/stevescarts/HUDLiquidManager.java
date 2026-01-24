@@ -1,5 +1,6 @@
 package mcp.mobius.waila.addons.stevescarts;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatFluid;
 import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
 import static mcp.mobius.waila.api.SpecialChars.GRAY;
 import static mcp.mobius.waila.api.SpecialChars.ITALIC;
@@ -17,7 +18,6 @@ import net.minecraft.world.World;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class HUDLiquidManager implements IWailaDataProvider {
 
@@ -79,14 +79,13 @@ public class HUDLiquidManager implements IWailaDataProvider {
             }
 
             String fluidString = fluidAmount == 0 ? "<Empty>"
-                    : String.format("%s " + ConfigHandler.instance().fluidUnit + " of %s", fluidAmount, fluidName);
+                    : String.format("%s of %s", formatFluid(fluidAmount), fluidName);
 
             if (color == 5) continue;
 
             String direction = (toCart & (1 << i)) != 0 ? "Load" : "Unload";
             String shouldReturn = (doReturn & (1 << i)) != 0 ? "Ret." : "Cont.";
-            String sAmount = amount == 0 ? "All"
-                    : this.getMaxAmountBuckets(amount) + " " + ConfigHandler.instance().fluidUnit;
+            String sAmount = amount == 0 ? "All" : formatFluid(this.getMaxAmountBuckets(amount));
 
             currenttip.add(
                     String.format(
