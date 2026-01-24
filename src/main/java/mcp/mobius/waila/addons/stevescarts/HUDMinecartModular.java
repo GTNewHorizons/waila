@@ -1,5 +1,6 @@
 package mcp.mobius.waila.addons.stevescarts;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
 import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
 import static mcp.mobius.waila.api.SpecialChars.GRAY;
 import static mcp.mobius.waila.api.SpecialChars.ITALIC;
@@ -47,7 +48,7 @@ public class HUDMinecartModular implements IWailaEntityProvider {
             return currenttip;
         }
 
-        Item ItemCartModule = null;
+        Item ItemCartModule;
         try {
             ItemCartModule = (Item) StevesCartsModule.ItemCartModule.get(null);
         } catch (Exception e) {
@@ -76,12 +77,11 @@ public class HUDMinecartModular implements IWailaEntityProvider {
                         currenttip.add(
                                 new ItemStack(ItemCartModule, 1, metas[i]).getDisplayName() + TAB
                                         + ALIGNRIGHT
+                                        + GRAY
                                         + " [ "
                                         + WHITE
-                                        + amount
-                                        + GRAY
-                                        + " mB of "
-                                        + WHITE
+                                        + formatNumber(amount)
+                                        + " of "
                                         + fluid
                                         + GRAY
                                         + " ]");

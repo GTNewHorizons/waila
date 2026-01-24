@@ -1,5 +1,8 @@
 package mcp.mobius.waila.addons.thermaldynamics;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatFluid;
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
+
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,9 +18,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
-import mcp.mobius.waila.utils.NumberFormatter;
 
 /**
  * Created by Lordmau5 on 28.02.2015.
@@ -71,12 +72,7 @@ public class FluiductFluidHandler implements IWailaDataProvider {
             return currenttip;
         }
 
-        currenttip.add(
-                String.format(
-                        "%s / %s %s",
-                        NumberFormatter.format(amount),
-                        NumberFormatter.format(capacity),
-                        ConfigHandler.instance().fluidUnit));
+        currenttip.add(String.format("%s / %s", formatNumber(amount), formatFluid(capacity)));
 
         return currenttip;
     }

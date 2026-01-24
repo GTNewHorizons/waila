@@ -6,7 +6,6 @@ dependencies {
     shadowImplementation('au.com.bytecode:opencsv:2.4')
 
     compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.09.52.205:dev") { transitive = false }
-    compileOnly("com.github.GTNewHorizons:GTNHLib:0.9.6:dev") { transitive = false }
 
     runtimeOnlyNonPublishable("com.github.GTNewHorizons:WAILAPlugins:0.7.2:dev") {
         exclude group: 'com.github.GTNewHorizons', module: 'waila'
@@ -21,4 +20,5 @@ dependencies {
     runtimeOnlyNonPublishable('curse.maven:thermal-expansion-69163:2388759')
     runtimeOnlyNonPublishable('curse.maven:thermal-dynamics-227443:2388756')
     implementation('curse.maven:cofh-core-69162:2388751')
+    api("com.github.GTNewHorizons:GTNHLib:0.9.6:dev")
 }

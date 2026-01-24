@@ -1,5 +1,7 @@
 package mcp.mobius.waila.overlay.tooltiprenderers;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
+
 import java.awt.Dimension;
 
 import net.minecraft.client.Minecraft;
@@ -12,7 +14,6 @@ import org.lwjgl.opengl.GL11;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
 import mcp.mobius.waila.overlay.DisplayUtil;
-import mcp.mobius.waila.utils.NumberFormatter;
 
 public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
 
@@ -74,7 +75,7 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
     }
 
     public String buildDisplayText(int amount, int capacity) {
-        return String.format("%s / %s RF", NumberFormatter.format(amount), NumberFormatter.format(capacity));
+        return String.format("%s / %s RF", formatNumber(amount), formatNumber(capacity));
     }
 
     public static void drawRect(Tessellator tessellator, int x, int y, double z, int width, int height, double minU,

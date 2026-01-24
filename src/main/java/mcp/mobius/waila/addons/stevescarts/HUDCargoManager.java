@@ -1,5 +1,6 @@
 package mcp.mobius.waila.addons.stevescarts;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
 import static mcp.mobius.waila.api.SpecialChars.ALIGNRIGHT;
 import static mcp.mobius.waila.api.SpecialChars.GRAY;
 import static mcp.mobius.waila.api.SpecialChars.ITALIC;
@@ -80,7 +81,8 @@ public class HUDCargoManager implements IWailaDataProvider {
 
                 String direction = (toCart & (1 << i)) != 0 ? "Load" : "Unload";
                 String shouldReturn = (doReturn & (1 << i)) != 0 ? "Ret." : "Cont.";
-                String sAmount = amount == 0 ? "All" : this.getAmount(amount) + " " + this.getAmountType(amount);
+                String sAmount = amount == 0 ? "All"
+                        : formatNumber(this.getAmount(amount)) + " " + this.getAmountType(amount);
 
                 String selection = (String) StevesCartsModule.GetSelectionName
                         .invoke(StevesCartsModule.CargoItemSelection.cast(itemSelection.get(target)));
