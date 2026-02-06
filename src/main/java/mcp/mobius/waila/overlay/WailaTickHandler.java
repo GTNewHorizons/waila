@@ -35,13 +35,9 @@ public class WailaTickHandler {
 
     @SubscribeEvent
     public void tickClient(TickEvent.ClientTickEvent event) {
-
         if (event.phase == TickEvent.Phase.START) return;
 
-        Minecraft mc = Minecraft.getMinecraft();
-        World world = mc.theWorld;
-        EntityPlayer player = mc.thePlayer;
-        if (world == null || player == null) {
+        if (!OverlayRenderer.isOverlayVisible()) {
             this.tooltip = null;
             RayTracing.instance().clear();
             return;
@@ -49,6 +45,9 @@ public class WailaTickHandler {
 
         RayTracing.instance().fire();
         MovingObjectPosition target = RayTracing.instance().getTarget();
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayer player = mc.thePlayer;
+        World world = mc.theWorld;
 
         List<String> currenttip;
         List<String> currenttipHead;
