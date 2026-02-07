@@ -15,14 +15,16 @@ public class OverlayRenderer {
     private static boolean hasDepthTest;
     private static int boundTexIndex;
 
-    public static void renderOverlay(Tooltip tooltip) {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (!(mc.currentScreen == null && mc.theWorld != null
+    public static boolean isOverlayVisible() {
+        final Minecraft mc = Minecraft.getMinecraft();
+        return (mc.currentScreen == null && mc.theWorld != null
                 && Minecraft.isGuiEnabled()
                 && !mc.gameSettings.keyBindPlayerList.getIsKeyPressed()
-                && ConfigHandler.instance().showTooltip()
-                && RayTracing.instance().getTarget() != null))
-            return;
+                && ConfigHandler.instance().showTooltip());
+    }
+
+    public static void renderOverlay(Tooltip tooltip) {
+        if (!isOverlayVisible() || RayTracing.instance().getTarget() == null) return;
 
         if (RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK
                 && RayTracing.instance().getTargetStack() != null) {
