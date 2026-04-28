@@ -40,7 +40,8 @@ import mcp.mobius.waila.utils.ModIdentification;
         name = "Waila",
         version = Tags.GRADLETOKEN_VERSION,
         dependencies = "after:NotEnoughItems@[1.0.4.0,)",
-        acceptableRemoteVersions = "*")
+        acceptableRemoteVersions = "*",
+        guiFactory = "mcp.mobius.waila.client.WailaGuiFactory")
 public class Waila {
 
     // The instance of your mod that Forge uses.
