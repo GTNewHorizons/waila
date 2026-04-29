@@ -4,7 +4,6 @@ import org.lwjgl.util.Point;
 
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.events.MouseEvent;
-import mcp.mobius.waila.gui.helpers.UIHelper;
 import mcp.mobius.waila.gui.interfaces.IWidget;
 
 public class ButtonBooleanConfig extends ButtonBoolean {
@@ -47,17 +46,7 @@ public class ButtonBooleanConfig extends ButtonBoolean {
         if (!ConfigHandler.instance().forcedConfigs.containsKey(this.configKey)) super.draw(pos);
         else {
             this.saveGLState();
-            int texOffset = -1;
-            this.mc.getTextureManager().bindTexture(widgetsTexture);
-            UIHelper.drawTexture(
-                    this.getPos().getX(),
-                    this.getPos().getY(),
-                    this.getSize().getX(),
-                    this.getSize().getY(),
-                    0,
-                    66 + texOffset * 20,
-                    200,
-                    20);
+            this.drawVanillaButton(-1);
             this.loadGLState();
         }
     }
