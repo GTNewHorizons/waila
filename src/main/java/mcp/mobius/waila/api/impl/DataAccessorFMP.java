@@ -12,18 +12,18 @@ import mcp.mobius.waila.utils.NBTUtil;
 
 public class DataAccessorFMP implements IWailaFMPAccessor {
 
-    String id;
-    World world;
-    EntityPlayer player;
-    MovingObjectPosition mop;
-    Vec3 renderingvec = null;
-    TileEntity entity;
-    NBTTagCompound partialNBT = null;
-    NBTTagCompound remoteNBT = null;
-    long timeLastUpdate = System.currentTimeMillis();
-    double partialFrame;
+    public static final DataAccessorFMP instance = new DataAccessorFMP();
 
-    public static DataAccessorFMP instance = new DataAccessorFMP();
+    private String id;
+    private World world;
+    private EntityPlayer player;
+    private MovingObjectPosition mop;
+    private Vec3 renderingvec;
+    private TileEntity tileEntity;
+    private NBTTagCompound partialNBT;
+    private double partialFrame;
+
+    private DataAccessorFMP() {}
 
     public void set(World _world, EntityPlayer _player, MovingObjectPosition _mop, NBTTagCompound _partialNBT,
             String id) {
@@ -35,11 +35,22 @@ public class DataAccessorFMP implements IWailaFMPAccessor {
         this.world = _world;
         this.player = _player;
         this.mop = _mop;
-        this.entity = world.getTileEntity(_mop.blockX, _mop.blockY, _mop.blockZ);
+        this.tileEntity = world.getTileEntity(_mop.blockX, _mop.blockY, _mop.blockZ);
         this.partialNBT = _partialNBT;
         this.id = id;
         this.renderingvec = renderVec;
         this.partialFrame = partialTicks;
+    }
+
+    public void reset() {
+        id = null;
+        world = null;
+        player = null;
+        mop = null;
+        renderingvec = null;
+        tileEntity = null;
+        partialNBT = null;
+        partialFrame = 0.0D;
     }
 
     @Override
@@ -54,7 +65,7 @@ public class DataAccessorFMP implements IWailaFMPAccessor {
 
     @Override
     public TileEntity getTileEntity() {
-        return this.entity;
+        return this.tileEntity;
     }
 
     @Override
@@ -69,12 +80,9 @@ public class DataAccessorFMP implements IWailaFMPAccessor {
 
     @Override
     public NBTTagCompound getFullNBTData() {
-        if (this.entity == null) return null;
-
-        if (this.isTagCorrect(this.remoteNBT)) return this.remoteNBT;
-
+        if (this.tileEntity == null) return null;
         NBTTagCompound tag = new NBTTagCompound();
-        this.entity.writeToNBT(tag);
+        this.tileEntity.writeToNBT(tag);
         return tag;
     }
 
@@ -98,20 +106,4 @@ public class DataAccessorFMP implements IWailaFMPAccessor {
         return this.id;
     }
 
-    private boolean isTagCorrect(NBTTagCompound tag) {
-        if (tag == null) {
-            this.timeLastUpdate = System.currentTimeMillis() - 250;
-            return false;
-        }
-
-        int x = tag.getInteger("x");
-        int y = tag.getInteger("y");
-        int z = tag.getInteger("z");
-
-        if (x == this.mop.blockX && y == this.mop.blockY && z == this.mop.blockZ) return true;
-        else {
-            this.timeLastUpdate = System.currentTimeMillis() - 250;
-            return false;
-        }
-    }
 }

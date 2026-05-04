@@ -35,9 +35,13 @@ public class DecoratorFMP implements IWailaBlockDecorator {
                         accessor.getRenderingPosition(),
                         accessor.getPartialFrame());
 
-                for (List<IWailaFMPDecorator> providersList : ModuleRegistrar.instance().getFMPDecorators(id).values())
-                    for (IWailaFMPDecorator provider : providersList)
+                for (List<IWailaFMPDecorator> providersList : ModuleRegistrar.instance().getFMPDecorators(id)
+                        .values()) {
+                    for (IWailaFMPDecorator provider : providersList) {
                         provider.decorateBlock(itemStack, DataAccessorFMP.instance, config);
+                    }
+                }
+                DataAccessorFMP.instance.reset();
             }
         }
     }
