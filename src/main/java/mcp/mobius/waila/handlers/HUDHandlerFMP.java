@@ -41,9 +41,11 @@ public class HUDHandlerFMP implements IWailaDataProvider {
 
                 for (List<IWailaFMPProvider> providersList : ModuleRegistrar.instance().getHeadFMPProviders(id)
                         .values()) {
-                    for (IWailaFMPProvider provider : providersList)
+                    for (IWailaFMPProvider provider : providersList) {
                         currenttip = provider.getWailaHead(itemStack, currenttip, DataAccessorFMP.instance, config);
+                    }
                 }
+                DataAccessorFMP.instance.reset();
             }
         }
 
@@ -64,9 +66,11 @@ public class HUDHandlerFMP implements IWailaDataProvider {
 
                 for (List<IWailaFMPProvider> providersList : ModuleRegistrar.instance().getBodyFMPProviders(id)
                         .values()) {
-                    for (IWailaFMPProvider provider : providersList)
+                    for (IWailaFMPProvider provider : providersList) {
                         currenttip = provider.getWailaBody(itemStack, currenttip, DataAccessorFMP.instance, config);
+                    }
                 }
+                DataAccessorFMP.instance.reset();
             }
         }
 
@@ -87,9 +91,11 @@ public class HUDHandlerFMP implements IWailaDataProvider {
 
                 for (List<IWailaFMPProvider> providersList : ModuleRegistrar.instance().getTailFMPProviders(id)
                         .values()) {
-                    for (IWailaFMPProvider provider : providersList)
+                    for (IWailaFMPProvider provider : providersList) {
                         currenttip = provider.getWailaTail(itemStack, currenttip, DataAccessorFMP.instance, config);
+                    }
                 }
+                DataAccessorFMP.instance.reset();
             }
         }
 
