@@ -24,8 +24,9 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
 
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
+        int amount = Integer.parseInt(params[0]);
         return new Dimension(
-                DisplayUtil.getDisplayWidth(buildDisplayText(Integer.parseInt(params[0]), Integer.parseInt(params[1])))
+                DisplayUtil.getDisplayWidth(buildDisplayText(amount, Math.max(Integer.parseInt(params[1]), amount)))
                         + 4,
                 height);
     }
@@ -36,7 +37,7 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
     @Override
     public void draw(String[] params, IWailaCommonAccessor accessor) {
         int amount = Integer.parseInt(params[0]);
-        int capacity = Integer.parseInt(params[1]);
+        int capacity = Math.max(Integer.parseInt(params[1]), amount);
         Tessellator tessellator = Tessellator.instance;
 
         Minecraft mc = Minecraft.getMinecraft();
