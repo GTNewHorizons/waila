@@ -53,11 +53,10 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
         boolean isEmpty = (params[0].equals("EMPTYFLUID") && params[1].equals("EMPTYFLUID"));
-        double amount = Double.parseDouble(params[2]);
         int displayWidth = DisplayUtil.getDisplayWidth(
                 buildDisplayText(
-                        isEmpty ? 0 : amount,
-                        Math.max(Double.parseDouble(params[3]), amount),
+                        isEmpty ? 0 : Double.parseDouble(params[2]),
+                        Double.parseDouble(params[3]),
                         params[1],
                         isEmpty));
 
@@ -71,7 +70,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
         String fluidName = params[0];
         String localizedName = params[1];
         double amount = Double.parseDouble(params[2]);
-        double capacity = Math.max(Double.parseDouble(params[3]), amount);
+        double capacity = Double.parseDouble(params[3]);
         Tessellator tessellator = Tessellator.instance;
         boolean isEmpty = fluidName.equals("EMPTYFLUID") && localizedName.equals("EMPTYFLUID");
 
@@ -84,7 +83,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             tessellator.startDrawingQuads();
             // Intentionally draw 2 pixels taller than needed than cover with the border to make the texture more
             // visible
-            int i = (int) ((double) (maxStringW - 2) * amount / capacity);
+            int i = (int) ((double) (maxStringW - 2) * (amount / Math.max(capacity, amount)));
             int j = 0;
             for (; i > height; i = i - height) {
                 drawRectFromIcon(tessellator, 1 + (j * height), 0, 0, icon, height, height);

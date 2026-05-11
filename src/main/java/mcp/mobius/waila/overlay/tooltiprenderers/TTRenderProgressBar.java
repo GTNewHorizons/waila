@@ -22,7 +22,7 @@ public class TTRenderProgressBar implements IWailaTooltipRenderer {
     @Override
     public void draw(String[] params, IWailaCommonAccessor accessor) {
         int currentValue = Integer.parseInt(params[0]);
-        int maxValue = Math.max(Integer.parseInt(params[1]), currentValue);
+        int maxValue = Integer.parseInt(params[1]);
 
         int progress = (currentValue * 28) / maxValue;
 
