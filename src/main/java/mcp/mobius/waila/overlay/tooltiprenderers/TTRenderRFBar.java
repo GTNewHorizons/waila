@@ -50,7 +50,7 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
             drawRect(tessellator, 1 + i, 0, 0, width, height, 0.0, 0.0, 0.5, 1.0);
         }
 
-        double i = (double) (maxStringW - 2) * amount / capacity;
+        double i = (double) (maxStringW - 2) * ((double) amount / Math.max(capacity, amount));
         int drawnRects = 0;
         for (; i > width; i -= width) {
             drawRect(tessellator, 1 + (drawnRects * width), 0, 0, width, height, 0.5, 0.0, 1.0, 1.0);
