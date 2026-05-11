@@ -25,7 +25,7 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
     @Override
     public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
         return new Dimension(
-                DisplayUtil.getDisplayWidth(buildDisplayText(Integer.parseInt(params[0]),Integer.parseInt(params[1])))
+                DisplayUtil.getDisplayWidth(buildDisplayText(Integer.parseInt(params[0]), Integer.parseInt(params[1])))
                         + 4,
                 height);
     }
