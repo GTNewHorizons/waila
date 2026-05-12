@@ -90,20 +90,20 @@ public enum WailaPacketHandler {
     }
 
     public void writeNBT(ByteBuf target, NBTTagCompound tag) throws IOException {
-        if (tag == null) target.writeShort(-1);
+        if (tag == null) target.writeInt(-1);
         else {
             byte[] abyte = CompressedStreamTools.compress(tag);
-            target.writeShort((short) abyte.length);
+            target.writeInt(abyte.length);
             target.writeBytes(abyte);
         }
     }
 
     public NBTTagCompound readNBT(ByteBuf dat) throws IOException {
-        short short1 = dat.readShort();
+        int val = dat.readInt();
 
-        if (short1 < 0) return null;
+        if (val < 0) return null;
         else {
-            byte[] abyte = new byte[short1];
+            byte[] abyte = new byte[val];
             dat.readBytes(abyte);
             return CompressedStreamTools.func_152457_a(abyte, NBTSizeTracker.field_152451_a);
         }
