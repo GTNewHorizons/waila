@@ -12,14 +12,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import gregtech.api.util.GTUtil;
-import gregtech.common.fluid.GTFluid;
-import gtPlusPlus.api.objects.minecraft.FluidGT6;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaVariableWidthTooltipRenderer;
@@ -37,17 +35,39 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
     public TTRenderFluidBar() {
         if (LoadedMods.GT5U) {
             bindColor = (fluidName) -> {
-                FluidStack aCheck = FluidUtils.getWildcardFluidStack(fluidName, 1000);
-                if (aCheck != null && (aCheck.getFluid() instanceof FluidGT6 || aCheck.getFluid() instanceof GTFluid)) {
-                    short[] RGBa = GTUtil.getRGBaArray(aCheck.getFluid().getColor());
-                    GL11.glColor4f(RGBa[0] / 255F, RGBa[1] / 255F, RGBa[2] / 255F, 1F);
-                } else {
-                    GL11.glColor4f(1F, 1F, 1F, 1F);
+                FluidStack tFStack = FluidUtils.getWildcardFluidStack(fluidName, 1000);
+                if (tFStack == null) {
+                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                    return;
                 }
+                Fluid tFluid = tFStack.getFluid();
+                if (tFluid == null) {
+                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                    return;
+                }
+                // duplicate code to prevent extra stack allocations
+                int tColor = tFluid.getColor();
+                float r = ((tColor >>> 16) & 0xFF) / (float) 0xFF;
+                float g = ((tColor >>> 8) & 0xFF) / (float) 0xFF;
+                float b = (tColor & 0xFF) / (float) 0xFF;
+                GL11.glColor4f(r, g, b, 1.0F);
             };
         } else {
-            bindColor = (fluidName) -> GL11.glColor4f(1F, 1F, 1F, 1F);
+            bindColor = (fluidName) -> {
+                Fluid tFluid = FluidRegistry.getFluid(fluidName);
+                if (tFluid == null) {
+                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                    return;
+                }
+                // duplicate code to prevent extra stack allocations
+                int tColor = tFluid.getColor();
+                float r = ((tColor >>> 16) & 0xFF) / (float) 0xFF;
+                float g = ((tColor >>> 8) & 0xFF) / (float) 0xFF;
+                float b = (tColor & 0xFF) / (float) 0xFF;
+                GL11.glColor4f(r, g, b, 1.0F);
+            };
         }
+
     }
 
     @Override
