@@ -109,7 +109,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
                 drawRectFromIcon(tessellator, 1 + (j * height), 0, 0, icon, height, height);
                 j++;
             }
-            if (i > 0) drawRect(
+            if (i > 0) DisplayUtil.drawRect(
                     tessellator,
                     1 + (j * height),
                     0,
@@ -128,13 +128,13 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
             GL11.glColor4f(1F, 1F, 1F, 0.70F);
             mc.getTextureManager().bindTexture(gradient);
             tessellator.startDrawingQuads();
-            drawRect(tessellator, 1, 0, 0, maxStringW - 2, height - 1, 0, 0, 1, 1);
+            DisplayUtil.drawRect(tessellator, 1, 0, 0, maxStringW - 2, height - 1, 0, 0, 1, 1);
             tessellator.draw();
         } else {
             Gui.drawRect(1, 0, maxStringW - 1, height - 1, 0x1A575656);
         }
 
-        drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
+        DisplayUtil.drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
 
         DisplayUtil.drawString(
                 buildDisplayText(amount, capacity, localizedName, isEmpty),
@@ -151,26 +151,7 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     public static void drawRectFromIcon(Tessellator tessellator, int x, int y, double z, IIcon icon, int width,
             int height) {
-        drawRect(tessellator, x, y, z, width, height, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV());
-    }
-
-    public static void drawRect(Tessellator tessellator, int x, int y, double z, int width, int height, double minU,
-            double minV, double maxU, double maxV) {
-        tessellator.addVertexWithUV(x, y + height, z, minU, maxV);
-        tessellator.addVertexWithUV(x + width, y + height, z, maxU, maxV);
-        tessellator.addVertexWithUV(x + width, y, z, maxU, minV);
-        tessellator.addVertexWithUV(x, y, z, minU, minV);
-    }
-
-    public static void drawThickBeveledBox(int x1, int y1, int x2, int y2, int thickness, int topleftcolor,
-            int botrightcolor, int fillcolor) {
-        if (fillcolor != -1) {
-            Gui.drawRect(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillcolor);
-        }
-        Gui.drawRect(x1, y1, x2 - 1, y1 + thickness, topleftcolor);
-        Gui.drawRect(x1, y1, x1 + thickness, y2 - 1, topleftcolor);
-        Gui.drawRect(x2 - thickness, y1, x2, y2 - 1, botrightcolor);
-        Gui.drawRect(x1, y2 - thickness, x2, y2, botrightcolor);
+        DisplayUtil.drawRect(tessellator, x, y, z, width, height, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV());
     }
 
     @Override

@@ -47,13 +47,13 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
 
         // Draw dark (uncharged) background for whole bar first
         for (int i = 0; i < (maxStringW - 2); i += width) {
-            drawRect(tessellator, 1 + i, 0, 0, width, height, 0.0, 0.0, 0.5, 1.0);
+            DisplayUtil.drawRect(tessellator, 1 + i, 0, 0, width, height, 0.0, 0.0, 0.5, 1.0);
         }
 
         double i = (double) (maxStringW - 2) * ((double) amount / Math.max(capacity, amount));
         int drawnRects = 0;
         for (; i > width; i -= width) {
-            drawRect(tessellator, 1 + (drawnRects * width), 0, 0, width, height, 0.5, 0.0, 1.0, 1.0);
+            DisplayUtil.drawRect(tessellator, 1 + (drawnRects * width), 0, 0, width, height, 0.5, 0.0, 1.0, 1.0);
             drawnRects++;
         }
         // Do less than full increments just as much as they take up on the scaled texture
@@ -61,14 +61,14 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
         tessellator.draw();
 
         // Border
-        drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
+        DisplayUtil.drawThickBeveledBox(0, 0, maxStringW, height, 1, 0xFF505050, 0xFF505050, -1);
 
         // Gradient
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glColor4f(1F, 1F, 1F, 0.5F);
         mc.getTextureManager().bindTexture(gradientTexture);
         tessellator.startDrawingQuads();
-        drawRect(tessellator, 1, 1, 0, maxStringW - 2, height - 2, 0, 0, 1, 1);
+        DisplayUtil.drawRect(tessellator, 1, 1, 0, maxStringW - 2, height - 2, 0, 0, 1, 1);
         tessellator.draw();
 
         DisplayUtil.drawString(buildDisplayText(amount, capacity), 2, 2, 0xFFFFFFFF, true);
@@ -78,31 +78,12 @@ public class TTRenderRFBar implements IWailaVariableWidthTooltipRenderer {
         return String.format("%s / %s RF", formatNumber(amount), formatNumber(capacity));
     }
 
-    public static void drawRect(Tessellator tessellator, int x, int y, double z, int width, int height, double minU,
-            double minV, double maxU, double maxV) {
-        tessellator.addVertexWithUV(x, y + height, z, minU, maxV);
-        tessellator.addVertexWithUV(x + width, y + height, z, maxU, maxV);
-        tessellator.addVertexWithUV(x + width, y, z, maxU, minV);
-        tessellator.addVertexWithUV(x, y, z, minU, minV);
-    }
-
     public static void drawRectD(Tessellator tessellator, double x, double y, double z, double width, double height,
             double minU, double minV, double maxU, double maxV) {
         tessellator.addVertexWithUV(x, y + height, z, minU, maxV);
         tessellator.addVertexWithUV(x + width, y + height, z, maxU, maxV);
         tessellator.addVertexWithUV(x + width, y, z, maxU, minV);
         tessellator.addVertexWithUV(x, y, z, minU, minV);
-    }
-
-    public static void drawThickBeveledBox(int x1, int y1, int x2, int y2, int thickness, int topleftcolor,
-            int botrightcolor, int fillcolor) {
-        if (fillcolor != -1) {
-            Gui.drawRect(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillcolor);
-        }
-        Gui.drawRect(x1, y1, x2 - 1, y1 + thickness, topleftcolor);
-        Gui.drawRect(x1, y1, x1 + thickness, y2 - 1, topleftcolor);
-        Gui.drawRect(x2 - thickness, y1, x2, y2 - 1, botrightcolor);
-        Gui.drawRect(x1, y2 - thickness, x2, y2, botrightcolor);
     }
 
     @Override

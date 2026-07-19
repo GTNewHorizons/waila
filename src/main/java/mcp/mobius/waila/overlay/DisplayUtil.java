@@ -179,4 +179,23 @@ public class DisplayUtil {
         DisplayUtil.drawTexturedModalRect(x, y, icon.u, icon.v, sx, sy, icon.su, icon.sv);
     }
 
+    public static void drawRect(Tessellator tessellator, int x, int y, double z, int width, int height, double minU,
+                                double minV, double maxU, double maxV) {
+        tessellator.addVertexWithUV(x, y + height, z, minU, maxV);
+        tessellator.addVertexWithUV(x + width, y + height, z, maxU, maxV);
+        tessellator.addVertexWithUV(x + width, y, z, maxU, minV);
+        tessellator.addVertexWithUV(x, y, z, minU, minV);
+    }
+
+    public static void drawThickBeveledBox(int x1, int y1, int x2, int y2, int thickness, int topleftcolor,
+                                           int botrightcolor, int fillcolor) {
+        if (fillcolor != -1) {
+            Gui.drawRect(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillcolor);
+        }
+        Gui.drawRect(x1, y1, x2 - 1, y1 + thickness, topleftcolor);
+        Gui.drawRect(x1, y1, x1 + thickness, y2 - 1, topleftcolor);
+        Gui.drawRect(x2 - thickness, y1, x2, y2 - 1, botrightcolor);
+        Gui.drawRect(x1, y2 - thickness, x2, y2, botrightcolor);
+    }
+
 }
