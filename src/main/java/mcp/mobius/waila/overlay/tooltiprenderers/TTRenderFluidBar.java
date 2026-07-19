@@ -151,7 +151,17 @@ public class TTRenderFluidBar implements IWailaVariableWidthTooltipRenderer {
 
     public static void drawRectFromIcon(Tessellator tessellator, int x, int y, double z, IIcon icon, int width,
             int height) {
-        DisplayUtil.drawRect(tessellator, x, y, z, width, height, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV());
+        DisplayUtil.drawRect(
+                tessellator,
+                x,
+                y,
+                z,
+                width,
+                height,
+                icon.getMinU(),
+                icon.getMinV(),
+                icon.getMaxU(),
+                icon.getMaxV());
     }
 
     @Override
