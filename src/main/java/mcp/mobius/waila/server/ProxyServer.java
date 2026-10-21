@@ -6,6 +6,7 @@ import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.addons.agriculture.AgricultureModule;
 import mcp.mobius.waila.addons.buildcraft.BCModule;
 import mcp.mobius.waila.addons.carpenters.CarpentersModule;
+import mcp.mobius.waila.addons.enderio.EnderIOModule;
 import mcp.mobius.waila.addons.enderstorage.EnderStorageModule;
 import mcp.mobius.waila.addons.etb.ETBModule;
 import mcp.mobius.waila.addons.exu.ExtraUtilitiesModule;
@@ -74,6 +75,9 @@ public class ProxyServer {
 
         /* ProjectRed API */
         ProjectRedModule.register();
+
+        /* EnderIO */
+        EnderIOModule.register();
 
         /* ExtraUtilities */
         ExtraUtilitiesModule.register();
