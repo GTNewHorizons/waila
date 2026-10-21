@@ -13,5 +13,5 @@ on:
 
 jobs:
   optimize-images:
-    uses: GTNewHorizons/GTNH-Actions-Workflows/.github/workflows/optimize-images.yml@master
+    uses: Pilad/GTNH-Actions-Workflows/.github/workflows/optimize-images.yml@master
     secrets: inherit
