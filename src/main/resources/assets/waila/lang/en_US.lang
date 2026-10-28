@@ -43,6 +43,8 @@ client.msg.nousage=No usage found.
 hud.msg.holdkeymoreinfo=Hold %s for more info
 
 hud.msg.empty=Empty
+hud.msg.inventory=%s items in %s of %s slots
+hud.msg.inventory.single=%s item in %s of %s slots
 hud.msg.output=Output
 hud.msg.input=Input
 hud.msg.out=Out
@@ -153,6 +155,7 @@ option.stevescarts.shifttoggle=Shift toggle
 option.general.showents=Show entities
 option.general.showhp=Show entities health
 option.general.showcrop=Show crop growth
+option.general.showinventory=Show inventory summary
 option.thaumcraft.aspects=Show aspects
 
 nei.options.keys.showenchant=Show enchanting values

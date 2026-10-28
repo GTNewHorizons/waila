@@ -17,6 +17,7 @@ import cpw.mods.fml.common.registry.GameData;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaEntityAccessor;
+import mcp.mobius.waila.handlers.HUDHandlerInventory;
 import mcp.mobius.waila.utils.NBTUtil;
 
 public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAccessor, IWailaEntityAccessor {
@@ -123,9 +124,21 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
 
     @Override
     public NBTTagCompound getNBTData() {
-        if ((this.tileEntity != null) && this.isTagCorrectTileEntity(this.remoteNbt)) return remoteNbt;
+        if ((this.tileEntity != null) && this.isTagCorrectTileEntity(this.remoteNbt)) {
+            if (!remoteNbt.getBoolean(HUDHandlerInventory.TAG_SUMMARY_ONLY)) return remoteNbt;
+            NBTTagCompound tag = new NBTTagCompound();
+            try {
+                this.tileEntity.writeToNBT(tag);
+            } catch (Exception ignored) {}
+            return HUDHandlerInventory.mergeSummary(remoteNbt, tag);
+        }
 
-        if ((this.entity != null) && this.isTagCorrectEntity(this.remoteNbt)) return remoteNbt;
+        if ((this.entity != null) && this.isTagCorrectEntity(this.remoteNbt)) {
+            if (!remoteNbt.getBoolean(HUDHandlerInventory.TAG_SUMMARY_ONLY)) return remoteNbt;
+            NBTTagCompound tag = new NBTTagCompound();
+            this.entity.writeToNBT(tag);
+            return HUDHandlerInventory.mergeSummary(remoteNbt, tag);
+        }
 
         if (this.tileEntity != null) {
             NBTTagCompound tag = new NBTTagCompound();

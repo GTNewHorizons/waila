@@ -20,6 +20,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
+import mcp.mobius.waila.handlers.HUDHandlerInventory;
 import mcp.mobius.waila.utils.AccessHelper;
 import mcp.mobius.waila.utils.NBTUtil;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
@@ -125,10 +126,15 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
                     }
                 }
 
+            } else if (msg.keys.isEmpty()) {
+                // The client asked only for the inventory summary
+                tag.setBoolean(HUDHandlerInventory.TAG_SUMMARY_ONLY, true);
             } else {
                 entity.writeToNBT(tag);
                 tag = NBTUtil.createTag(tag, msg.keys);
             }
+
+            HUDHandlerInventory.writeSummary(entity, world, msg.posX, msg.posY, msg.posZ, tag);
 
             tag.setInteger("WailaX", msg.posX);
             tag.setInteger("WailaY", msg.posY);
