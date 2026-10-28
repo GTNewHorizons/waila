@@ -24,7 +24,16 @@ public class OverlayRenderer {
     }
 
     public static void renderOverlay(Tooltip tooltip) {
-        if (!isOverlayVisible() || RayTracing.instance().getTarget() == null) return;
+        if (!isOverlayVisible()) return;
+
+        BreakProgressRenderer.update();
+
+        if (RayTracing.instance().getTarget() == null
+                || RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.MISS) {
+            // Keep the last tooltip while the break progress fades out after the block was broken
+            if (tooltip != null && BreakProgressRenderer.isFading()) doRenderOverlay(tooltip);
+            return;
+        }
 
         if (RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK
                 && RayTracing.instance().getTargetStack() != null) {
@@ -57,6 +66,8 @@ public class OverlayRenderer {
                 OverlayConfig.bgcolor,
                 OverlayConfig.gradient1,
                 OverlayConfig.gradient2);
+
+        BreakProgressRenderer.draw(tooltip.x, tooltip.y, tooltip.w, tooltip.h);
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
