@@ -153,6 +153,8 @@ option.stevescarts.shifttoggle=Shift toggle
 option.general.showents=Show entities
 option.general.showhp=Show entities health
 option.general.showcrop=Show crop growth
+option.general.breakprogress=Show break progress
+option.general.breakprogresstop=Break progress on top
 option.thaumcraft.aspects=Show aspects
 
 nei.options.keys.showenchant=Show enchanting values
