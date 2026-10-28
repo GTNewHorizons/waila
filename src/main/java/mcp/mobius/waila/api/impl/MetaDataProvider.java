@@ -21,6 +21,7 @@ import mcp.mobius.waila.api.IWailaEntityProvider;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.cbcore.Layout;
 import mcp.mobius.waila.client.KeyEvent;
+import mcp.mobius.waila.handlers.HUDHandlerInventory;
 import mcp.mobius.waila.network.Message0x01TERequest;
 import mcp.mobius.waila.network.Message0x03EntRequest;
 import mcp.mobius.waila.network.WailaPacketHandler;
@@ -80,7 +81,8 @@ public class MetaDataProvider {
                 keys.addAll(ModuleRegistrar.instance().getSyncedNBTKeys(accessor.getTileEntity()));
 
             if (!keys.isEmpty() || ModuleRegistrar.instance().hasNBTProviders(block)
-                    || ModuleRegistrar.instance().hasNBTProviders(accessor.getTileEntity()))
+                    || ModuleRegistrar.instance().hasNBTProviders(accessor.getTileEntity())
+                    || HUDHandlerInventory.shouldRequest(accessor.getTileEntity()))
                 WailaPacketHandler.INSTANCE.sendToServer(new Message0x01TERequest(accessor.getTileEntity(), keys));
 
         } else if (accessor.getTileEntity() != null && !Waila.instance.serverPresent
@@ -193,7 +195,8 @@ public class MetaDataProvider {
             if (ModuleRegistrar.instance().hasSyncedNBTKeys(accessor.getEntity()))
                 keys.addAll(ModuleRegistrar.instance().getSyncedNBTKeys(accessor.getEntity()));
 
-            if (!keys.isEmpty() || ModuleRegistrar.instance().hasNBTEntityProviders(accessor.getEntity()))
+            if (!keys.isEmpty() || ModuleRegistrar.instance().hasNBTEntityProviders(accessor.getEntity())
+                    || HUDHandlerInventory.shouldRequest(accessor.getEntity()))
                 WailaPacketHandler.INSTANCE.sendToServer(new Message0x03EntRequest(accessor.getEntity(), keys));
 
         } else if (accessor.getEntity() != null && !Waila.instance.serverPresent && accessor.isTimeElapsed(250)) {
