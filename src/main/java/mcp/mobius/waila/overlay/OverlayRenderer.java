@@ -11,8 +11,6 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class OverlayRenderer {
 
-    private static boolean hasBlending;
-    private static boolean hasDepthTest;
     private static int boundTexIndex;
 
     public static boolean isOverlayVisible() {
@@ -87,17 +85,12 @@ public class OverlayRenderer {
     }
 
     private static void saveGLState() {
-        hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);
-        hasDepthTest = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
         boundTexIndex = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
-        GL11.glPushAttrib(GL11.GL_CURRENT_BIT);
+        // Icons turn on lighting, lights, color material and rescale normal; the box changes blend func and shade model
+        GL11.glPushAttrib(GL11.GL_CURRENT_BIT | GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT | GL11.GL_COLOR_BUFFER_BIT);
     }
 
     private static void loadGLState() {
-        if (hasBlending) GL11.glEnable(GL11.GL_BLEND);
-        else GL11.glDisable(GL11.GL_BLEND);
-        if (hasDepthTest) GL11.glEnable(GL11.GL_DEPTH_TEST);
-        else GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
         GL11.glPopAttrib();
     }

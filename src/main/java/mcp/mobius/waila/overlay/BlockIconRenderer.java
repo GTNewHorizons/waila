@@ -148,9 +148,8 @@ public final class BlockIconRenderer {
         } finally {
             renderBlocks.blockAccess = null;
             GL11.glPopAttrib();
-            // A renderer that failed can leave a pushed matrix behind
-            while (GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH) > matrixDepth + 1) GL11.glPopMatrix();
-            GL11.glPopMatrix();
+            // A renderer that failed can leave a pushed matrix behind, but never pop the caller's
+            while (GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH) > matrixDepth) GL11.glPopMatrix();
         }
     }
 }
