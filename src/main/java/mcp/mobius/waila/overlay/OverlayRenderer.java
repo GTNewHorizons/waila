@@ -23,10 +23,10 @@ public class OverlayRenderer {
                 && ConfigHandler.instance().showTooltip());
     }
 
-    public static void renderOverlay(Tooltip tooltip) {
+    public static void renderOverlay(Tooltip tooltip, float partialTicks) {
         if (!isOverlayVisible()) return;
 
-        BreakProgressRenderer.update();
+        BreakProgressRenderer.update(partialTicks);
 
         if (RayTracing.instance().getTarget() == null
                 || RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.MISS) {

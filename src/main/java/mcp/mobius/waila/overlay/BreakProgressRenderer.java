@@ -23,16 +23,15 @@ public final class BreakProgressRenderer {
     public static final String CFG_ENABLED = "general.breakprogress";
     public static final String CFG_TOP = "general.breakprogresstop";
 
-    /** Time in ms that the line needs to fade out completely. */
-    private static final long FADE_TIME = 250;
-    private static final int THICKNESS = 2;
+    /** Alpha change per game tick */
+    private static final float FADE_PER_TICK = 0.1f;
+    /** Alpha while mining. The line is fully opaque only in the last tick before the block breaks. */
+    private static final float MAX_ALPHA = 0.6f;
 
-    private static float shownProgress;
+    private static float progress;
+    private static float alpha;
     private static boolean canHarvest = true;
-    private static long fadeStart = -1;
-
-    private static int lastX, lastY, lastZ;
-    private static Block lastBlock;
+    private static long lastFrame;
 
     private static Field curBlockDamageField;
     private static boolean fieldFailed;
@@ -46,35 +45,35 @@ public final class BreakProgressRenderer {
     /**
      * Updates the progress state. Call this one time per frame before you draw.
      */
-    public static void update() {
+    public static void update(float partialTicks) {
         final Minecraft mc = Minecraft.getMinecraft();
-        if (!isEnabled() || mc.playerController == null || mc.theWorld == null) {
-            reset();
+        long now = Minecraft.getSystemTime();
+        float deltaTicks = (now - lastFrame) / 50f;
+        lastFrame = now;
+
+        if (!isEnabled() || mc.playerController == null || mc.theWorld == null || mc.thePlayer == null) {
+            progress = alpha = 0;
             return;
         }
 
-        float damage = MathHelper.clamp_float(getBlockDamage(mc.playerController), 0f, 1f);
-        if (damage > 0) {
-            shownProgress = damage;
-            fadeStart = -1;
-            MovingObjectPosition target = RayTracing.instance().getTarget();
-            if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-                lastX = target.blockX;
-                lastY = target.blockY;
-                lastZ = target.blockZ;
-                lastBlock = mc.theWorld.getBlock(lastX, lastY, lastZ);
-                int meta = mc.theWorld.getBlockMetadata(lastX, lastY, lastZ);
-                canHarvest = ForgeHooks.canHarvestBlock(lastBlock, mc.thePlayer, meta);
-            }
+        float damage = getBlockDamage(mc.playerController);
+        MovingObjectPosition target = RayTracing.instance().getTarget();
+        if (damage <= 0 || target == null || target.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
+            // Not mining (anymore), fade out the last progress
+            alpha = Math.max(alpha - deltaTicks * FADE_PER_TICK, 0f);
             return;
         }
 
-        if (shownProgress > 0 && fadeStart < 0) {
-            // Mining stopped. If the block is gone, show a full line before it fades out.
-            if (lastBlock != null && mc.theWorld.getBlock(lastX, lastY, lastZ) != lastBlock) {
-                shownProgress = 1f;
-            }
-            fadeStart = Minecraft.getSystemTime();
+        int x = target.blockX, y = target.blockY, z = target.blockZ;
+        Block block = mc.theWorld.getBlock(x, y, z);
+        canHarvest = ForgeHooks.canHarvestBlock(block, mc.thePlayer, mc.theWorld.getBlockMetadata(x, y, z));
+        alpha = Math.min(alpha + deltaTicks * FADE_PER_TICK, MAX_ALPHA);
+        float perTick = block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, x, y, z);
+        if (damage + perTick >= 1f) {
+            // The block breaks in the next tick
+            alpha = progress = 1f;
+        } else {
+            progress = MathHelper.clamp_float(damage + partialTicks * perTick, 0f, 1f);
         }
     }
 
@@ -94,48 +93,27 @@ public final class BreakProgressRenderer {
     }
 
     /**
-     * @return true while the line fades out after the player stopped mining or broke the block.
+     * @return true while the line is visible, also while it fades out after the block was broken.
      */
     public static boolean isFading() {
-        return fadeStart >= 0 && getAlpha() > 0;
-    }
-
-    private static void reset() {
-        shownProgress = 0;
-        fadeStart = -1;
-        lastBlock = null;
-    }
-
-    private static float getAlpha() {
-        // Same curve as WDMla and Jade: the line gets more opaque while the progress increases.
-        float alpha = Math.min(Math.min(shownProgress, 0.6f) + 0.4f * shownProgress, 1f);
-        if (fadeStart >= 0) {
-            float faded = 1f - (float) (Minecraft.getSystemTime() - fadeStart) / FADE_TIME;
-            alpha *= Math.max(faded, 0f);
-        }
-        return alpha;
+        return alpha > 0;
     }
 
     /**
-     * Draws the line on the tooltip box. The arguments are the box geometry from {@link Tooltip}.
+     * Draws the line on the outer row of the tooltip box. The arguments are the box geometry from {@link Tooltip}.
      */
     public static void draw(int x, int y, int w, int h) {
-        if (!isEnabled() || shownProgress <= 0) return;
+        if (!isEnabled() || alpha <= 0) return;
 
-        float alpha = getAlpha();
-        if (alpha <= 0) {
-            reset();
-            return;
-        }
-
-        int width = (int) ((w - 1) * shownProgress);
+        int width = (int) ((w - 1) * progress);
         if (width <= 0) return;
 
+        // Transparent as the box background
+        float boxAlpha = (OverlayConfig.alpha >>> 24) / 255f;
         int base = canHarvest ? ColorUtils.breakProgress.getColor() : ColorUtils.breakProgressFailure.getColor();
-        int color = ((int) (((base >>> 24) & 0xFF) * alpha) << 24) | (base & 0xFFFFFF);
+        int color = ((int) (((base >>> 24) & 0xFF) * alpha * boxAlpha) << 24) | (base & 0xFFFFFF);
 
         boolean top = ConfigHandler.instance().getConfig(CFG_TOP, false);
-        int lineY = top ? y : y + h + 1 - THICKNESS;
-        DisplayUtil.drawGradientRect(x + 1, lineY, width, THICKNESS, color, color);
+        DisplayUtil.drawGradientRect(x + 1, top ? y : y + h, width, 1, color, color);
     }
 }

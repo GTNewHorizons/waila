@@ -13,7 +13,7 @@ public class ColorUtils {
             progressBarTop          = color.argb("progressBarTop",       "0xFFFF0000"),
             progressBarBottom       = color.argb("progressBarBottom",    "0xFF8B0000"),
             breakProgress           = color.argb("breakProgress",        "0xFFFFFFFF"),
-            breakProgressFailure    = color.argb("breakProgressFailure", "0xFFFF4444");
+            breakProgressFailure    = color.argb("breakProgressFailure", "0xFFAA0000");
     // spotless:on
 
 }
