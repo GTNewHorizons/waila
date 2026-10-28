@@ -69,7 +69,16 @@ public class OverlayRenderer {
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
-        if (tooltip.hasIcon && tooltip.stack != null && tooltip.stack.getItem() != null)
+        boolean drawn3D = tooltip.hasIcon && tooltip.hasBlockPos
+                && BlockIconRenderer.isEnabled()
+                && BlockIconRenderer.render(
+                        tooltip.x + 5,
+                        tooltip.y + tooltip.h / 2 - 8,
+                        16,
+                        tooltip.blockX,
+                        tooltip.blockY,
+                        tooltip.blockZ);
+        if (!drawn3D && tooltip.hasIcon && tooltip.stack != null && tooltip.stack.getItem() != null)
             DisplayUtil.renderStack(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, tooltip.stack);
 
         loadGLState();
