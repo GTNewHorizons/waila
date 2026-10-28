@@ -1,10 +1,13 @@
 package mcp.mobius.waila.overlay;
 
+import java.nio.FloatBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
@@ -28,6 +31,7 @@ public final class EntityIconRenderer {
     private static final float TURN_SPEED = 45f;
 
     private static final Set<Class<?>> failedClasses = new HashSet<>();
+    private static final FloatBuffer modelview = GLAllocation.createDirectFloatBuffer(16);
 
     private EntityIconRenderer() {}
 
@@ -60,6 +64,9 @@ public final class EntityIconRenderer {
             prevHeadYaw = living.prevRotationYawHead;
         }
         float playerViewY = RenderManager.instance.playerViewY;
+        float infoX = ActiveRenderInfo.rotationX, infoZ = ActiveRenderInfo.rotationZ;
+        float infoYZ = ActiveRenderInfo.rotationYZ, infoXZ = ActiveRenderInfo.rotationXZ,
+                infoXY = ActiveRenderInfo.rotationXY;
         boolean hideGui = mc.gameSettings.hideGUI;
 
         // Entity renderers change blend, depth, alpha and lighting state (so save all of it)
@@ -99,6 +106,7 @@ public final class EntityIconRenderer {
                 living.rotationYawHead = living.prevRotationYawHead = 0f;
             }
             RenderManager.instance.playerViewY = 180f;
+            setBillboardAxes();
             // Hide name tags
             mc.gameSettings.hideGUI = true;
 
@@ -109,6 +117,11 @@ public final class EntityIconRenderer {
         } finally {
             mc.gameSettings.hideGUI = hideGui;
             RenderManager.instance.playerViewY = playerViewY;
+            ActiveRenderInfo.rotationX = infoX;
+            ActiveRenderInfo.rotationZ = infoZ;
+            ActiveRenderInfo.rotationYZ = infoYZ;
+            ActiveRenderInfo.rotationXZ = infoXZ;
+            ActiveRenderInfo.rotationXY = infoXY;
             entity.rotationYaw = yaw;
             entity.prevRotationYaw = prevYaw;
             entity.rotationPitch = pitch;
@@ -125,5 +138,24 @@ public final class EntityIconRenderer {
             // A renderer that failed can leave a pushed matrix behind, but should never pop the callers
             while (GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH) > matrixDepth) GL11.glPopMatrix();
         }
+    }
+
+    /**
+     * Billboards (like Thaumcraft wisps) face the camera with the axes in {@link ActiveRenderInfo}, which belong to the
+     * world view. Point them at the screen of the icon instead.
+     */
+    private static void setBillboardAxes() {
+        modelview.clear();
+        GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelview);
+        // The rows of the rotation are the screen right and down axes in model space, all with the same length
+        float len = (float) Math.sqrt(
+                modelview.get(0) * modelview.get(0) + modelview.get(4) * modelview.get(4)
+                        + modelview.get(8) * modelview.get(8));
+        // Vanilla stores the left axis in rotationX/Z and the up axis in rotationYZ/XZ/XY
+        ActiveRenderInfo.rotationX = -modelview.get(0) / len;
+        ActiveRenderInfo.rotationZ = -modelview.get(8) / len;
+        ActiveRenderInfo.rotationYZ = -modelview.get(1) / len;
+        ActiveRenderInfo.rotationXZ = -modelview.get(5) / len;
+        ActiveRenderInfo.rotationXY = -modelview.get(9) / len;
     }
 }
