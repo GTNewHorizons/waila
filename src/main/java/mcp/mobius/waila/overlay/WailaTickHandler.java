@@ -142,7 +142,7 @@ public class WailaTickHandler {
                 currenttip.addAll(currenttipBody);
                 currenttip.addAll(currenttipTail);
 
-                this.tooltip = new Tooltip(currenttip, false);
+                this.tooltip = new Tooltip(currenttip, targetEnt);
             }
         }
 
