@@ -37,6 +37,11 @@ public class OverlayRenderer {
         }
     }
 
+    /** Draws a sample box, for previews like a HUD editor's. */
+    static void drawPreview(Tooltip tooltip) {
+        doRenderOverlay(tooltip);
+    }
+
     private static void doRenderOverlay(Tooltip tooltip) {
 
         GL11.glPushMatrix();
