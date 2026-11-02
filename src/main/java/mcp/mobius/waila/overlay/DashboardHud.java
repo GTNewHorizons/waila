@@ -28,11 +28,31 @@ public final class DashboardHud {
     private static Tooltip sample;
     private static long lastSampleTime;
 
+    /** The box drawn last, before scaling, so the element follows its size and Waila's position setting. */
+    private static boolean boxDrawn;
+    private static int boxX;
+    private static int boxY;
+    private static int boxWidth;
+    private static int boxHeight;
+
     private DashboardHud() {}
 
     public static void register() {
         INFO_BOX.setPreview((screenWidth, screenHeight) -> OverlayRenderer.drawPreview(getSample()));
         HudRegistry.register(INFO_BOX);
+    }
+
+    static boolean beginBox(int x, int y, int width, int height) {
+        boxDrawn = true;
+        boxX = x;
+        boxY = y;
+        boxWidth = width;
+        boxHeight = height;
+        return HudRegistry.beginRender(INFO_BOX);
+    }
+
+    static void endBox() {
+        HudRegistry.endRender();
     }
 
     /**
@@ -58,15 +78,23 @@ public final class DashboardHud {
                 stone);
     }
 
+    /** Before the first box is drawn, the sample's place and size. */
     private static HudBounds getBounds(int screenWidth, int screenHeight) {
-        if (sample == null) {
-            sample = createSample();
+        if (!boxDrawn) {
+            if (sample == null) {
+                sample = createSample();
+            }
+            return getBounds(sample.x, sample.y, sample.w + 1, sample.h + 1);
         }
+        return getBounds(boxX, boxY, boxWidth, boxHeight);
+    }
+
+    private static HudBounds getBounds(int x, int y, int width, int height) {
         float scale = OverlayConfig.scale;
         return new HudBounds(
-                Math.round(sample.x * scale),
-                Math.round(sample.y * scale),
-                Math.round((sample.w + 1) * scale),
-                Math.round((sample.h + 1) * scale));
+                Math.round(x * scale),
+                Math.round(y * scale),
+                Math.round(width * scale),
+                Math.round(height * scale));
     }
 }
