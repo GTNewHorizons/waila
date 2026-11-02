@@ -42,7 +42,9 @@ public final class DashboardHud {
         HudRegistry.register(INFO_BOX);
     }
 
-    static boolean beginBox(int x, int y, int width, int height) {
+    /** The mod that drew the box, if not Waila, is shown next to Waila's name in the editor. */
+    static boolean beginBox(String drawnBy, int x, int y, int width, int height) {
+        INFO_BOX.setModNameAddon(drawnBy);
         boxDrawn = true;
         boxX = x;
         boxY = y;

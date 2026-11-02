@@ -49,7 +49,12 @@ public class OverlayRenderer {
      * {@link #endBox()}.
      */
     public static boolean beginBox(int x, int y, int width, int height) {
-        return !LoadedMods.DASHBOARD || DashboardHud.beginBox(x, y, width, height);
+        return beginBox(null, x, y, width, height);
+    }
+
+    /** Like {@link #beginBox(int, int, int, int)}, for a mod that draws the box itself, so a HUD editor can name it. */
+    public static boolean beginBox(String drawnBy, int x, int y, int width, int height) {
+        return !LoadedMods.DASHBOARD || DashboardHud.beginBox(drawnBy, x, y, width, height);
     }
 
     /** Call right after drawing the info box, only if {@link #beginBox} returned true. */
