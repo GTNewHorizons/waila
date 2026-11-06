@@ -1,6 +1,7 @@
 package mcp.mobius.waila.handlers;
 
 import static mcp.mobius.waila.api.SpecialChars.BLUE;
+import static mcp.mobius.waila.api.SpecialChars.GRAY;
 import static mcp.mobius.waila.api.SpecialChars.ITALIC;
 
 import java.util.List;
@@ -17,8 +18,10 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.handlers.nei.NEIHandler;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.Constants;
+import mcp.mobius.waila.utils.LoadedMods;
 import mcp.mobius.waila.utils.ModIdentification;
 
 public class HUDHandlerBlocks implements IWailaDataProvider {
@@ -49,6 +52,11 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
 
         if (currenttip.isEmpty()) currenttip.add("< Unnamed >");
         else {
+            if (LoadedMods.NEI && config.getConfig("general.showsecondlangname")) {
+                String secondName = NEIHandler.getSecondLanguageName(itemStack);
+                if (!secondName.isEmpty()) currenttip.add(GRAY + secondName);
+            }
+
             if (ConfigHandler.instance()
                     .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_METADATA, true)) {
                 currenttip.add(
