@@ -16,6 +16,7 @@ import codechicken.nei.api.API;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
+import codechicken.nei.util.ItemUntranslator;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.cbcore.LangUtil;
 import mcp.mobius.waila.overlay.RayTracing;
@@ -37,6 +38,10 @@ public class NEIHandler {
 
         GuiContainerManager.addInputHandler(new HandlerEnchants());
         API.addKeyBind(Constants.BIND_SCREEN_ENCH, Keyboard.KEY_I);
+    }
+
+    public static String getSecondLanguageName(ItemStack stack) {
+        return ItemUntranslator.getInstance().getItemStackDisplayName(stack);
     }
 
     public static boolean firstInventory = true;
