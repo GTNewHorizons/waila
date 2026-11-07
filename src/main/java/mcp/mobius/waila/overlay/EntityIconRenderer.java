@@ -71,6 +71,7 @@ public final class EntityIconRenderer {
 
         // Entity renderers change blend, depth, alpha and lighting state (so save all of it)
         int matrixDepth = GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH);
+        int attribDepth = GL11.glGetInteger(GL11.GL_ATTRIB_STACK_DEPTH);
         GL11.glPushMatrix();
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         try {
@@ -111,7 +112,7 @@ public final class EntityIconRenderer {
             mc.gameSettings.hideGUI = true;
 
             RenderManager.instance.renderEntityWithPosYaw(entity, 0d, 0d, 0d, 0f, 1f);
-        } catch (Throwable e) {
+        } catch (Exception | LinkageError e) {
             failedClasses.add(entity.getClass());
             WailaExceptionHandler.handleErr(e, "EntityIconRenderer | " + entity.getClass().getName(), null);
         } finally {
@@ -133,10 +134,10 @@ public final class EntityIconRenderer {
                 living.prevRotationYawHead = prevHeadYaw;
             }
 
-            // Also restores lighting, the active texture unit and the lightmap enable
-            GL11.glPopAttrib();
-            // A renderer that failed can leave a pushed matrix behind, but should never pop the callers
-            while (GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH) > matrixDepth) GL11.glPopMatrix();
+            // A renderer can leave unbalanced pushes behind, but should never pop the caller's. Query each
+            // stack once and pop down to where it started.
+            for (int i = GL11.glGetInteger(GL11.GL_ATTRIB_STACK_DEPTH) - attribDepth; i > 0; i--) GL11.glPopAttrib();
+            for (int i = GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH) - matrixDepth; i > 0; i--) GL11.glPopMatrix();
         }
     }
 

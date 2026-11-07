@@ -78,7 +78,7 @@ public class DisplayUtil {
         try {
             renderItem.renderItemAndEffectIntoGUI(fontRenderer, textureManager, stack, x, y);
             renderItem.renderItemOverlayIntoGUI(fontRenderer, textureManager, stack, x, y);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             String stackStr = stack != null ? stack.toString() : "NullStack";
             WailaExceptionHandler.handleErr(e, "renderStack | " + stackStr, null);
         }

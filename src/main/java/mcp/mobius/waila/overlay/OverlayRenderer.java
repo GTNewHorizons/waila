@@ -2,6 +2,7 @@ package mcp.mobius.waila.overlay;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 
 import org.lwjgl.opengl.GL11;
@@ -67,10 +68,11 @@ public class OverlayRenderer {
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
+        Entity entity = tooltip.entity;
         if (tooltip.hasIcon && tooltip.stack != null && tooltip.stack.getItem() != null)
             DisplayUtil.renderStack(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, tooltip.stack);
-        else if (tooltip.hasIcon && tooltip.getEntity() != null)
-            EntityIconRenderer.render(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, 16, tooltip.getEntity());
+        else if (tooltip.hasIcon && entity != null)
+            EntityIconRenderer.render(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, 16, entity);
 
         loadGLState();
         GL11.glPopMatrix();

@@ -9,7 +9,6 @@ import static mcp.mobius.waila.api.SpecialChars.patternTab;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +50,7 @@ public class Tooltip {
     Point pos;
     boolean hasIcon = false;
     ItemStack stack;
-    WeakReference<Entity> entity;
+    Entity entity;
 
     IWailaCommonAccessor accessor = DataAccessorCommon.instance;
 
@@ -111,11 +110,7 @@ public class Tooltip {
 
     public Tooltip(List<String> textData, Entity entity) {
         this(textData, entity != null && EntityIconRenderer.isEnabled());
-        this.entity = entity == null ? null : new WeakReference<>(entity);
-    }
-
-    Entity getEntity() {
-        return entity == null ? null : entity.get();
+        this.entity = entity;
     }
 
     public Tooltip(List<String> textData, boolean hasIcon) {
