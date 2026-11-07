@@ -49,6 +49,8 @@ public class Tooltip {
     Point pos;
     boolean hasIcon = false;
     ItemStack stack;
+    boolean hasBlockPos = false;
+    int blockX, blockY, blockZ;
 
     IWailaCommonAccessor accessor = DataAccessorCommon.instance;
 
@@ -104,6 +106,16 @@ public class Tooltip {
     public Tooltip(List<String> textData, ItemStack stack) {
         this(textData, true);
         this.stack = stack;
+    }
+
+    /**
+     * Sets the position of the block, so that the icon can show the block from the world.
+     */
+    public void setBlockPos(int x, int y, int z) {
+        this.hasBlockPos = true;
+        this.blockX = x;
+        this.blockY = y;
+        this.blockZ = z;
     }
 
     public Tooltip(List<String> textData, boolean hasIcon) {
