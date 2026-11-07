@@ -136,7 +136,9 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
         if ((this.entity != null) && this.isTagCorrectEntity(this.remoteNbt)) {
             if (!remoteNbt.getBoolean(HUDHandlerInventory.TAG_SUMMARY_ONLY)) return remoteNbt;
             NBTTagCompound tag = new NBTTagCompound();
-            this.entity.writeToNBT(tag);
+            try {
+                this.entity.writeToNBT(tag);
+            } catch (Exception ignored) {}
             return HUDHandlerInventory.mergeSummary(remoteNbt, tag);
         }
 

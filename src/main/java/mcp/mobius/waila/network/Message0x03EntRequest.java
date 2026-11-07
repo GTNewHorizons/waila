@@ -92,7 +92,7 @@ public class Message0x03EntRequest extends SimpleChannelInboundHandler<Message0x
                 tag = NBTUtil.createTag(tag, msg.keys);
             }
 
-            HUDHandlerInventory.writeSummary(entity, world, 0, 0, 0, tag);
+            HUDHandlerInventory.writeSummary(entity, tag);
 
             tag.setInteger("WailaEntityID", entity.getEntityId());
 

@@ -43,8 +43,8 @@ client.msg.nousage=No usage found.
 hud.msg.holdkeymoreinfo=Hold %s for more info
 
 hud.msg.empty=Empty
-hud.msg.inventory=%s items in %s of %s slots
-hud.msg.inventory.single=%s item in %s of %s slots
+hud.msg.inventory=%d items in %d of %d slots
+hud.msg.inventory.single=%d item in %d of %d slots
 hud.msg.output=Output
 hud.msg.input=Input
 hud.msg.out=Out

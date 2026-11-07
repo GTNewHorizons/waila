@@ -1,7 +1,5 @@
 package mcp.mobius.waila.handlers;
 
-import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
-
 import java.util.List;
 
 import net.minecraft.entity.Entity;
@@ -9,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -47,13 +46,15 @@ public class HUDHandlerInventory implements IWailaDataProvider, IWailaEntityProv
      * @return true if the client must ask the server for the summary of this target.
      */
     public static boolean shouldRequest(Object target) {
+        // Players implement IInventory, so this also summarises player inventories. Test instanceof EntityPlayer to
+        // skip.
         return target instanceof IInventory && ConfigHandler.instance().getConfig(CFG_SHOW, true);
     }
 
     /**
      * Server side: adds the item count, the used slots and the total slots of the target to the tag.
      */
-    public static void writeSummary(Object target, World world, int x, int y, int z, NBTTagCompound tag) {
+    public static void writeSummary(Object target, NBTTagCompound tag) {
         if (!(target instanceof IInventory)) return;
         try {
             IInventory inv = (IInventory) target;
@@ -79,7 +80,7 @@ public class HUDHandlerInventory implements IWailaDataProvider, IWailaEntityProv
             tag.setLong(TAG_ITEMS, items);
             tag.setInteger(TAG_USED, used);
             tag.setInteger(TAG_SLOTS, slots);
-        } catch (Throwable e) {
+        } catch (Exception | LinkageError e) {
             // Do not lose the data of the other providers because of one bad inventory
             WailaExceptionHandler.handleErr(e, "HUDHandlerInventory | " + target.getClass().getName(), null);
         }
@@ -89,8 +90,10 @@ public class HUDHandlerInventory implements IWailaDataProvider, IWailaEntityProv
      * Client side: adds the values of a summary only answer to the local NBT of the target.
      */
     public static NBTTagCompound mergeSummary(NBTTagCompound remote, NBTTagCompound local) {
-        for (Object key : remote.func_150296_c()) local.setTag((String) key, remote.getTag((String) key).copy());
-        local.removeTag(TAG_SUMMARY_ONLY);
+        for (String key : new String[] { TAG_ITEMS, TAG_USED, TAG_SLOTS }) {
+            NBTBase tag = remote.getTag(key);
+            if (tag != null) local.setTag(key, tag.copy());
+        }
         return local;
     }
 
@@ -101,7 +104,7 @@ public class HUDHandlerInventory implements IWailaDataProvider, IWailaEntityProv
         long items = tag.getLong(TAG_ITEMS);
         int used = tag.getInteger(TAG_USED);
         String key = items == 1 ? "hud.msg.inventory.single" : "hud.msg.inventory";
-        currenttip.add(String.format(LangUtil.translateG(key), formatNumber(items), used, slots));
+        currenttip.add(String.format(LangUtil.translateG(key), items, used, slots));
     }
 
     @Override

@@ -134,7 +134,7 @@ public class Message0x01TERequest extends SimpleChannelInboundHandler<Message0x0
                 tag = NBTUtil.createTag(tag, msg.keys);
             }
 
-            HUDHandlerInventory.writeSummary(entity, world, msg.posX, msg.posY, msg.posZ, tag);
+            HUDHandlerInventory.writeSummary(entity, tag);
 
             tag.setInteger("WailaX", msg.posX);
             tag.setInteger("WailaY", msg.posY);
