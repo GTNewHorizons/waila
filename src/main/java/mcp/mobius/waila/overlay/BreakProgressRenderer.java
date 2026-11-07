@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -32,6 +33,8 @@ public final class BreakProgressRenderer {
     private static float alpha;
     private static boolean canHarvest = true;
     private static long lastFrame;
+    private static World lastWorld;
+    private static int lastX, lastY, lastW, lastH;
 
     private static Field curBlockDamageField;
     private static boolean fieldFailed;
@@ -48,9 +51,14 @@ public final class BreakProgressRenderer {
     public static void update(float partialTicks) {
         final Minecraft mc = Minecraft.getMinecraft();
         long now = Minecraft.getSystemTime();
-        float deltaTicks = (now - lastFrame) / 50f;
+        // A paused or lagging client must not fade out in one step
+        float deltaTicks = Math.min((now - lastFrame) / 50f, 1f);
         lastFrame = now;
 
+        if (mc.theWorld != lastWorld) {
+            lastWorld = mc.theWorld;
+            progress = alpha = 0;
+        }
         if (!isEnabled() || mc.playerController == null || mc.theWorld == null || mc.thePlayer == null) {
             progress = alpha = 0;
             return;
@@ -93,16 +101,13 @@ public final class BreakProgressRenderer {
     }
 
     /**
-     * @return true while the line is visible, also while it fades out after the block was broken.
-     */
-    public static boolean isFading() {
-        return alpha > 0;
-    }
-
-    /**
      * Draws the line on the outer row of the tooltip box. The arguments are the box geometry from {@link Tooltip}.
      */
     public static void draw(int x, int y, int w, int h) {
+        lastX = x;
+        lastY = y;
+        lastW = w;
+        lastH = h;
         if (!isEnabled() || alpha <= 0) return;
 
         int width = (int) ((w - 1) * progress);
@@ -115,5 +120,12 @@ public final class BreakProgressRenderer {
 
         boolean top = ConfigHandler.instance().getConfig(CFG_TOP, false);
         DisplayUtil.drawGradientRect(x + 1, top ? y : y + h, width, 1, color, color);
+    }
+
+    /**
+     * Draws only the fading line, for when the tooltip itself is already gone.
+     */
+    public static void drawLast() {
+        draw(lastX, lastY, lastW, lastH);
     }
 }

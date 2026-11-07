@@ -30,8 +30,8 @@ public class OverlayRenderer {
 
         if (RayTracing.instance().getTarget() == null
                 || RayTracing.instance().getTarget().typeOfHit == MovingObjectPosition.MovingObjectType.MISS) {
-            // Keep the last tooltip while the break progress fades out after the block was broken
-            if (tooltip != null && BreakProgressRenderer.isFading()) doRenderOverlay(tooltip);
+            // Keep drawing the progress bar while it fades out after the block was broken
+            BreakProgressRenderer.drawLast();
             return;
         }
 
