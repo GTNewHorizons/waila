@@ -76,6 +76,7 @@ public final class BlockIconRenderer {
         Tessellator tessellator = Tessellator.instance;
 
         int matrixDepth = GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH);
+        int attribDepth = GL11.glGetInteger(GL11.GL_ATTRIB_STACK_DEPTH);
         GL11.glPushMatrix();
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         try {
@@ -114,6 +115,8 @@ public final class BlockIconRenderer {
                 mc.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
                 renderBlocks.blockAccess = world;
                 renderBlocks.renderAllFaces = true;
+                // The offsets of the tessellator are global and are not reset by draw
+                tessellator.setTranslation(0, 0, 0);
                 tessellator.startDrawingQuads();
                 try {
                     for (int pass = 0; pass < 2; pass++) {
@@ -123,12 +126,16 @@ public final class BlockIconRenderer {
                     }
                 } finally {
                     ForgeHooksClient.setRenderPass(-1);
-                    tessellator.draw();
+                    try {
+                        tessellator.draw();
+                    } catch (IllegalStateException alreadyDrawn) {
+                        // A renderer can end the batch itself, draw would throw then
+                    }
                     tessellator.setTranslation(0, 0, 0);
                 }
             }
 
-            // Special renderer (chests, engines, tanks, ...)
+            // Special renderer, also drawn on top of the block model above
             if (hasTesr) {
                 RenderHelper.enableStandardItemLighting();
                 for (int pass = 0; pass < 2; pass++) {
@@ -141,15 +148,17 @@ public final class BlockIconRenderer {
                 RenderHelper.disableStandardItemLighting();
             }
             return true;
-        } catch (Throwable e) {
+        } catch (Exception | LinkageError e) {
             failedClasses.add(block.getClass());
             WailaExceptionHandler.handleErr(e, "BlockIconRenderer | " + block.getClass().getName(), null);
             return false;
         } finally {
             renderBlocks.blockAccess = null;
-            GL11.glPopAttrib();
-            // A renderer that failed can leave a pushed matrix behind, but never pop the caller's
-            while (GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH) > matrixDepth) GL11.glPopMatrix();
+            renderBlocks.renderAllFaces = false;
+            // A renderer can leave unbalanced pushes behind, but should never pop the caller's. Query each
+            // stack once and pop down to where it started.
+            for (int i = GL11.glGetInteger(GL11.GL_ATTRIB_STACK_DEPTH) - attribDepth; i > 0; i--) GL11.glPopAttrib();
+            for (int i = GL11.glGetInteger(GL11.GL_MODELVIEW_STACK_DEPTH) - matrixDepth; i > 0; i--) GL11.glPopMatrix();
         }
     }
 }
