@@ -147,4 +147,5 @@ option.stevescarts.colorblind=Режим цветокоррекции
 option.stevescarts.shifttoggle=Приседание показывает
 option.general.showhp=Показывать здоровье сущностей
 option.general.showcrop=Показывать рост растений
+option.general.showsecondlangname=Показывать название на втором языке (NEI)
 option.thaumcraft.aspects=Показывать аспекты
