@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class OverlayRenderer {
 
@@ -37,7 +38,32 @@ public class OverlayRenderer {
         }
     }
 
+    /** Draws a sample box, for previews like a HUD editor's. */
+    static void drawPreview(Tooltip tooltip) {
+        doRenderOverlay(tooltip);
+    }
+
+    /**
+     * Call right before drawing the info box, with its place and size before scaling, also when another mod draws the
+     * box. Lets a HUD editor move, resize or hide it. False means the box is hidden, so skip drawing it and do not call
+     * {@link #endBox()}.
+     */
+    public static boolean beginBox(int x, int y, int width, int height) {
+        return beginBox(null, x, y, width, height);
+    }
+
+    /** Like {@link #beginBox(int, int, int, int)}, for a mod that draws the box itself, so a HUD editor can name it. */
+    public static boolean beginBox(String drawnBy, int x, int y, int width, int height) {
+        return !LoadedMods.DASHBOARD || DashboardHud.beginBox(drawnBy, x, y, width, height);
+    }
+
+    /** Call right after drawing the info box, only if {@link #beginBox} returned true. */
+    public static void endBox() {
+        if (LoadedMods.DASHBOARD) DashboardHud.endBox();
+    }
+
     private static void doRenderOverlay(Tooltip tooltip) {
+        if (!beginBox(tooltip.x, tooltip.y, tooltip.w + 1, tooltip.h + 1)) return;
 
         GL11.glPushMatrix();
         saveGLState();
@@ -74,7 +100,7 @@ public class OverlayRenderer {
 
         loadGLState();
         GL11.glPopMatrix();
-
+        endBox();
     }
 
     private static void saveGLState() {
