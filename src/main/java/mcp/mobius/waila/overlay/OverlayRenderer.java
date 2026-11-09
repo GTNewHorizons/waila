@@ -2,6 +2,7 @@ package mcp.mobius.waila.overlay;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 
 import org.lwjgl.opengl.GL11;
@@ -11,8 +12,6 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class OverlayRenderer {
 
-    private static boolean hasBlending;
-    private static boolean hasDepthTest;
     private static int boundTexIndex;
 
     public static boolean isOverlayVisible() {
@@ -69,8 +68,11 @@ public class OverlayRenderer {
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
+        Entity entity = tooltip.entity;
         if (tooltip.hasIcon && tooltip.stack != null && tooltip.stack.getItem() != null)
             DisplayUtil.renderStack(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, tooltip.stack);
+        else if (tooltip.hasIcon && entity != null)
+            EntityIconRenderer.render(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, 16, entity);
 
         loadGLState();
         GL11.glPopMatrix();
@@ -78,17 +80,12 @@ public class OverlayRenderer {
     }
 
     private static void saveGLState() {
-        hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);
-        hasDepthTest = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
         boundTexIndex = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
-        GL11.glPushAttrib(GL11.GL_CURRENT_BIT);
+        // Icons turn on lighting, lights, color material and rescale normal
+        GL11.glPushAttrib(GL11.GL_CURRENT_BIT | GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT | GL11.GL_COLOR_BUFFER_BIT);
     }
 
     private static void loadGLState() {
-        if (hasBlending) GL11.glEnable(GL11.GL_BLEND);
-        else GL11.glDisable(GL11.GL_BLEND);
-        if (hasDepthTest) GL11.glEnable(GL11.GL_DEPTH_TEST);
-        else GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
         GL11.glPopAttrib();
     }
