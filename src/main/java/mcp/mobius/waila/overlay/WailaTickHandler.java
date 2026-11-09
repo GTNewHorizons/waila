@@ -29,7 +29,7 @@ public class WailaTickHandler {
     @SubscribeEvent
     public void tickRender(TickEvent.RenderTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            OverlayRenderer.renderOverlay(tooltip);
+            OverlayRenderer.renderOverlay(tooltip, event.renderTickTime);
         }
     }
 
