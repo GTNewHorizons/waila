@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.config.Configuration;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -27,8 +28,8 @@ public class WailaTickHandler {
     private final MetaDataProvider handler = new MetaDataProvider();
 
     @SubscribeEvent
-    public void tickRender(TickEvent.RenderTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
+    public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+        if (event.type == RenderGameOverlayEvent.ElementType.ALL) {
             OverlayRenderer.renderOverlay(tooltip);
         }
     }
