@@ -112,7 +112,7 @@ public final class EntityIconRenderer {
             mc.gameSettings.hideGUI = true;
 
             RenderManager.instance.renderEntityWithPosYaw(entity, 0d, 0d, 0d, 0f, 1f);
-        } catch (Exception | LinkageError e) {
+        } catch (Exception e) {
             failedClasses.add(entity.getClass());
             WailaExceptionHandler.handleErr(e, "EntityIconRenderer | " + entity.getClass().getName(), null);
         } finally {

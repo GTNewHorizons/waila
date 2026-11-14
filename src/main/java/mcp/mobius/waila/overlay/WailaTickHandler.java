@@ -44,9 +44,10 @@ public class WailaTickHandler {
         if (event.phase == TickEvent.Phase.START) return;
 
         Minecraft mc = Minecraft.getMinecraft();
+        World world = mc.theWorld;
         // The tooltip and the ray trace target hold the entity, which holds the world
-        if (mc.theWorld != lastWorld) reset();
-        lastWorld = mc.theWorld;
+        if (world != lastWorld) reset();
+        lastWorld = world;
 
         if (!OverlayRenderer.isOverlayVisible()) {
             reset();
@@ -56,7 +57,6 @@ public class WailaTickHandler {
         RayTracing.instance().fire();
         MovingObjectPosition target = RayTracing.instance().getTarget();
         EntityPlayer player = mc.thePlayer;
-        World world = mc.theWorld;
 
         List<String> currenttip;
         List<String> currenttipHead;
