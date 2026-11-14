@@ -148,7 +148,7 @@ public final class BlockIconRenderer {
                 RenderHelper.disableStandardItemLighting();
             }
             return true;
-        } catch (Exception | LinkageError e) {
+        } catch (Exception e) {
             failedClasses.add(block.getClass());
             WailaExceptionHandler.handleErr(e, "BlockIconRenderer | " + block.getClass().getName(), null);
             return false;
