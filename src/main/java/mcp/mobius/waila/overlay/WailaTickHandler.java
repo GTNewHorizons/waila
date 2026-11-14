@@ -14,9 +14,11 @@ import net.minecraftforge.common.config.Configuration;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import mcp.mobius.waila.api.IWailaBlock;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.MetaDataProvider;
+import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.api.impl.TipList;
 import mcp.mobius.waila.cbcore.Layout;
 import mcp.mobius.waila.utils.Constants;
@@ -97,6 +99,10 @@ public class WailaTickHandler {
                 currenttip.addAll(currenttipTail);
 
                 this.tooltip = new Tooltip(currenttip, targetStack);
+                // Only show the world block when no provider chose another stack (camo blocks, multiparts, ...)
+                if (!(accessor.getBlock() instanceof IWailaBlock)
+                        && !ModuleRegistrar.instance().hasStackProviders(accessor.getBlock()))
+                    this.tooltip.setBlockPos(target.blockX, target.blockY, target.blockZ);
             }
         } else if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
             DataAccessorCommon accessor = DataAccessorCommon.instance;
