@@ -80,7 +80,7 @@ public class HUDHandlerInventory implements IWailaDataProvider, IWailaEntityProv
             tag.setLong(TAG_ITEMS, items);
             tag.setInteger(TAG_USED, used);
             tag.setInteger(TAG_SLOTS, slots);
-        } catch (Exception | LinkageError e) {
+        } catch (Exception e) {
             // Do not lose the data of the other providers because of one bad inventory
             WailaExceptionHandler.handleErr(e, "HUDHandlerInventory | " + target.getClass().getName(), null);
         }
