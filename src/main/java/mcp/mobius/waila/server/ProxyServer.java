@@ -29,6 +29,7 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.handlers.DecoratorFMP;
 import mcp.mobius.waila.handlers.HUDHandlerFMP;
+import mcp.mobius.waila.handlers.HUDHandlerInventory;
 import mcp.mobius.waila.utils.LoadedMods;
 
 public class ProxyServer {
@@ -41,6 +42,7 @@ public class ProxyServer {
 
         HUDHandlerVanilla.register();
         HUDHandlerFurnace.register();
+        HUDHandlerInventory.register();
 
         /* BUILDCRAFT */
         BCModule.register();
