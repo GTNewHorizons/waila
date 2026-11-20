@@ -68,7 +68,9 @@ public class Waila {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
             MinecraftForge.EVENT_BUS.register(new DecoratorRenderer());
             FMLCommonHandler.instance().bus().register(new KeyEvent());
-            FMLCommonHandler.instance().bus().register(new WailaTickHandler());
+            WailaTickHandler tickHandler = new WailaTickHandler();
+            FMLCommonHandler.instance().bus().register(tickHandler);
+            MinecraftForge.EVENT_BUS.register(tickHandler);
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
     }
