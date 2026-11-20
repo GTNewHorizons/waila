@@ -29,17 +29,19 @@ import mcp.mobius.waila.client.KeyEvent;
 import mcp.mobius.waila.commands.CommandDumpHandlers;
 import mcp.mobius.waila.network.NetworkHandler;
 import mcp.mobius.waila.network.WailaPacketHandler;
+import mcp.mobius.waila.overlay.DashboardHud;
 import mcp.mobius.waila.overlay.DecoratorRenderer;
 import mcp.mobius.waila.overlay.OverlayConfig;
 import mcp.mobius.waila.overlay.WailaTickHandler;
 import mcp.mobius.waila.server.ProxyServer;
+import mcp.mobius.waila.utils.LoadedMods;
 import mcp.mobius.waila.utils.ModIdentification;
 
 @Mod(
         modid = "Waila",
         name = "Waila",
         version = Tags.GRADLETOKEN_VERSION,
-        dependencies = "after:NotEnoughItems@[1.0.4.0,)",
+        dependencies = "after:NotEnoughItems@[1.0.4.0,);after:dashboard@[1.0.2,)",
         acceptableRemoteVersions = "*",
         guiFactory = "mcp.mobius.waila.client.WailaGuiFactory")
 public class Waila {
@@ -69,6 +71,7 @@ public class Waila {
             MinecraftForge.EVENT_BUS.register(new DecoratorRenderer());
             FMLCommonHandler.instance().bus().register(new KeyEvent());
             FMLCommonHandler.instance().bus().register(new WailaTickHandler());
+            if (LoadedMods.DASHBOARD) DashboardHud.register();
         }
         FMLCommonHandler.instance().bus().register(new NetworkHandler());
     }
