@@ -24,8 +24,14 @@ import mcp.mobius.waila.utils.Constants;
 
 public class WailaTickHandler {
 
-    private Tooltip tooltip = null;
+    private static Tooltip tooltip = null;
+    private static World lastWorld = null;
     private final MetaDataProvider handler = new MetaDataProvider();
+
+    private static void reset() {
+        tooltip = null;
+        RayTracing.instance().clear();
+    }
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
@@ -38,17 +44,20 @@ public class WailaTickHandler {
     public void tickClient(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.START) return;
 
+        Minecraft mc = Minecraft.getMinecraft();
+        World world = mc.theWorld;
+        // The tooltip and the ray trace target hold the entity, which holds the world
+        if (world != lastWorld) reset();
+        lastWorld = world;
+
         if (!OverlayRenderer.isOverlayVisible()) {
-            this.tooltip = null;
-            RayTracing.instance().clear();
+            reset();
             return;
         }
 
         RayTracing.instance().fire();
         MovingObjectPosition target = RayTracing.instance().getTarget();
-        Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.thePlayer;
-        World world = mc.theWorld;
 
         List<String> currenttip;
         List<String> currenttipHead;
@@ -97,7 +106,7 @@ public class WailaTickHandler {
                 currenttip.addAll(currenttipBody);
                 currenttip.addAll(currenttipTail);
 
-                this.tooltip = new Tooltip(currenttip, targetStack);
+                tooltip = new Tooltip(currenttip, targetStack);
             }
         } else if (target != null && target.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
             DataAccessorCommon accessor = DataAccessorCommon.instance;
@@ -143,7 +152,7 @@ public class WailaTickHandler {
                 currenttip.addAll(currenttipBody);
                 currenttip.addAll(currenttipTail);
 
-                this.tooltip = new Tooltip(currenttip, false);
+                tooltip = new Tooltip(currenttip, targetEnt);
             }
         }
 

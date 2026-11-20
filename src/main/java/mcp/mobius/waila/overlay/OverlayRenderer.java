@@ -2,17 +2,17 @@ package mcp.mobius.waila.overlay;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import mcp.mobius.waila.api.impl.ConfigHandler;
+import mcp.mobius.waila.utils.LoadedMods;
 
 public class OverlayRenderer {
 
-    private static boolean hasBlending;
-    private static boolean hasDepthTest;
     private static int boundTexIndex;
 
     public static boolean isOverlayVisible() {
@@ -37,7 +37,32 @@ public class OverlayRenderer {
         }
     }
 
+    /** Draws a sample box, for previews like a HUD editor's. */
+    static void drawPreview(Tooltip tooltip) {
+        doRenderOverlay(tooltip);
+    }
+
+    /**
+     * Call right before drawing the info box, with its place and size before scaling, also when another mod draws the
+     * box. Lets a HUD editor move, resize or hide it. False means the box is hidden, so skip drawing it and do not call
+     * {@link #endBox()}.
+     */
+    public static boolean beginBox(int x, int y, int width, int height) {
+        return beginBox(null, x, y, width, height);
+    }
+
+    /** Like {@link #beginBox(int, int, int, int)}, for a mod that draws the box itself, so a HUD editor can name it. */
+    public static boolean beginBox(String drawnBy, int x, int y, int width, int height) {
+        return !LoadedMods.DASHBOARD || DashboardHud.beginBox(drawnBy, x, y, width, height);
+    }
+
+    /** Call right after drawing the info box, only if {@link #beginBox} returned true. */
+    public static void endBox() {
+        if (LoadedMods.DASHBOARD) DashboardHud.endBox();
+    }
+
     private static void doRenderOverlay(Tooltip tooltip) {
+        if (!beginBox(tooltip.x, tooltip.y, tooltip.w + 1, tooltip.h + 1)) return;
 
         GL11.glPushMatrix();
         saveGLState();
@@ -69,26 +94,24 @@ public class OverlayRenderer {
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
+        Entity entity = tooltip.entity;
         if (tooltip.hasIcon && tooltip.stack != null && tooltip.stack.getItem() != null)
             DisplayUtil.renderStack(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, tooltip.stack);
+        else if (tooltip.hasIcon && entity != null)
+            EntityIconRenderer.render(tooltip.x + 5, tooltip.y + tooltip.h / 2 - 8, 16, entity);
 
         loadGLState();
         GL11.glPopMatrix();
-
+        endBox();
     }
 
     private static void saveGLState() {
-        hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);
-        hasDepthTest = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
         boundTexIndex = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
-        GL11.glPushAttrib(GL11.GL_CURRENT_BIT);
+        // Icons turn on lighting, lights, color material and rescale normal
+        GL11.glPushAttrib(GL11.GL_CURRENT_BIT | GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT | GL11.GL_COLOR_BUFFER_BIT);
     }
 
     private static void loadGLState() {
-        if (hasBlending) GL11.glEnable(GL11.GL_BLEND);
-        else GL11.glDisable(GL11.GL_BLEND);
-        if (hasDepthTest) GL11.glEnable(GL11.GL_DEPTH_TEST);
-        else GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
         GL11.glPopAttrib();
     }
